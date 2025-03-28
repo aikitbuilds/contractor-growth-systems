@@ -31,12 +31,12 @@ const Navbar = () => {
               <Button variant="outline" size="sm">Login</Button>
             </Link>
             <Link to="/contact">
-              <Button variant="default" size="sm" className="bg-primary hover:bg-primary-600">Schedule a Strategy Call</Button>
+              <Button size="sm" className="bg-primary hover:bg-primary-600">Schedule a Strategy Call</Button>
             </Link>
           </div>
         </div>
         
-        <button className="md:hidden" onClick={toggleMenu}>
+        <button className="md:hidden" onClick={toggleMenu} aria-label="Toggle menu">
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
@@ -57,7 +57,7 @@ const Navbar = () => {
                   <Button variant="outline" className="w-full">Login</Button>
                 </Link>
                 <Link to="/contact" onClick={toggleMenu}>
-                  <Button variant="default" className="w-full bg-primary hover:bg-primary-600">Schedule a Strategy Call</Button>
+                  <Button className="w-full bg-primary hover:bg-primary-600">Schedule a Strategy Call</Button>
                 </Link>
               </div>
             </div>
