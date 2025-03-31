@@ -1,4 +1,4 @@
-
+import React from "react";
 import Navbar from "@/components/Navbar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SalesGrowthChart from "@/components/dashboard/SalesGrowthChart";
@@ -11,6 +11,94 @@ import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { useEffect } from "react";
+import {
+  Line,
+  LineChart as RechartLine,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  Pie,
+  Cell,
+  PieChart as RechartPie,
+  Bar,
+  BarChart as RechartBar,
+} from "recharts";
+
+// Sample data for visualizations
+const monthlySalesData = [
+  { month: "Jan", actual: 420000, forecast: 400000 },
+  { month: "Feb", actual: 380000, forecast: 410000 },
+  { month: "Mar", actual: 450000, forecast: 430000 },
+  { month: "Apr", actual: 520000, forecast: 470000 },
+  { month: "May", actual: 580000, forecast: 510000 },
+  { month: "Jun", actual: 620000, forecast: 550000 },
+];
+
+const monthlyDealsData = [
+  { month: "Jan", actual: 42, forecast: 40 },
+  { month: "Feb", actual: 38, forecast: 41 },
+  { month: "Mar", actual: 45, forecast: 43 },
+  { month: "Apr", actual: 52, forecast: 47 },
+  { month: "May", actual: 58, forecast: 51 },
+  { month: "Jun", actual: 62, forecast: 55 },
+];
+
+const monthlyASPData = [
+  { month: "Jan", asp: 10000 },
+  { month: "Feb", asp: 10500 },
+  { month: "Mar", asp: 10200 },
+  { month: "Apr", asp: 10400 },
+  { month: "May", asp: 10700 },
+  { month: "Jun", asp: 11000 },
+];
+
+const salesMixData = [
+  { name: "Solar", value: 55 },
+  { name: "Roofing", value: 30 },
+  { name: "HVAC", value: 15 },
+];
+
+const marketingSpendData = [
+  { month: "Jan", actual: 42000, budget: 45000 },
+  { month: "Feb", actual: 40000, budget: 45000 },
+  { month: "Mar", actual: 47000, budget: 46000 },
+  { month: "Apr", actual: 49000, budget: 47000 },
+  { month: "May", actual: 52000, budget: 48000 },
+  { month: "Jun", actual: 55000, budget: 50000 },
+];
+
+const marketingLeadsData = [
+  { month: "Jan", leads: 120 },
+  { month: "Feb", leads: 115 },
+  { month: "Mar", leads: 135 },
+  { month: "Apr", leads: 150 },
+  { month: "May", leads: 165 },
+  { month: "Jun", leads: 180 },
+];
+
+const closeRateData = [
+  { month: "Jan", rate: 28 },
+  { month: "Feb", rate: 26 },
+  { month: "Mar", rate: 29 },
+  { month: "Apr", rate: 33 },
+  { month: "May", rate: 35 },
+  { month: "Jun", rate: 36 },
+];
+
+// Chart colors
+const colors = {
+  primary: "#0A2A4F",
+  secondary: "#00BCD4",
+  accent: "#4CAF50",
+  warning: "#F59E0B",
+  danger: "#EF4444",
+  neutral: "#6B7280",
+};
+
+const COLORS = ["#0088FE", "#00BCD4", "#4CAF50", "#FFBB28"];
 
 const Dashboard = () => {
   const { toast } = useToast();
@@ -23,6 +111,26 @@ const Dashboard = () => {
     });
   }, [toast]);
 
+  // Convert value to formatted currency
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
+
+  // Calculate percentage to goal
+  const calcPercentToGoal = (actual: number, goal: number) => {
+    return Math.round((actual / goal) * 100);
+  };
+  
+  // Format percentage
+  const formatPercent = (value: number) => {
+    return `${value}%`;
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
@@ -32,8 +140,8 @@ const Dashboard = () => {
         
         <main className="flex-1 p-6 lg:p-8 ml-0 md:ml-64">
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-primary">Dashboard</h1>
-            <p className="text-gray-600">Welcome back! Here's your business at a glance.</p>
+            <h1 className="text-3xl font-bold text-primary">Client Dashboard</h1>
+            <p className="text-gray-600">Performance metrics and business intelligence at a glance</p>
           </div>
 
           <Tabs defaultValue="overview" className="space-y-6">

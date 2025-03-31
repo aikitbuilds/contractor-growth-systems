@@ -280,42 +280,55 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Case Studies Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
+      {/* Social Proof - Case Studies */}
+      <section className="py-16 relative">
+        {/* Background image with overlay */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/Images/semper_back1.png" 
+            alt="Semper Solaris background" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/70"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Success Stories</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Discover how our systematic approach to business growth has helped contractors achieve remarkable results.
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Success Stories</h2>
+            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+              See how we've helped contractors just like you achieve predictable growth.
             </p>
           </div>
           
-          <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md overflow-hidden">
-            <div className="md:flex">
-              <div className="md:w-1/3 bg-gray-800 flex items-center justify-center p-8">
-                <img 
-                  src="https://images.unsplash.com/photo-1611323763572-a01c4f01b87d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                  alt="Solar installation on residential roof" 
-                  className="w-full rounded-lg"
-                />
-              </div>
-              <div className="md:w-2/3 p-8">
-                <div className="uppercase tracking-wide text-xs font-semibold text-secondary mb-1">Case Study</div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Systemizing for Explosive Scale</h3>
-                <p className="text-gray-600 mb-4">
-                  Lessons from the Semper Solaris Growth Trajectory: How implementing robust business systems enabled multi-million dollar growth.
-                </p>
-                <div className="flex gap-3 flex-wrap mb-4">
-                  <span className="inline-block bg-secondary/10 text-secondary text-xs px-2 py-1 rounded-full">System Implementation</span>
-                  <span className="inline-block bg-secondary/10 text-secondary text-xs px-2 py-1 rounded-full">Scalable Growth</span>
-                  <span className="inline-block bg-secondary/10 text-secondary text-xs px-2 py-1 rounded-full">Multi-Vertical Success</span>
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-black/50 backdrop-blur-sm border border-white/10 rounded-xl p-8 shadow-xl">
+              <div className="flex flex-col md:flex-row gap-8 items-center">
+                <div className="md:w-1/3 flex justify-center">
+                  <img 
+                    src="/Images/Semper_Solaris_Logo.webp" 
+                    alt="Semper Solaris" 
+                    className="w-full max-w-[200px] h-auto"
+                  />
                 </div>
-                <Link to="/case-study/semper-solaris">
-                  <Button variant="outline" className="flex items-center">
-                    Read Case Study
-                    <ArrowRight className="h-4 w-4 ml-2" />
-                  </Button>
-                </Link>
+                
+                <div className="md:w-2/3">
+                  <h3 className="text-2xl font-bold text-white mb-3">Systemizing for Explosive Scale</h3>
+                  <p className="text-gray-300 mb-4">
+                    Learn how Semper Solaris transformed from a small local operation to a $100M+ powerhouse through systematic implementation of sales and operational processes.
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="bg-secondary/20 text-secondary text-xs py-1 px-3 rounded-full">Solar</span>
+                    <span className="bg-secondary/20 text-secondary text-xs py-1 px-3 rounded-full">Roofing</span>
+                    <span className="bg-secondary/20 text-secondary text-xs py-1 px-3 rounded-full">Growth Transformation</span>
+                  </div>
+                  
+                  <Link to="/case-study/semper-solaris" className="inline-block">
+                    <Button className="bg-secondary hover:bg-secondary-600 text-white">
+                      Read Case Study <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -441,23 +454,6 @@ const Index = () => {
                 <p className="text-gray-700">Ready to implement systematic approaches to sales and operations</p>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Social Proof Placeholder */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Success Stories</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              See how we've helped contractors just like you achieve predictable growth.
-            </p>
-          </div>
-          
-          {/* Placeholder for future testimonials */}
-          <div className="bg-gray-100 p-10 text-center rounded-lg">
-            <p className="text-lg font-medium text-gray-500">Testimonials and case studies coming soon</p>
           </div>
         </div>
       </section>

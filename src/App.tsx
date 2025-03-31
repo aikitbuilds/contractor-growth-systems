@@ -9,6 +9,9 @@ import BusinessGrowth from "./pages/BusinessGrowth";
 import CourseComingSoon from "./pages/CourseComingSoon";
 import SemperSolarisCase from "./pages/SemperSolarisCase";
 import AIImageTools from "./pages/AIImageTools";
+import About from "./pages/About";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 import Footer from "./components/Footer";
 import AIChatbot from "./components/AIChatbot";
 
@@ -28,6 +31,9 @@ const App = () => (
               <Route path="/course-coming-soon" element={<CourseComingSoon />} />
               <Route path="/case-study/semper-solaris" element={<SemperSolarisCase />} />
               <Route path="/ai-image-tools" element={<AIImageTools />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
