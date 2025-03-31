@@ -1,0 +1,15 @@
+open solarsales.pro 
+bdc-ftp-admin@solarsales.pro 
+prompt 
+cd / 
+lcd C:\Users\aikit\Documents\GitHub\contractor-growth-systems\dist 
+mput *.* 
+cd assets 
+lcd assets 
+mput *.* 
+cd .. 
+lcd .. 
+cd Images 
+lcd Images 
+mput *.* 
+bye 

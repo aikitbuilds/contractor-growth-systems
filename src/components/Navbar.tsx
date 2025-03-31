@@ -79,15 +79,16 @@ const Navbar = () => {
             </nav>
             
             <div className="flex items-center space-x-4">
-              <a 
-                href="tel:+1234567890" 
-                className={`flex items-center transition-colors ${
-                  isScrolled ? 'text-gray-800 hover:text-primary' : 'text-white hover:text-secondary'
-                }`}
-              >
-                <Phone className="w-5 h-5 mr-2" />
-                <span className="font-medium">Call Us</span>
-              </a>
+              <Link to="/login">
+                <Button 
+                  variant="outline"
+                  className={`${
+                    isScrolled ? 'border-primary text-primary hover:bg-primary/10' : 'border-white text-white hover:bg-white/10'
+                  }`}
+                >
+                  Client Login
+                </Button>
+              </Link>
               <Link to="/contact">
                 <Button 
                   className={`${
@@ -154,21 +155,13 @@ const Navbar = () => {
             >
               Contact
             </Link>
-            <a 
-              href="tel:+1234567890" 
-              className="flex items-center text-gray-800 py-3 border-b border-gray-100 hover:text-primary transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <Phone className="w-5 h-5 mr-2" />
-              <span>Call Us</span>
-            </a>
             <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-              <Button variant="outline" className="w-full">
-                Login
+              <Button variant="outline" className="w-full mt-4">
+                Client Login
               </Button>
             </Link>
             <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
-              <Button className="w-full bg-primary hover:bg-primary-600 text-white">
+              <Button className="w-full bg-primary hover:bg-primary-600 text-white mt-2">
                 Schedule a Strategy Call
               </Button>
             </Link>

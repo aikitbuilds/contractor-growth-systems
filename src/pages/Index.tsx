@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle, BarChart3, Users, FileText, Phone, Shield, Zap, Award, TrendingUp } from 'lucide-react';
+import { ArrowRight, CheckCircle, BarChart3, Users, FileText, Phone, Shield, Zap, Award, TrendingUp, ArrowUpIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
 import { Card } from '@/components/ui/card';
@@ -16,30 +16,112 @@ const Index = () => {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1613665813446-82a78c468a1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80" 
-            alt="Contractor working" 
+            src="/Images/Hero.png" 
+            alt="Contractor business growth" 
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40"></div>
         </div>
         
         <div className="container mx-auto px-4 relative z-10 py-16 md:py-24">
-          <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Stop Guessing, Start Scaling
-            </h1>
-            <h2 className="text-xl md:text-2xl text-white/90 mb-8">
-              End the cycle of inconsistent leads and transform your contracting business with systematic approaches to sales, marketing, and operations.
-            </h2>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium">
-                Schedule a Strategy Call <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Link to="/business-growth">
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 font-medium">
-                  Interactive Dashboard
+          <div className="flex flex-col md:flex-row items-center">
+            <div className="md:w-1/2 md:pr-8">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+                Stop Guessing, Start Scaling
+              </h1>
+              <h2 className="text-xl md:text-2xl text-white/90 mb-8">
+                End the cycle of inconsistent leads and transform your contracting business with systematic approaches to sales, marketing, and operations.
+              </h2>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium">
+                  Schedule a Strategy Call <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-              </Link>
+                <Link to="/business-growth">
+                  <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 font-medium">
+                    Interactive Dashboard
+                  </Button>
+                </Link>
+              </div>
+            </div>
+            
+            {/* Interactive Dashboard Preview */}
+            <div className="md:w-1/2 mt-10 md:mt-0">
+              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 shadow-2xl">
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-white text-xl font-bold">Performance Metrics</h3>
+                  <span className="bg-secondary/20 text-secondary text-xs py-1 px-3 rounded-full">Live Data</span>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  {/* Sales Growth Metric */}
+                  <div className="bg-white/10 p-4 rounded-lg">
+                    <div className="text-white/70 text-sm mb-1">Sales Growth</div>
+                    <div className="flex items-end justify-between">
+                      <div className="text-white text-2xl font-bold">+143%</div>
+                      <div className="flex items-center text-emerald-400 text-sm">
+                        <ArrowUpIcon className="h-4 w-4 mr-1" />
+                        <span>18.2%</span>
+                      </div>
+                    </div>
+                    <div className="mt-2 h-2 bg-white/20 rounded-full overflow-hidden">
+                      <div className="bg-emerald-400 h-full rounded-full" style={{ width: '78%' }}></div>
+                    </div>
+                  </div>
+                  
+                  {/* Lead Conversion Metric */}
+                  <div className="bg-white/10 p-4 rounded-lg">
+                    <div className="text-white/70 text-sm mb-1">Lead Conversion</div>
+                    <div className="flex items-end justify-between">
+                      <div className="text-white text-2xl font-bold">34.7%</div>
+                      <div className="flex items-center text-emerald-400 text-sm">
+                        <ArrowUpIcon className="h-4 w-4 mr-1" />
+                        <span>7.5%</span>
+                      </div>
+                    </div>
+                    <div className="mt-2 h-2 bg-white/20 rounded-full overflow-hidden">
+                      <div className="bg-emerald-400 h-full rounded-full" style={{ width: '65%' }}></div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Mini Chart */}
+                <div className="bg-white/10 p-4 rounded-lg mb-4">
+                  <div className="flex justify-between items-center mb-3">
+                    <div className="text-white/70 text-sm">Monthly Revenue Trend</div>
+                    <div className="text-white text-xs px-2 py-1 rounded-full bg-white/10">Last 6 Months</div>
+                  </div>
+                  
+                  <div className="relative h-20">
+                    <div className="absolute bottom-0 left-0 w-full h-full flex items-end">
+                      <div className="w-1/6 h-[30%] bg-secondary/50 rounded-sm mx-[2px]"></div>
+                      <div className="w-1/6 h-[40%] bg-secondary/50 rounded-sm mx-[2px]"></div>
+                      <div className="w-1/6 h-[35%] bg-secondary/50 rounded-sm mx-[2px]"></div>
+                      <div className="w-1/6 h-[60%] bg-secondary/50 rounded-sm mx-[2px]"></div>
+                      <div className="w-1/6 h-[75%] bg-secondary/50 rounded-sm mx-[2px]"></div>
+                      <div className="w-1/6 h-[95%] bg-secondary/70 rounded-sm mx-[2px]"></div>
+                    </div>
+                    <div className="absolute bottom-0 left-0 w-full h-[20%] bg-gradient-to-t from-secondary/20 to-transparent rounded-b-sm"></div>
+                  </div>
+                  
+                  <div className="flex justify-between text-white/50 text-xs mt-2">
+                    <span>Jan</span>
+                    <span>Feb</span>
+                    <span>Mar</span>
+                    <span>Apr</span>
+                    <span>May</span>
+                    <span>Jun</span>
+                  </div>
+                </div>
+                
+                <div className="text-center">
+                  <Link to="/business-growth">
+                    <Button variant="secondary" size="sm" className="text-xs bg-secondary/20 hover:bg-secondary/30 text-white border-0">
+                      View Detailed Analytics
+                      <ArrowRight className="h-3 w-3 ml-1" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -191,6 +273,48 @@ const Index = () => {
             <Button variant="outline" size="lg">
               View All Services
             </Button>
+          </div>
+        </div>
+      </section>
+      
+      {/* Case Studies Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Success Stories</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Discover how our systematic approach to business growth has helped contractors achieve remarkable results.
+            </p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md overflow-hidden">
+            <div className="md:flex">
+              <div className="md:w-1/3 bg-gray-800 flex items-center justify-center p-8">
+                <img 
+                  src="https://images.unsplash.com/photo-1611323763572-a01c4f01b87d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                  alt="Solar installation on residential roof" 
+                  className="w-full rounded-lg"
+                />
+              </div>
+              <div className="md:w-2/3 p-8">
+                <div className="uppercase tracking-wide text-xs font-semibold text-secondary mb-1">Case Study</div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Systemizing for Explosive Scale</h3>
+                <p className="text-gray-600 mb-4">
+                  Lessons from the Semper Solaris Growth Trajectory: How implementing robust business systems enabled multi-million dollar growth.
+                </p>
+                <div className="flex gap-3 flex-wrap mb-4">
+                  <span className="inline-block bg-secondary/10 text-secondary text-xs px-2 py-1 rounded-full">System Implementation</span>
+                  <span className="inline-block bg-secondary/10 text-secondary text-xs px-2 py-1 rounded-full">Scalable Growth</span>
+                  <span className="inline-block bg-secondary/10 text-secondary text-xs px-2 py-1 rounded-full">Multi-Vertical Success</span>
+                </div>
+                <Link to="/case-study/semper-solaris">
+                  <Button variant="outline" className="flex items-center">
+                    Read Case Study
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
