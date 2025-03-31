@@ -1,10 +1,10 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle, BarChart3, Users, FileText } from 'lucide-react';
+import { ArrowRight, CheckCircle, BarChart3, Users, FileText, Phone, Shield, Zap, Award, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
 import { Card } from '@/components/ui/card';
+import HomeAIChatComponent from '@/components/HomeAIChatComponent';
 
 const Index = () => {
   return (
@@ -12,38 +12,34 @@ const Index = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="pt-28 pb-16 md:pt-36 md:pb-24 bg-gradient-to-br from-primary-100 to-white">
-        <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row items-center">
-            <div className="md:w-1/2 mb-10 md:mb-0">
-              <h1 className="text-primary mb-4">
-                Stop Guessing, Start Scaling
-              </h1>
-              <h2 className="text-2xl md:text-3xl font-heading font-bold text-gray-700 mb-6">
-                Proven Sales Systems for Contractors
-              </h2>
-              <p className="text-lg text-gray-600 mb-8">
-                End the cycle of inconsistent leads and transform your contracting business with systematic approaches to sales, marketing, and operations.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/contact">
-                  <Button size="lg" className="bg-primary hover:bg-primary-600 font-medium">
-                    Schedule a Strategy Call <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-                <Link to="/services">
-                  <Button size="lg" variant="outline" className="font-medium">
-                    Explore Our Systems
-                  </Button>
-                </Link>
-              </div>
-            </div>
-            <div className="md:w-1/2">
-              <img 
-                src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                alt="Contractor planning with technology" 
-                className="rounded-lg shadow-xl w-full h-auto"
-              />
+      <section className="relative pt-32 md:pt-0 min-h-[90vh] flex items-center">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1613665813446-82a78c468a1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80" 
+            alt="Contractor working" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10 py-16 md:py-24">
+          <div className="max-w-2xl">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+              Stop Guessing, Start Scaling
+            </h1>
+            <h2 className="text-xl md:text-2xl text-white/90 mb-8">
+              End the cycle of inconsistent leads and transform your contracting business with systematic approaches to sales, marketing, and operations.
+            </h2>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium">
+                Schedule a Strategy Call <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Link to="/business-growth">
+                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 font-medium">
+                  Interactive Dashboard
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -51,7 +47,7 @@ const Index = () => {
 
       {/* Problem/Solution Section */}
       <section className="py-16 bg-white">
-        <div className="container mx-auto">
+        <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Common Contractor Challenges We Solve</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -103,43 +99,46 @@ const Index = () => {
       </section>
 
       {/* USP Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto">
+      <section className="py-16 bg-gray-900 text-white">
+        <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 mb-10 md:mb-0">
-              <img 
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                alt="Strategic collaboration" 
-                className="rounded-lg shadow-md w-full h-auto"
-              />
+              <div className="relative">
+                <div className="rounded-xl overflow-hidden">
+                  <img 
+                    src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                    alt="Strategic collaboration" 
+                    className="w-full h-auto"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-secondary/30 to-transparent mix-blend-overlay"></div>
+              </div>
             </div>
             <div className="md:w-1/2 md:pl-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6">Hands-On Implementation, Not Just Theory</h2>
-              <p className="text-lg text-gray-600 mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Hands-On Implementation, Not Just Theory</h2>
+              <p className="text-lg text-gray-300 mb-6">
                 We don't just provide advice - we roll up our sleeves and implement proven sales systems directly in your business.
               </p>
               
               <div className="space-y-4">
                 <div className="flex items-start">
-                  <CheckCircle className="h-6 w-6 text-accent mr-3 mt-1 flex-shrink-0" />
-                  <p className="text-gray-700">Custom-tailored strategies for your specific contracting niche</p>
+                  <CheckCircle className="h-6 w-6 text-secondary mr-3 mt-1 flex-shrink-0" />
+                  <p className="text-gray-300">Custom-tailored strategies for your specific contracting niche</p>
                 </div>
                 <div className="flex items-start">
-                  <CheckCircle className="h-6 w-6 text-accent mr-3 mt-1 flex-shrink-0" />
-                  <p className="text-gray-700">Expert guidance from industry veterans with proven results</p>
+                  <CheckCircle className="h-6 w-6 text-secondary mr-3 mt-1 flex-shrink-0" />
+                  <p className="text-gray-300">Expert guidance from industry veterans with proven results</p>
                 </div>
                 <div className="flex items-start">
-                  <CheckCircle className="h-6 w-6 text-accent mr-3 mt-1 flex-shrink-0" />
-                  <p className="text-gray-700">Direct integration with your team for sustainable growth</p>
+                  <CheckCircle className="h-6 w-6 text-secondary mr-3 mt-1 flex-shrink-0" />
+                  <p className="text-gray-300">Direct integration with your team for sustainable growth</p>
                 </div>
               </div>
               
               <div className="mt-8">
-                <Link to="/about">
-                  <Button className="bg-primary hover:bg-primary-600">
-                    About Our Approach
-                  </Button>
-                </Link>
+                <Button className="bg-secondary hover:bg-secondary-600 text-white">
+                  About Our Approach <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
               </div>
             </div>
           </div>
@@ -148,7 +147,7 @@ const Index = () => {
 
       {/* Services Overview */}
       <section className="py-16 bg-white">
-        <div className="container mx-auto">
+        <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Our Core Services</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -189,11 +188,91 @@ const Index = () => {
           </div>
           
           <div className="text-center mt-10">
-            <Link to="/services">
-              <Button variant="outline" size="lg">
-                View All Services
-              </Button>
-            </Link>
+            <Button variant="outline" size="lg">
+              View All Services
+            </Button>
+          </div>
+        </div>
+      </section>
+      
+      {/* ROI Calculator Section */}
+      <section id="calculator" className="relative py-16 md:py-24">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-70"
+          style={{ 
+            backgroundImage: `url('https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80')`,
+            backgroundPosition: 'center'
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-white/40 to-white/80" />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Calculate Your Growth Potential</h2>
+          
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
+              <div className="mb-6">
+                <p className="text-lg text-gray-700 mb-4">
+                  See how our systems can impact your contracting business with our ROI calculator. Enter your information below to get a personalized estimate.
+                </p>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Current Monthly Revenue</label>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">$</span>
+                    <input 
+                      type="text" 
+                      className="w-full rounded-md border border-gray-300 py-2.5 pl-8 pr-3 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary" 
+                      placeholder="10,000"
+                    />
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Number of Team Members</label>
+                  <input 
+                    type="number" 
+                    className="w-full rounded-md border border-gray-300 py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary" 
+                    placeholder="5"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Average Project Value</label>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">$</span>
+                    <input 
+                      type="text" 
+                      className="w-full rounded-md border border-gray-300 py-2.5 pl-8 pr-3 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary" 
+                      placeholder="25,000"
+                    />
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Closing Rate (%)</label>
+                  <div className="relative">
+                    <input 
+                      type="number" 
+                      className="w-full rounded-md border border-gray-300 py-2.5 pl-3 pr-8 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary" 
+                      placeholder="25"
+                      max="100"
+                    />
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">%</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex justify-center">
+                <Button className="bg-secondary hover:bg-secondary-600 text-white font-medium px-8">
+                  Calculate Growth Potential
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -271,6 +350,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* AI Chat Component */}
+      <HomeAIChatComponent />
+
       {/* Final CTA */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto text-center">
@@ -285,9 +367,6 @@ const Index = () => {
           </Link>
         </div>
       </section>
-
-      {/* Footer will go here */}
-
     </div>
   );
 };
