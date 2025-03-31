@@ -12,6 +12,7 @@ import AIImageTools from "./pages/AIImageTools";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import Services from "./pages/Services";
 import Footer from "./components/Footer";
 import AIChatbot from "./components/AIChatbot";
 
@@ -32,6 +33,7 @@ const App = () => (
               <Route path="/case-study/semper-solaris" element={<SemperSolarisCase />} />
               <Route path="/ai-image-tools" element={<AIImageTools />} />
               <Route path="/about" element={<About />} />
+              <Route path="/services" element={<Services />} />
               <Route path="/login" element={<Login />} />
               <Route path="/dashboard" element={<Dashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

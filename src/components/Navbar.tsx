@@ -8,16 +8,38 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  
+  // Set initial styling based on current page
+  const isHomePage = location.pathname === '/';
+  
+  // Initialize isScrolled to true on non-home pages to maintain consistent appearance
+  const [initialRender, setInitialRender] = useState(true);
+  
+  useEffect(() => {
+    if (initialRender) {
+      setIsScrolled(!isHomePage);
+      setInitialRender(false);
+    }
+  }, [isHomePage, initialRender]);
 
   // Track scroll position
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (isHomePage) {
+        // Only change scroll state based on scroll position for homepage
+        setIsScrolled(window.scrollY > 20);
+      } else {
+        // Always keep the solid background on other pages
+        setIsScrolled(true);
+      }
     };
+    
+    // Set initial scroll state
+    handleScroll();
     
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isHomePage]);
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -39,7 +61,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Logo color={isScrolled ? 'light' : 'light'} />
+          <Logo color="light" />
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-1">
@@ -55,6 +77,12 @@ const Navbar = () => {
               className={({ isActive }) => linkClass(isActive)}
             >
               About
+            </NavLink>
+            <NavLink 
+              to="/services" 
+              className={({ isActive }) => linkClass(isActive)}
+            >
+              Services
             </NavLink>
             <NavLink 
               to="/case-study/semper-solaris" 
@@ -102,15 +130,17 @@ const Navbar = () => {
                 Client Login
               </Button>
             </NavLink>
-            <Button className={`
-              transition-transform duration-300 hover:scale-105
-              ${isScrolled 
-                ? 'bg-white text-primary hover:bg-gray-100' 
-                : 'bg-white text-primary hover:bg-gray-100 shadow-lg'
-              }
-            `}>
-              Schedule a Strategy Call
-            </Button>
+            <NavLink to="/services">
+              <Button className={`
+                transition-transform duration-300 hover:scale-105
+                ${isScrolled 
+                  ? 'bg-white text-primary hover:bg-gray-100' 
+                  : 'bg-white text-primary hover:bg-gray-100 shadow-lg'
+                }
+              `}>
+                Schedule a Strategy Call
+              </Button>
+            </NavLink>
           </div>
           
           {/* Mobile Menu Button */}
@@ -145,6 +175,14 @@ const Navbar = () => {
                 }
               >
                 About
+              </NavLink>
+              <NavLink 
+                to="/services"
+                className={({ isActive }) => 
+                  `px-3 py-2 text-white ${isActive ? 'bg-primary-600 rounded' : ''}`
+                }
+              >
+                Services
               </NavLink>
               <NavLink 
                 to="/case-study/semper-solaris"
@@ -188,9 +226,11 @@ const Navbar = () => {
                     Client Login
                   </Button>
                 </NavLink>
-                <Button className="w-full bg-white text-primary hover:bg-gray-100">
-                  Schedule a Strategy Call
-                </Button>
+                <NavLink to="/services" className="block">
+                  <Button className="w-full bg-white text-primary hover:bg-gray-100">
+                    Schedule a Strategy Call
+                  </Button>
+                </NavLink>
               </div>
             </div>
           </div>
