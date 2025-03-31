@@ -270,9 +270,12 @@ const Index = () => {
           </div>
           
           <div className="text-center mt-10">
-            <Button variant="outline" size="lg">
-              View All Services
-            </Button>
+            <Link to="/ai-image-tools" className="inline-block">
+              <Button variant="outline" size="lg" className="flex items-center">
+                Explore AI Image Tools
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

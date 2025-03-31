@@ -12,7 +12,7 @@ function HomeAIChatComponent() {
             {/* Left side - Content */}
             <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
               <div className="mb-4">
-                <span className="bg-violet-500 text-white text-xs font-medium py-1 px-3 rounded-full">
+                <span className="bg-secondary text-white text-xs font-medium py-1 px-3 rounded-full">
                   AI Expert Available 24/7
                 </span>
               </div>
@@ -27,20 +27,20 @@ function HomeAIChatComponent() {
               
               <div className="space-y-3 mb-8">
                 <div className="flex items-center">
-                  <CheckCircle className="h-5 w-5 text-violet-500 mr-3" />
+                  <CheckCircle className="h-5 w-5 text-secondary mr-3" />
                   <span className="text-gray-700">Instant niche-specific insights</span>
                 </div>
                 <div className="flex items-center">
-                  <CheckCircle className="h-5 w-5 text-violet-500 mr-3" />
+                  <CheckCircle className="h-5 w-5 text-secondary mr-3" />
                   <span className="text-gray-700">24/7 strategic guidance</span>
                 </div>
                 <div className="flex items-center">
-                  <CheckCircle className="h-5 w-5 text-violet-500 mr-3" />
+                  <CheckCircle className="h-5 w-5 text-secondary mr-3" />
                   <span className="text-gray-700">Personalized growth recommendations</span>
                 </div>
               </div>
               
-              <Button className="bg-violet-500 hover:bg-violet-600 text-white w-fit">
+              <Button className="bg-secondary hover:bg-secondary-600 text-white w-fit">
                 Chat with Steve Now
               </Button>
             </div>
@@ -49,10 +49,10 @@ function HomeAIChatComponent() {
             <div className="md:w-1/2 bg-black flex items-center justify-center p-8 md:p-0">
               <div className="relative w-64 h-64 md:w-80 md:h-80">
                 {/* Circular border */}
-                <div className="absolute inset-0 rounded-full border-4 border-violet-300 animate-pulse"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-secondary-300 animate-pulse"></div>
                 
                 {/* Video in circle */}
-                <div className="absolute inset-2 rounded-full overflow-hidden bg-gradient-to-b from-violet-500 to-violet-800">
+                <div className="absolute inset-2 rounded-full overflow-hidden bg-gradient-to-b from-secondary-400 to-secondary-700">
                   <video 
                     className="w-full h-full object-cover"
                     autoPlay
@@ -66,7 +66,7 @@ function HomeAIChatComponent() {
                 </div>
                 
                 {/* Glowing effect */}
-                <div className="absolute inset-0 rounded-full bg-violet-500 opacity-20 blur-xl"></div>
+                <div className="absolute inset-0 rounded-full bg-secondary opacity-20 blur-xl"></div>
               </div>
             </div>
           </div>

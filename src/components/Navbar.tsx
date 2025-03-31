@@ -83,7 +83,9 @@ const Navbar = () => {
                 <Button 
                   variant="outline"
                   className={`${
-                    isScrolled ? 'border-primary text-primary hover:bg-primary/10' : 'border-white text-white hover:bg-white/10'
+                    isScrolled 
+                      ? 'border-secondary bg-secondary text-white hover:bg-secondary-600' 
+                      : 'border-secondary bg-secondary text-white hover:bg-secondary-600'
                   }`}
                 >
                   Client Login
@@ -156,7 +158,10 @@ const Navbar = () => {
               Contact
             </Link>
             <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-              <Button variant="outline" className="w-full mt-4">
+              <Button 
+                variant="outline" 
+                className="w-full mt-4 border-secondary bg-secondary text-white hover:bg-secondary-600"
+              >
                 Client Login
               </Button>
             </Link>
