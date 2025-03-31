@@ -1,211 +1,178 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { CheckCircle } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { X, Send, MessageSquare, Sparkles } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
-// Sample initial messages
-const initialMessages = [
-  { 
-    text: "Hi there! I'm Steve, your AI business growth expert. How can I help you scale your contracting business today?", 
-    isUser: false, 
-    time: "Just now" 
-  }
-];
-
-function AIChatbot() {
+const AIChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState(initialMessages);
-  const [inputValue, setInputValue] = useState('');
-  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+  const [messages, setMessages] = useState([
+    { text: "Hi there! I'm your AI assistant. How can I help with your contracting business today?", sender: 'ai' }
+  ]);
+  const [input, setInput] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const [isFloating, setIsFloating] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  function getCurrentTime() {
-    const now = new Date();
-    return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  }
-  
-  function handleToggleChat() {
+  // Animation for chat button
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsFloating(prev => !prev);
+    }, 2000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  // Auto-scroll to bottom of chat when new messages appear
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
+
+  const toggleChat = () => {
     setIsOpen(!isOpen);
-  }
-  
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setInputValue(e.target.value);
-  }
-  
-  function handleSendMessage() {
-    if (inputValue.trim() === '') return;
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  };
+
+  const handleSend = () => {
+    if (input.trim() === '') return;
     
     // Add user message
-    const userMessage = {
-      text: inputValue,
-      isUser: true,
-      time: getCurrentTime()
-    };
+    setMessages([...messages, { text: input, sender: 'user' }]);
+    setInput('');
     
-    setMessages([...messages, userMessage]);
-    setInputValue('');
+    // Simulate AI typing
+    setIsTyping(true);
     
-    // Simulate AI response after a delay
+    // Simulate AI response
     setTimeout(() => {
-      const aiResponses = [
-        "That's a great question about scaling your business. Based on my analysis, the key is implementing systematic processes that don't rely solely on your personal involvement.",
-        "I'd recommend focusing on your sales pipeline automation first. Many contractors see a 30-40% increase in conversion rates with proper lead scoring and follow-up systems.",
-        "Looking at your situation, I'd suggest starting with team training systems. Creating repeatable processes your team can follow will free up your time for strategic growth.",
-        "From my experience with similar contracting businesses, the most important next step would be implementing proper job costing systems to protect your profit margins."
+      const responses = [
+        "I can help you systematize your sales process to increase close rates. Would you like to learn more?",
+        "Growing a contracting business requires the right systems. What specific area are you looking to improve?",
+        "Many contractors struggle with inconsistent leads. We have proven methods to create a predictable pipeline.",
+        "Your team's productivity can significantly improve with the right processes. Would you like some specific strategies?",
+        "I'd be happy to explain how our BDC approach can help scale your business from $1M to $10M+."
       ];
       
-      const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
-      
-      const aiMessage = {
-        text: randomResponse,
-        isUser: false,
-        time: getCurrentTime()
-      };
-      
-      setMessages(prevMessages => [...prevMessages, aiMessage]);
-    }, 1000);
-  }
-  
-  function handleKeyPress(e: React.KeyboardEvent) {
+      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+      setMessages(prev => [...prev, { text: randomResponse, sender: 'ai' }]);
+      setIsTyping(false);
+    }, 1500);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      handleSendMessage();
+      handleSend();
     }
-  }
-  
-  // Auto-scroll to bottom of messages
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
-  
+  };
+
   return (
-    <div className="fixed bottom-6 right-6 z-50">
-      {/* Chat Button when closed */}
-      {!isOpen && (
-        <button 
-          onClick={handleToggleChat}
-          className="group flex items-center bg-white rounded-full shadow-lg py-2 pl-2 pr-4 hover:pr-6 transition-all duration-300"
-        >
-          <div className="w-12 h-12 rounded-full overflow-hidden mr-2 relative">
-            <img 
-              src="/Images/steve1.png" 
-              alt="Steve AI" 
-              className="absolute w-full h-full object-cover"
-            />
-          </div>
-          <span className="font-medium text-gray-800 pr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            Chat with Steve
-          </span>
-        </button>
-      )}
-
-      {/* Chat Interface when open */}
+    <div className="fixed bottom-4 right-4 z-50">
+      {/* Chat Window */}
       {isOpen && (
-        <div className="flex flex-col bg-white rounded-2xl shadow-xl w-[380px] h-[600px] overflow-hidden">
+        <div className="bg-white rounded-xl shadow-2xl w-80 md:w-96 mb-4 overflow-hidden transform transition-all duration-300 ease-in-out">
           {/* Chat Header */}
-          <div className="bg-gradient-to-r from-secondary to-secondary-600 p-4">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-white">
-                  <img 
-                    src="/Images/steve1.png"
-                    alt="Steve AI" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div>
-                  <h3 className="text-white font-bold">Talk to Steve</h3>
-                  <p className="text-secondary-100 text-sm">Niche Business Strategist</p>
-                </div>
-              </div>
-              <button 
-                onClick={handleToggleChat}
-                className="text-white hover:bg-secondary-700 rounded-full p-2"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              </button>
+          <div className="bg-gradient-to-r from-secondary to-secondary-600 p-4 flex justify-between items-center">
+            <div className="flex items-center">
+              <Sparkles className="h-6 w-6 text-white mr-2" />
+              <h3 className="text-white font-semibold">AI Assistant</h3>
             </div>
+            <Button
+              variant="ghost" 
+              size="sm" 
+              className="text-white hover:bg-white/20 p-1 h-auto rounded-full"
+              onClick={toggleChat}
+            >
+              <X className="h-5 w-5" />
+            </Button>
           </div>
-
-          {/* Features Banner */}
-          <div className="bg-secondary-100 px-4 py-2 flex items-center justify-center">
-            <span className="bg-secondary text-white text-xs font-medium py-1 px-3 rounded-full">
-              AI Expert Available 24/7
-            </span>
-          </div>
-
+          
           {/* Chat Messages */}
-          <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
-            <div className="space-y-4">
-              {messages.map((message, index) => (
-                <div 
-                  key={index} 
-                  className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div 
-                    className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg ${
-                      message.isUser 
-                      ? 'bg-secondary text-white' 
-                      : 'bg-white text-gray-800 border border-gray-200'
-                    }`}
-                  >
-                    <div className="flex items-end justify-between gap-2">
-                      <p className="text-sm">{message.text}</p>
-                      <span className={`text-xs mt-1 ${message.isUser ? 'text-secondary-200' : 'text-gray-500'}`}>
-                        {message.time}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              <div ref={messagesEndRef} />
-            </div>
-          </div>
-
-          {/* Feature List */}
-          <div className="bg-gray-50 border-t border-gray-200 px-4 py-3">
-            <div className="space-y-1">
-              <div className="flex items-center text-sm text-gray-600">
-                <CheckCircle className="h-4 w-4 text-secondary mr-2" />
-                <span>Instant niche-specific insights</span>
-              </div>
-              <div className="flex items-center text-sm text-gray-600">
-                <CheckCircle className="h-4 w-4 text-secondary mr-2" />
-                <span>24/7 strategic guidance</span>
-              </div>
-              <div className="flex items-center text-sm text-gray-600">
-                <CheckCircle className="h-4 w-4 text-secondary mr-2" />
-                <span>Personalized growth recommendations</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Chat Input */}
-          <div className="p-4 border-t border-gray-200 bg-white">
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                placeholder="Ask Steve about growing your business..."
-                className="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-secondary"
-                value={inputValue}
-                onChange={handleInputChange}
-                onKeyPress={handleKeyPress}
-              />
-              <button
-                onClick={handleSendMessage}
-                className="bg-secondary text-white rounded-full p-2 hover:bg-secondary-600 transition-colors"
-                disabled={inputValue.trim() === ''}
+          <div className="h-80 overflow-y-auto p-4 bg-gray-50">
+            {messages.map((message, index) => (
+              <div 
+                key={index}
+                className={`mb-4 flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="22" y1="2" x2="11" y2="13"></line>
-                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                </svg>
-              </button>
-            </div>
+                <div 
+                  className={`px-4 py-2 rounded-2xl max-w-[85%] ${
+                    message.sender === 'user' 
+                      ? 'bg-secondary text-white rounded-tr-none' 
+                      : 'bg-gray-200 text-gray-800 rounded-tl-none'
+                  } animate-fadeIn`}
+                >
+                  {message.text}
+                </div>
+              </div>
+            ))}
+            {isTyping && (
+              <div className="flex justify-start mb-4">
+                <div className="bg-gray-200 text-gray-800 px-4 py-2 rounded-2xl rounded-tl-none inline-flex space-x-1">
+                  <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                  <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                  <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+          
+          {/* Chat Input */}
+          <div className="p-3 border-t flex items-center">
+            <input
+              type="text"
+              value={input}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              className="flex-1 border border-gray-300 rounded-l-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent"
+              placeholder="Type your message..."
+            />
+            <Button 
+              variant="default"
+              size="sm"
+              className="bg-secondary hover:bg-secondary-600 rounded-r-full"
+              onClick={handleSend}
+            >
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
+          
+          {/* Feature Badges */}
+          <div className="p-3 bg-gray-50 border-t flex flex-wrap gap-2 justify-center">
+            <span className="inline-flex items-center text-xs px-2 py-1 bg-secondary/10 text-secondary rounded-full">
+              <Sparkles className="h-3 w-3 mr-1" />
+              Contracting Specialist
+            </span>
+            <span className="inline-flex items-center text-xs px-2 py-1 bg-secondary/10 text-secondary rounded-full">
+              24/7 Support
+            </span>
           </div>
         </div>
       )}
+      
+      {/* Chat Button */}
+      <button
+        onClick={toggleChat}
+        className={`relative flex items-center justify-center w-16 h-16 rounded-full bg-white shadow-lg p-2 border-2 border-secondary transition-all duration-500 
+        ${isFloating ? 'translate-y-[-4px]' : 'translate-y-0'} 
+        hover:scale-110
+        focus:outline-none focus:ring-4 focus:ring-secondary/50`}
+        aria-label="Open AI Chat"
+      >
+        <img 
+          src="/Images/steve1.png" 
+          alt="AI Assistant" 
+          className="w-full h-full object-cover rounded-full" 
+        />
+        <div className="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
+        <div className="absolute -top-2 -right-2 bg-secondary text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold">
+          AI
+        </div>
+      </button>
     </div>
   );
-}
+};
 
 export default AIChatbot; 

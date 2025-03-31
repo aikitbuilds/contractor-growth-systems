@@ -1,179 +1,202 @@
-import { useState, useEffect } from 'react';
-import { Menu, X, Phone } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { MenuIcon, X } from 'lucide-react';
+import { NavLink, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import Logo from './Logo';
+import Logo from '@/components/Logo';
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
+  // Track scroll position
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      setIsScrolled(window.scrollY > 20);
     };
-
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+  
+  const navbarClass = isScrolled 
+    ? 'bg-primary shadow-lg py-3' 
+    : 'bg-transparent py-4';
+    
+  const linkClass = (isActive: boolean) => `
+    relative px-3 py-2 text-sm font-medium transition-colors
+    ${isScrolled || isMenuOpen ? 'text-white' : 'text-white'}
+    ${isActive ? 'after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-secondary' : 'hover:text-secondary'}
+  `;
+
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-md py-2' : 'bg-black/20 backdrop-blur-sm py-4'
-      }`}
-    >
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navbarClass}`}>
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center space-x-2">
-            <Logo size="md" />
-          </Link>
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Logo color={isScrolled ? 'light' : 'light'} />
           
-          <div className="hidden md:flex items-center space-x-8">
-            <nav className="flex space-x-8">
-              <Link to="/" 
-                className={`font-medium transition-colors ${
-                  isScrolled ? 'text-gray-800 hover:text-primary' : 'text-white hover:text-secondary'
-                }`}
-              >
-                Home
-              </Link>
-              <Link to="/services" 
-                className={`font-medium transition-colors ${
-                  isScrolled ? 'text-gray-800 hover:text-primary' : 'text-white hover:text-secondary'
-                }`}
-              >
-                Services
-              </Link>
-              <Link to="/about" 
-                className={`font-medium transition-colors ${
-                  isScrolled ? 'text-gray-800 hover:text-primary' : 'text-white hover:text-secondary'
-                }`}
-              >
-                About
-              </Link>
-              <Link to="/resources" 
-                className={`font-medium transition-colors ${
-                  isScrolled ? 'text-gray-800 hover:text-primary' : 'text-white hover:text-secondary'
-                }`}
-              >
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-1">
+            <NavLink 
+              to="/" 
+              end
+              className={({ isActive }) => linkClass(isActive)}
+            >
+              Home
+            </NavLink>
+            <NavLink 
+              to="/about" 
+              className={({ isActive }) => linkClass(isActive)}
+            >
+              About
+            </NavLink>
+            <NavLink 
+              to="/case-study/semper-solaris" 
+              className={({ isActive }) => linkClass(isActive)}
+            >
+              Case Studies
+            </NavLink>
+            <div className="relative group px-3 py-2">
+              <span className="text-sm font-medium cursor-pointer flex items-center text-white hover:text-secondary">
                 Resources
-              </Link>
-              <Link to="/course-coming-soon" 
-                className={`font-medium transition-colors ${
-                  isScrolled ? 'text-gray-800 hover:text-primary' : 'text-white hover:text-secondary'
-                }`}
-              >
-                <span className="flex items-center">
+                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+              <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                <NavLink 
+                  to="/ai-image-tools" 
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  AI Image Tools
+                </NavLink>
+                <NavLink 
+                  to="/course-coming-soon" 
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
                   Solar Course
-                  <span className="ml-2 bg-secondary text-white text-xs py-0.5 px-1.5 rounded-full">New</span>
-                </span>
-              </Link>
-              <Link to="/contact" 
-                className={`font-medium transition-colors ${
-                  isScrolled ? 'text-gray-800 hover:text-primary' : 'text-white hover:text-secondary'
-                }`}
-              >
-                Contact
-              </Link>
-            </nav>
-            
-            <div className="flex items-center space-x-4">
-              <Link to="/login">
-                <Button 
-                  variant="outline"
-                  className={`${
-                    isScrolled 
-                      ? 'border-secondary bg-secondary text-white hover:bg-secondary-600' 
-                      : 'border-secondary bg-secondary text-white hover:bg-secondary-600'
-                  }`}
-                >
-                  Client Login
-                </Button>
-              </Link>
-              <Link to="/contact">
-                <Button 
-                  className={`${
-                    isScrolled 
-                      ? 'bg-primary hover:bg-primary-600 text-white' 
-                      : 'bg-white hover:bg-white/90 text-primary'
-                  } shadow-lg hover:shadow-xl transition-all`}
-                >
-                  Schedule a Strategy Call
-                </Button>
-              </Link>
+                  <span className="ml-2 bg-secondary text-white text-xs py-0.5 px-1.5 rounded-full">
+                    New
+                  </span>
+                </NavLink>
+              </div>
             </div>
           </div>
           
+          {/* Action Buttons */}
+          <div className="hidden md:flex items-center gap-3">
+            <NavLink to="/login">
+              <Button variant="default" className={`
+                transition-all duration-300 transform hover:scale-105
+                ${isScrolled 
+                  ? 'bg-secondary text-white hover:bg-secondary-600' 
+                  : 'bg-secondary text-white hover:bg-secondary-600 shadow-lg shadow-secondary/30'
+                }
+              `}>
+                Client Login
+              </Button>
+            </NavLink>
+            <Button className={`
+              transition-transform duration-300 hover:scale-105
+              ${isScrolled 
+                ? 'bg-white text-primary hover:bg-gray-100' 
+                : 'bg-white text-primary hover:bg-gray-100 shadow-lg'
+              }
+            `}>
+              Schedule a Strategy Call
+            </Button>
+          </div>
+          
+          {/* Mobile Menu Button */}
           <button 
-            className={`md:hidden transition-colors ${
-              isScrolled ? 'text-gray-800' : 'text-white'
-            }`}
+            className="md:hidden text-white"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
+            aria-label="Toggle Menu"
           >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMenuOpen ? <X size={24} /> : <MenuIcon size={24} />}
           </button>
         </div>
       </div>
       
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg animate-fade-in">
-          <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-            <Link to="/" 
-              className="text-gray-800 py-3 border-b border-gray-100 hover:text-primary transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <Link to="/services" 
-              className="text-gray-800 py-3 border-b border-gray-100 hover:text-primary transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Services
-            </Link>
-            <Link to="/about" 
-              className="text-gray-800 py-3 border-b border-gray-100 hover:text-primary transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              About
-            </Link>
-            <Link to="/resources" 
-              className="text-gray-800 py-3 border-b border-gray-100 hover:text-primary transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Resources
-            </Link>
-            <Link to="/course-coming-soon" 
-              className="text-gray-800 py-3 border-b border-gray-100 hover:text-primary transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Solar Course
-            </Link>
-            <Link to="/contact" 
-              className="text-gray-800 py-3 border-b border-gray-100 hover:text-primary transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Contact
-            </Link>
-            <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-              <Button 
-                variant="outline" 
-                className="w-full mt-4 border-secondary bg-secondary text-white hover:bg-secondary-600"
+        <div className="md:hidden bg-primary/95 backdrop-blur-sm">
+          <div className="container mx-auto px-4 py-3">
+            <div className="flex flex-col space-y-3">
+              <NavLink 
+                to="/" 
+                end
+                className={({ isActive }) => 
+                  `px-3 py-2 text-white ${isActive ? 'bg-primary-600 rounded' : ''}`
+                }
               >
-                Client Login
-              </Button>
-            </Link>
-            <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
-              <Button className="w-full bg-primary hover:bg-primary-600 text-white mt-2">
-                Schedule a Strategy Call
-              </Button>
-            </Link>
+                Home
+              </NavLink>
+              <NavLink 
+                to="/about"
+                className={({ isActive }) => 
+                  `px-3 py-2 text-white ${isActive ? 'bg-primary-600 rounded' : ''}`
+                }
+              >
+                About
+              </NavLink>
+              <NavLink 
+                to="/case-study/semper-solaris"
+                className={({ isActive }) => 
+                  `px-3 py-2 text-white ${isActive ? 'bg-primary-600 rounded' : ''}`
+                }
+              >
+                Case Studies
+              </NavLink>
+              
+              <div className="px-3 py-2">
+                <p className="text-white font-medium mb-2">Resources</p>
+                <div className="pl-4 space-y-2">
+                  <NavLink 
+                    to="/ai-image-tools"
+                    className={({ isActive }) => 
+                      `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
+                    }
+                  >
+                    AI Image Tools
+                  </NavLink>
+                  <NavLink 
+                    to="/course-coming-soon"
+                    className={({ isActive }) => 
+                      `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
+                    }
+                  >
+                    <div className="flex items-center">
+                      Solar Course
+                      <span className="ml-2 bg-secondary text-white text-xs py-0.5 px-1.5 rounded-full">
+                        New
+                      </span>
+                    </div>
+                  </NavLink>
+                </div>
+              </div>
+              
+              <div className="pt-2 space-y-3">
+                <NavLink to="/login" className="block">
+                  <Button variant="default" className="w-full bg-secondary hover:bg-secondary-600 shadow-md">
+                    Client Login
+                  </Button>
+                </NavLink>
+                <Button className="w-full bg-white text-primary hover:bg-gray-100">
+                  Schedule a Strategy Call
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       )}
-    </header>
+    </nav>
   );
 };
 

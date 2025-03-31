@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle, BarChart3, Users, FileText, Phone, Shield, Zap, Award, TrendingUp, ArrowUpIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -7,6 +7,64 @@ import { Card } from '@/components/ui/card';
 import HomeAIChatComponent from '@/components/HomeAIChatComponent';
 
 const Index = () => {
+  // Animation states for metrics
+  const [salesGrowth, setSalesGrowth] = useState(0);
+  const [leadConversion, setLeadConversion] = useState(0);
+  const [chartHeights, setChartHeights] = useState([0, 0, 0, 0, 0, 0]);
+  const [metricsVisible, setMetricsVisible] = useState(false);
+  
+  // Animate metrics when component mounts or when metrics become visible
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setMetricsVisible(true);
+      
+      // Animate sales growth
+      let count = 0;
+      const salesInterval = setInterval(() => {
+        if (count >= 143) {
+          clearInterval(salesInterval);
+        } else {
+          setSalesGrowth(prev => Math.min(prev + 3, 143));
+          count += 3;
+        }
+      }, 20);
+      
+      // Animate lead conversion
+      let convCount = 0;
+      const convInterval = setInterval(() => {
+        if (convCount >= 34.7) {
+          clearInterval(convInterval);
+        } else {
+          setLeadConversion(prev => Math.min(prev + 0.7, 34.7));
+          convCount += 0.7;
+        }
+      }, 30);
+      
+      // Animate chart bars
+      const finalHeights = [30, 40, 35, 60, 75, 95];
+      let chartCount = 0;
+      const chartInterval = setInterval(() => {
+        if (chartCount >= 20) {
+          clearInterval(chartInterval);
+          setChartHeights(finalHeights);
+        } else {
+          setChartHeights(prev => 
+            prev.map((h, i) => Math.min(h + finalHeights[i]/20, finalHeights[i]))
+          );
+          chartCount++;
+        }
+      }, 40);
+      
+      return () => {
+        clearInterval(salesInterval);
+        clearInterval(convInterval);
+        clearInterval(chartInterval);
+      };
+    }, 500);
+    
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -46,46 +104,51 @@ const Index = () => {
             
             {/* Interactive Dashboard Preview */}
             <div className="md:w-1/2 mt-10 md:mt-0">
-              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 shadow-2xl">
+              <div 
+                className={`bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/20 shadow-2xl transform transition-all duration-500 ${metricsVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
+              >
                 <div className="flex justify-between items-center mb-6">
                   <h3 className="text-white text-xl font-bold">Performance Metrics</h3>
-                  <span className="bg-secondary/20 text-secondary text-xs py-1 px-3 rounded-full">Live Data</span>
+                  <div className="bg-secondary/20 text-secondary text-xs py-1 px-3 rounded-full flex items-center">
+                    <span className="w-2 h-2 bg-secondary rounded-full mr-1 animate-pulse"></span>
+                    Live Data
+                  </div>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   {/* Sales Growth Metric */}
-                  <div className="bg-white/10 p-4 rounded-lg">
+                  <div className="bg-white/10 p-4 rounded-lg transform transition-all duration-300 hover:scale-105 hover:bg-white/15">
                     <div className="text-white/70 text-sm mb-1">Sales Growth</div>
                     <div className="flex items-end justify-between">
-                      <div className="text-white text-2xl font-bold">+143%</div>
+                      <div className="text-white text-2xl font-bold">+{salesGrowth.toFixed(0)}%</div>
                       <div className="flex items-center text-emerald-400 text-sm">
-                        <ArrowUpIcon className="h-4 w-4 mr-1" />
+                        <ArrowUpIcon className="h-4 w-4 mr-1 animate-bounce" />
                         <span>18.2%</span>
                       </div>
                     </div>
                     <div className="mt-2 h-2 bg-white/20 rounded-full overflow-hidden">
-                      <div className="bg-emerald-400 h-full rounded-full" style={{ width: '78%' }}></div>
+                      <div className="bg-emerald-400 h-full rounded-full transition-all duration-1000" style={{ width: `${(salesGrowth/143)*78}%` }}></div>
                     </div>
                   </div>
                   
                   {/* Lead Conversion Metric */}
-                  <div className="bg-white/10 p-4 rounded-lg">
+                  <div className="bg-white/10 p-4 rounded-lg transform transition-all duration-300 hover:scale-105 hover:bg-white/15">
                     <div className="text-white/70 text-sm mb-1">Lead Conversion</div>
                     <div className="flex items-end justify-between">
-                      <div className="text-white text-2xl font-bold">34.7%</div>
+                      <div className="text-white text-2xl font-bold">{leadConversion.toFixed(1)}%</div>
                       <div className="flex items-center text-emerald-400 text-sm">
-                        <ArrowUpIcon className="h-4 w-4 mr-1" />
+                        <ArrowUpIcon className="h-4 w-4 mr-1 animate-bounce" />
                         <span>7.5%</span>
                       </div>
                     </div>
                     <div className="mt-2 h-2 bg-white/20 rounded-full overflow-hidden">
-                      <div className="bg-emerald-400 h-full rounded-full" style={{ width: '65%' }}></div>
+                      <div className="bg-emerald-400 h-full rounded-full transition-all duration-1000" style={{ width: `${(leadConversion/34.7)*65}%` }}></div>
                     </div>
                   </div>
                 </div>
                 
                 {/* Mini Chart */}
-                <div className="bg-white/10 p-4 rounded-lg mb-4">
+                <div className="bg-white/10 p-4 rounded-lg mb-4 transform transition-all duration-300 hover:scale-[1.02] hover:bg-white/15">
                   <div className="flex justify-between items-center mb-3">
                     <div className="text-white/70 text-sm">Monthly Revenue Trend</div>
                     <div className="text-white text-xs px-2 py-1 rounded-full bg-white/10">Last 6 Months</div>
@@ -93,12 +156,12 @@ const Index = () => {
                   
                   <div className="relative h-20">
                     <div className="absolute bottom-0 left-0 w-full h-full flex items-end">
-                      <div className="w-1/6 h-[30%] bg-secondary/50 rounded-sm mx-[2px]"></div>
-                      <div className="w-1/6 h-[40%] bg-secondary/50 rounded-sm mx-[2px]"></div>
-                      <div className="w-1/6 h-[35%] bg-secondary/50 rounded-sm mx-[2px]"></div>
-                      <div className="w-1/6 h-[60%] bg-secondary/50 rounded-sm mx-[2px]"></div>
-                      <div className="w-1/6 h-[75%] bg-secondary/50 rounded-sm mx-[2px]"></div>
-                      <div className="w-1/6 h-[95%] bg-secondary/70 rounded-sm mx-[2px]"></div>
+                      <div className="w-1/6 h-[30%] bg-secondary/50 rounded-sm mx-[2px] transform transition-all duration-700" style={{ height: `${chartHeights[0]}%` }}></div>
+                      <div className="w-1/6 h-[40%] bg-secondary/50 rounded-sm mx-[2px] transform transition-all duration-700 delay-100" style={{ height: `${chartHeights[1]}%` }}></div>
+                      <div className="w-1/6 h-[35%] bg-secondary/50 rounded-sm mx-[2px] transform transition-all duration-700 delay-200" style={{ height: `${chartHeights[2]}%` }}></div>
+                      <div className="w-1/6 h-[60%] bg-secondary/50 rounded-sm mx-[2px] transform transition-all duration-700 delay-300" style={{ height: `${chartHeights[3]}%` }}></div>
+                      <div className="w-1/6 h-[75%] bg-secondary/50 rounded-sm mx-[2px] transform transition-all duration-700 delay-400" style={{ height: `${chartHeights[4]}%` }}></div>
+                      <div className="w-1/6 h-[95%] bg-secondary/70 rounded-sm mx-[2px] transform transition-all duration-700 delay-500 hover:bg-secondary" style={{ height: `${chartHeights[5]}%` }}></div>
                     </div>
                     <div className="absolute bottom-0 left-0 w-full h-[20%] bg-gradient-to-t from-secondary/20 to-transparent rounded-b-sm"></div>
                   </div>
@@ -115,9 +178,9 @@ const Index = () => {
                 
                 <div className="text-center">
                   <Link to="/business-growth">
-                    <Button variant="secondary" size="sm" className="text-xs bg-secondary/20 hover:bg-secondary/30 text-white border-0">
+                    <Button variant="secondary" size="sm" className="text-xs bg-secondary/20 hover:bg-secondary/30 text-white border-0 transform transition-all duration-300 hover:scale-105">
                       View Detailed Analytics
-                      <ArrowRight className="h-3 w-3 ml-1" />
+                      <ArrowRight className="h-3 w-3 ml-1 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
                 </div>
