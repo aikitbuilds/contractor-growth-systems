@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gage Solar Project Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #111827;
+            --light: #f3f4f6;
+            --card-bg: #ffffff;
+            --border: #e5e7eb;
+            --text-muted: #9ca3af;
+            --green-action: #059669;
+            --red-action: #dc2626;
+        }
+        
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9fafb;
+        }
+        
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .sync-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+        
+        .sync-button:hover {
+            background-color: var(--primary-hover);
+        }
+        
+        .sync-button.syncing {
+            animation: spin 2s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            background-color: var(--success);
+            color: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        pre {
+            white-space: pre-wrap;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        
+        code {
+            font-family: 'Consolas', monospace;
+        }
+        
+        #dashboard-content {
+            margin-top: 20px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: #666;
+        }
+
+        /* Two-column layout */
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Make tables look better */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background-color: #f9fafb;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f3f4f6;
+        }
+        
+        /* Interactive checkboxes */
+        .task-checkbox {
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
+        /* Diagram container */
+        .diagram-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        /* Project Overview diagram styling */
+        .diagram-container h2 {
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+        
+        .diagram-container h2::before {
+            content: '📊';
+            margin-right: 8px;
+        }
+        
+        .diagram-container pre {
+            background-color: white;
+            padding: 5px;
+        }
+        
+        .diagram-container .mermaid {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        /* Task lists */
+        .task-complete {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+        
+        /* Task section */
+        .task-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .task-section h2 {
+            margin-top: 0;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+        
+        /* Daily summary section */
+        .daily-summary {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .daily-summary-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .daily-summary-header h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+        
+        .daily-summary-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .daily-summary-content.expanded {
+            max-height: 500px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .daily-summary-date {
+            font-weight: 600;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .daily-summary-date:first-child {
+            margin-top: 0;
+        }
+        
+        .daily-summary-entry {
+            padding: 5px 0;
+            margin-left: 15px;
+        }
+        
+        /* AI Recommendations */
+        .ai-recommendation {
+            display: flex;
+            align-items: flex-start;
+            padding: 6px 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+        
+        .ai-recommendation:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .recommendation-action-buttons {
+            display: none;
+            margin-left: 25px;
+            margin-top: 5px;
+        }
+        
+        .ai-recommendation.active .recommendation-action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .recommendation-button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .accept-button {
+            background-color: var(--green-action);
+            color: white;
+        }
+        
+        .accept-button:hover {
+            background-color: #047857;
+        }
+        
+        .decline-button {
+            background-color: var(--red-action);
+            color: white;
+        }
+        
+        .decline-button:hover {
+            background-color: #b91c1c;
+        }
+        
+        /* Tech Stack Collapsible */
+        .tech-stack {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .tech-stack-header {
+            background-color: #f9fafb;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .tech-stack-header h3 {
+            margin: 0;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tech-stack-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .tech-stack-content.expanded {
+            max-height: 500px;
+            padding: 15px 20px;
+        }
+        
+        .tech-category {
+            margin-bottom: 12px;
+        }
+        
+        .tech-category h4 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--dark);
+        }
+        
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .tech-item {
+            background-color: #f3f4f6;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: var(--dark);
+        }
+        
+        /* Toggle Icon Animation */
+        .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .toggle-icon.rotated {
+            transform: rotate(180deg);
+        }
+        
+        /* Task ID Format */
+        .task-id {
+            font-weight: 600;
+            color: var(--primary);
+            margin-right: 5px;
+            padding: 2px 6px;
+            background-color: #e0e7ff;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .ai-task-id {
+            font-weight: 600;
+            color: #6d28d9;
+            margin-right: 5px;
+            padding: 2px 6px;
+            background-color: #ede9fe;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .backlog-task-id {
+            font-weight: 600;
+            color: #0284c7;
+            margin-right: 5px;
+            padding: 2px 6px;
+            background-color: #e0f2fe;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="notification" id="notification">Dashboard synchronized successfully</div>
+    
+    <div class="dashboard">
+        <div class="header">
+            <h1>Project Dashboard</h1>
+            <div>Last updated: <span id="last-updated">Loading...</span></div>
+        </div>
+        
+        <div id="dashboard-content" class="loading">
+            Loading dashboard...
+        </div>
+    </div>
+    
+    <button class="sync-button" id="syncButton" title="Refresh Dashboard">
+        <i class="fas fa-sync-alt"></i>
+    </button>
+    
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({ startOnLoad: true });
+        
+        // Function to show notification
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.backgroundColor = isError ? 'var(--danger)' : 'var(--success)';
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Function to sync with BOARD.md via API
+        async function syncBoard() {
+            const syncButton = document.getElementById('syncButton');
+            syncButton.classList.add('syncing');
+            
+            try {
+                const response = await fetch('/api/sync-board');
+                const data = await response.json();
+                
+                if (data.success) {
+                    showNotification(data.message);
+                    loadDashboard();
+                } else {
+                    showNotification(data.message || 'Failed to sync dashboard', true);
+                }
+            } catch (error) {
+                console.error('Error syncing board:', error);
+                showNotification('Error syncing dashboard', true);
+            } finally {
+                syncButton.classList.remove('syncing');
+            }
+        }
+        
+        // Function to update task status
+        async function updateTaskStatus(taskId, completed) {
+            try {
+                const response = await fetch('/api/update-task', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ taskId, completed })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showNotification(`Task ${taskId} ${completed ? 'completed' : 'reopened'}`);
+                } else {
+                    showNotification(data.message || 'Failed to update task', true);
+                }
+            } catch (error) {
+                console.error('Error updating task:', error);
+                showNotification('Error updating task', true);
+            }
+        }
+        
+        // Function to load daily summary
+        async function loadDailySummary() {
+            try {
+                const response = await fetch('/api/daily-summary');
+                const data = await response.json();
+                
+                if (!data.success || !data.dailySummary || data.dailySummary.length === 0) {
+                    return null;
+                }
+                
+                let summaryHTML = '';
+                
+                // Process and format each day's entries
+                data.dailySummary.slice(0, 5).forEach(day => {
+                    summaryHTML += `<div class="daily-summary-date">${day.date}</div>`;
+                    
+                    day.entries.forEach(entry => {
+                        summaryHTML += `<div class="daily-summary-entry">${entry}</div>`;
+                    });
+                });
+                
+                return summaryHTML;
+            } catch (error) {
+                console.error('Error loading daily summary:', error);
+                return null;
+            }
+        }
+        
+        // Function to toggle expandable sections
+        function toggleExpandableSection(headerElement, contentElement, iconElement) {
+            headerElement.addEventListener('click', () => {
+                contentElement.classList.toggle('expanded');
+                iconElement.classList.toggle('rotated');
+            });
+        }
+        
+        // Function to extract tech stack from BOARD.md
+        function extractTechStack(html) {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            
+            // Look for environment setup section
+            const envSetupHeader = Array.from(tempDiv.querySelectorAll('h3'))
+                .find(h3 => h3.textContent.includes('Environment Setup'));
+                
+            if (!envSetupHeader) return null;
+            
+            // Get all list items after the environment setup header
+            let techItems = [];
+            let currentElement = envSetupHeader.nextElementSibling;
+            
+            while (currentElement && currentElement.tagName !== 'H3') {
+                if (currentElement.tagName === 'UL') {
+                    const listItems = currentElement.querySelectorAll('li');
+                    listItems.forEach(item => {
+                        techItems.push(item.textContent.trim());
+                    });
+                }
+                currentElement = currentElement.nextElementSibling;
+            }
+            
+            // Process tech items into categories
+            const techStack = {
+                "Frontend": [],
+                "Backend": [],
+                "DevOps": [],
+                "Tools": []
+            };
+            
+            techItems.forEach(item => {
+                const techName = item.split(':')[0].trim();
+                
+                // Categorize the technology
+                if (['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Shadcn/UI', 'Vite'].includes(techName)) {
+                    techStack["Frontend"].push(techName);
+                } else if (['Node.js', 'Express'].includes(techName)) {
+                    techStack["Backend"].push(techName);
+                } else if (techName.includes('API') || techName.includes('Keys')) {
+                    techStack["API"].push(techName);
+                } else {
+                    techStack["Tools"].push(techName);
+                }
+            });
+            
+            // Remove empty categories
+            Object.keys(techStack).forEach(category => {
+                if (techStack[category].length === 0) {
+                    delete techStack[category];
+                }
+            });
+            
+            return techStack;
+        }
+        
+        // Function to render tech stack section
+        function renderTechStackSection(techStack) {
+            if (!techStack) return '';
+            
+            let techHTML = `
+                <div class="tech-stack">
+                    <div class="tech-stack-header" id="tech-stack-header">
+                        <h3><i class="fas fa-code"></i> Tech Stack</h3>
+                        <i class="fas fa-chevron-down toggle-icon" id="tech-stack-toggle"></i>
+                    </div>
+                    <div class="tech-stack-content" id="tech-stack-content">
+            `;
+            
+            Object.keys(techStack).forEach(category => {
+                techHTML += `
+                    <div class="tech-category">
+                        <h4>${category}</h4>
+                        <div class="tech-list">
+                `;
+                
+                techStack[category].forEach(tech => {
+                    techHTML += `<div class="tech-item">${tech}</div>`;
+                });
+                
+                techHTML += `
+                        </div>
+                    </div>
+                `;
+            });
+            
+            techHTML += `
+                    </div>
+                </div>
+            `;
+            
+            return techHTML;
+        }
+        
+        // Function to extract and move the diagram to the top
+        function processDashboardContent(html) {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            
+            // Look for Project Overview section specifically
+            const h2Elements = tempDiv.querySelectorAll('h2');
+            const projectOverviewHeader = Array.from(h2Elements).find(h2 => 
+                h2.textContent.includes('Project Overview') || h2.textContent.includes('📊 Project Overview')
+            );
+            
+            let diagramHTML = '';
+            
+            // First try to find diagram in Project Overview section
+            if (projectOverviewHeader) {
+                let currentElement = projectOverviewHeader.nextElementSibling;
+                while (currentElement && currentElement.tagName !== 'H2') {
+                    if (currentElement.tagName === 'PRE' && currentElement.querySelector('.language-mermaid')) {
+                        // Create diagram container
+                        diagramHTML = `
+                            <div class="diagram-container">
+                                <h2>Project Overview</h2>
+                                ${currentElement.outerHTML}
+                            </div>
+                        `;
+                        
+                        // Remove diagram from original location
+                        currentElement.remove();
+                        break;
+                    }
+                    currentElement = currentElement.nextElementSibling;
+                }
+            }
+            
+            // If no diagram found in Project Overview, look for any mermaid diagrams
+            if (!diagramHTML) {
+                const mermaidDivs = tempDiv.querySelectorAll('.language-mermaid');
+                
+                if (mermaidDivs.length > 0) {
+                    // Get the first diagram
+                    const firstDiagram = mermaidDivs[0];
+                    const diagramParent = firstDiagram.closest('pre');
+                    
+                    if (diagramParent) {
+                        // Create diagram container
+                        diagramHTML = `
+                            <div class="diagram-container">
+                                <h2>Project Overview</h2>
+                                ${diagramParent.outerHTML}
+                            </div>
+                        `;
+                        
+                        // Remove diagram from original location
+                        diagramParent.remove();
+                    }
+                }
+            }
+            
+            // Extract tech stack
+            const techStack = extractTechStack(html);
+            const techStackHTML = renderTechStackSection(techStack);
+            
+            // Process task lists to make them interactive
+            const taskListItems = tempDiv.querySelectorAll('li');
+            taskListItems.forEach(item => {
+                const checkboxMatch = item.innerHTML.match(/^\[([ x])\] ((?:\d+[a-z]?|[AB]\d+)\.?:?)(.*)/);
+                if (checkboxMatch) {
+                    const isChecked = checkboxMatch[1] === 'x';
+                    const taskId = checkboxMatch[2].replace(/[\.:]$/, '');
+                    const taskText = checkboxMatch[3];
+                    
+                    // Determine task type by ID and apply appropriate styles
+                    let taskIdClass = 'task-id';
+                    let isAiRecommendation = false;
+                    
+                    if (taskId.startsWith('A')) {
+                        taskIdClass = 'ai-task-id';
+                        isAiRecommendation = true;
+                    } else if (taskId.startsWith('B')) {
+                        taskIdClass = 'backlog-task-id';
+                    }
+                    
+                    if (isAiRecommendation) {
+                        // Create an interactive AI recommendation with action buttons
+                        item.classList.add('ai-recommendation');
+                        item.setAttribute('data-task-id', taskId);
+                        
+                        item.innerHTML = `
+                            <input type="checkbox" class="task-checkbox" data-task-id="${taskId}" 
+                                ${isChecked ? 'checked' : ''}>
+                            <span class="${isChecked ? 'task-complete' : ''}" data-task-id="${taskId}">
+                                <span class="${taskIdClass}">${taskId}</span>${taskText}
+                            </span>
+                            <div class="recommendation-action-buttons">
+                                <button class="recommendation-button accept-button" data-task-id="${taskId}">
+                                    <i class="fas fa-check"></i> Accept
+                                </button>
+                                <button class="recommendation-button decline-button" data-task-id="${taskId}">
+                                    <i class="fas fa-times"></i> Decline
+                                </button>
+                            </div>
+                        `;
+                    } else {
+                        // Regular task with styled ID
+                        item.innerHTML = `
+                            <input type="checkbox" class="task-checkbox" data-task-id="${taskId}" 
+                                ${isChecked ? 'checked' : ''}>
+                            <span class="${isChecked ? 'task-complete' : ''}" data-task-id="${taskId}">
+                                <span class="${taskIdClass}">${taskId}</span>${taskText}
+                            </span>
+                        `;
+                    }
+                }
+            });
+            
+            // Create two-column layout
+            let sections = [];
+            
+            h2Elements.forEach(h2 => {
+                let section = document.createElement('div');
+                section.className = 'task-section';
+                section.appendChild(h2.cloneNode(true));
+                
+                let currentElement = h2.nextElementSibling;
+                while (currentElement && currentElement.tagName !== 'H2') {
+                    section.appendChild(currentElement.cloneNode(true));
+                    currentElement = currentElement.nextElementSibling;
+                }
+                
+                sections.push(section.outerHTML);
+            });
+            
+            // Create two columns and distribute sections
+            let leftColumnHTML = '';
+            let rightColumnHTML = '';
+            
+            sections.forEach((section, index) => {
+                if (index % 2 === 0) {
+                    leftColumnHTML += section;
+                } else {
+                    rightColumnHTML += section;
+                }
+            });
+            
+            // Assemble the final HTML
+            const finalHTML = `
+                ${diagramHTML}
+                ${techStackHTML}
+                <div id="daily-summary-container"></div>
+                <div class="two-columns">
+                    <div class="column">
+                        ${leftColumnHTML}
+                    </div>
+                    <div class="column">
+                        ${rightColumnHTML}
+                    </div>
+                </div>
+            `;
+            
+            return finalHTML;
+        }
+        
+        // Function to render the daily summary section
+        async function renderDailySummary() {
+            const summaryContainer = document.getElementById('daily-summary-container');
+            if (!summaryContainer) return;
+            
+            const summaryContent = await loadDailySummary();
+            if (!summaryContent) return;
+            
+            const summaryHTML = `
+                <div class="daily-summary">
+                    <div class="daily-summary-header" id="daily-summary-header">
+                        <h2><i class="fas fa-calendar-check"></i> Recent Activity</h2>
+                        <i class="fas fa-chevron-down toggle-icon" id="daily-summary-toggle"></i>
+                    </div>
+                    <div class="daily-summary-content" id="daily-summary-content">
+                        ${summaryContent}
+                    </div>
+                </div>
+            `;
+            
+            summaryContainer.innerHTML = summaryHTML;
+            
+            // Add toggle functionality
+            const headerElement = document.getElementById('daily-summary-header');
+            const contentElement = document.getElementById('daily-summary-content');
+            const iconElement = document.getElementById('daily-summary-toggle');
+            
+            if (headerElement && contentElement && iconElement) {
+                toggleExpandableSection(headerElement, contentElement, iconElement);
+            }
+        }
+        
+        // Function to fetch and render the BOARD.md content
+        async function loadDashboard() {
+            try {
+                const response = await fetch('/BOARD.md');
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to load BOARD.md: ${response.status}`);
+                }
+                
+                const markdownContent = await response.text();
+                
+                // Convert markdown to HTML
+                let html = marked.parse(markdownContent);
+                
+                // Process and enhance the HTML
+                html = processDashboardContent(html);
+                
+                // Set the content
+                document.getElementById('dashboard-content').innerHTML = html;
+                document.getElementById('dashboard-content').classList.remove('loading');
+                
+                // Update last updated time
+                document.getElementById('last-updated').textContent = new Date().toLocaleString();
+                
+                // Initialize mermaid diagrams
+                mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
+                
+                // Initialize tech stack toggle if it exists
+                const techStackHeader = document.getElementById('tech-stack-header');
+                const techStackContent = document.getElementById('tech-stack-content');
+                const techStackToggle = document.getElementById('tech-stack-toggle');
+                
+                if (techStackHeader && techStackContent && techStackToggle) {
+                    toggleExpandableSection(techStackHeader, techStackContent, techStackToggle);
+                }
+                
+                // Render the daily summary section
+                await renderDailySummary();
+                
+                // Add event listeners to task checkboxes
+                document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', async function() {
+                        const taskId = this.dataset.taskId;
+                        const completed = this.checked;
+                        const taskText = this.nextElementSibling;
+                        
+                        if (completed) {
+                            taskText.classList.add('task-complete');
+                        } else {
+                            taskText.classList.remove('task-complete');
+                        }
+                        
+                        await updateTaskStatus(taskId, completed);
+                    });
+                });
+                
+                // Add event listeners to AI recommendation items
+                document.querySelectorAll('.ai-recommendation').forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        // Don't toggle if clicking on the checkbox or buttons
+                        if (e.target.classList.contains('task-checkbox') || 
+                            e.target.closest('.recommendation-button')) {
+                            return;
+                        }
+                        
+                        // Remove active from all other recommendations
+                        document.querySelectorAll('.ai-recommendation').forEach(rec => {
+                            if (rec !== this) rec.classList.remove('active');
+                        });
+                        
+                        // Toggle active state on this recommendation
+                        this.classList.toggle('active');
+                    });
+                });
+                
+                // Add event listeners to accept/decline buttons
+                document.querySelectorAll('.accept-button').forEach(button => {
+                    button.addEventListener('click', async function() {
+                        const taskId = this.dataset.taskId;
+                        await updateTaskStatus(taskId, true);
+                        
+                        // Find and check the associated checkbox
+                        const checkbox = document.querySelector(`.task-checkbox[data-task-id="${taskId}"]`);
+                        if (checkbox && !checkbox.checked) {
+                            checkbox.checked = true;
+                            checkbox.nextElementSibling.classList.add('task-complete');
+                        }
+                        
+                        // Close the active state
+                        this.closest('.ai-recommendation').classList.remove('active');
+                    });
+                });
+                
+                document.querySelectorAll('.decline-button').forEach(button => {
+                    button.addEventListener('click', async function() {
+                        const taskId = this.dataset.taskId;
+                        await updateTaskStatus(taskId, false);
+                        
+                        // Find and uncheck the associated checkbox
+                        const checkbox = document.querySelector(`.task-checkbox[data-task-id="${taskId}"]`);
+                        if (checkbox && checkbox.checked) {
+                            checkbox.checked = false;
+                            checkbox.nextElementSibling.classList.remove('task-complete');
+                        }
+                        
+                        // Close the active state
+                        this.closest('.ai-recommendation').classList.remove('active');
+                    });
+                });
+                
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+                document.getElementById('dashboard-content').innerHTML = 
+                    `<div class="card">
+                        <h2 style="color: var(--danger);">Error Loading Dashboard</h2>
+                        <p>${error.message}</p>
+                        <p>Make sure BOARD.md exists in the public folder.</p>
+                    </div>`;
+                document.getElementById('dashboard-content').classList.remove('loading');
+            }
+        }
+        
+        // Load the dashboard on page load
+        document.addEventListener('DOMContentLoaded', loadDashboard);
+        
+        // Set up refresh button
+        document.getElementById('syncButton').addEventListener('click', () => {
+            // Try to sync first, which will then reload the dashboard
+            syncBoard();
+        });
+    </script>
+</body>
+</html> 
