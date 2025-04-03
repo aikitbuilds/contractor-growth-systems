@@ -8,7 +8,9 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start:dashboard": "node dashboard-server.js",
+    "start:all": "concurrently \"npm run dev\" \"npm run start:dashboard\""
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
