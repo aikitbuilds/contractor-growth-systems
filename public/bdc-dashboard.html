@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gage Solar Project Dashboard</title>
+    <title>Contractor Growth Systems Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -52,15 +52,15 @@
         
         .sync-button {
             position: fixed;
-            bottom: 20px;
+            top: 20px;
             right: 20px;
             background-color: var(--primary);
             color: white;
             border: none;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 20px;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
             cursor: pointer;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
             display: flex;
@@ -435,6 +435,216 @@
             border-radius: 4px;
             font-size: 0.9em;
         }
+        
+        .share-button {
+            position: fixed;
+            top: 20px;
+            right: 100px;
+            background-color: var(--success);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+        
+        .share-button:hover {
+            background-color: #0da271;
+            transform: scale(1.05);
+        }
+        
+        .share-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .share-modal.show {
+            display: flex;
+        }
+        
+        .share-modal-content {
+            background-color: white;
+            border-radius: 8px;
+            padding: 24px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        
+        .share-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .share-modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+            color: var(--dark);
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+        
+        .close-modal:hover {
+            color: var(--dark);
+        }
+        
+        .share-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .share-option {
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .share-option:hover {
+            border-color: var(--primary);
+            background-color: #f0f7ff;
+        }
+        
+        .share-option i {
+            font-size: 28px;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+        
+        .share-option-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--dark);
+        }
+        
+        .share-option-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 4px;
+        }
+        
+        .email-form {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .email-form.show {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .modal-action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .modal-button {
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border: none;
+        }
+        
+        .cancel-button {
+            background-color: #f3f4f6;
+            color: var(--dark);
+        }
+        
+        .cancel-button:hover {
+            background-color: #e5e7eb;
+        }
+        
+        .send-button {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .send-button:hover {
+            background-color: var(--primary-hover);
+        }
+        
+        /* Print mode styling */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+        
+        .print-mode .sync-button,
+        .print-mode .share-button,
+        .print-mode .notification {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -442,7 +652,7 @@
     
     <div class="dashboard">
         <div class="header">
-            <h1>Project Dashboard</h1>
+            <h1>Contractor Growth Systems Dashboard</h1>
             <div>Last updated: <span id="last-updated">Loading...</span></div>
         </div>
         
@@ -454,6 +664,53 @@
     <button class="sync-button" id="syncButton" title="Refresh Dashboard">
         <i class="fas fa-sync-alt"></i>
     </button>
+    
+    <button class="share-button" id="shareButton" title="Share Dashboard">
+        <i class="fas fa-share-alt"></i>
+    </button>
+    
+    <div class="share-modal" id="shareModal">
+        <div class="share-modal-content">
+            <div class="share-modal-header">
+                <h3>Share Dashboard</h3>
+                <button class="close-modal" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="share-options">
+                <div class="share-option" id="downloadPdfOption">
+                    <i class="fas fa-file-pdf"></i>
+                    <div class="share-option-title">Download PDF</div>
+                    <div class="share-option-desc">Save a copy to your device</div>
+                </div>
+                <div class="share-option" id="emailPdfOption">
+                    <i class="fas fa-envelope"></i>
+                    <div class="share-option-title">Email PDF</div>
+                    <div class="share-option-desc">Send via email</div>
+                </div>
+            </div>
+            
+            <div class="email-form" id="emailForm">
+                <div class="form-group">
+                    <label for="recipientEmail">Recipient Email</label>
+                    <input type="email" id="recipientEmail" placeholder="email@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="emailSubject">Subject</label>
+                    <input type="text" id="emailSubject" value="Contractor Growth Systems Dashboard Report" required>
+                </div>
+                <div class="form-group">
+                    <label for="emailMessage">Message</label>
+                    <textarea id="emailMessage" placeholder="Optional message...">Please find attached the latest dashboard report for our project.</textarea>
+                </div>
+                <div class="modal-action-buttons">
+                    <button class="modal-button cancel-button" id="cancelEmailButton">Cancel</button>
+                    <button class="modal-button send-button" id="sendEmailButton">Send Email</button>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <script>
         // Initialize Mermaid
@@ -973,6 +1230,198 @@
         document.getElementById('syncButton').addEventListener('click', () => {
             // Try to sync first, which will then reload the dashboard
             syncBoard();
+        });
+        
+        // Share functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const shareButton = document.getElementById('shareButton');
+            const shareModal = document.getElementById('shareModal');
+            const closeModal = document.getElementById('closeModal');
+            const downloadPdfOption = document.getElementById('downloadPdfOption');
+            const emailPdfOption = document.getElementById('emailPdfOption');
+            const emailForm = document.getElementById('emailForm');
+            const cancelEmailButton = document.getElementById('cancelEmailButton');
+            const sendEmailButton = document.getElementById('sendEmailButton');
+            
+            // Open share modal
+            shareButton.addEventListener('click', () => {
+                shareModal.classList.add('show');
+                emailForm.classList.remove('show');
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', () => {
+                shareModal.classList.remove('show');
+            });
+            
+            // Close modal when clicking outside
+            shareModal.addEventListener('click', (e) => {
+                if (e.target === shareModal) {
+                    shareModal.classList.remove('show');
+                }
+            });
+            
+            // Download PDF option
+            downloadPdfOption.addEventListener('click', async () => {
+                try {
+                    showNotification('Generating PDF...', false);
+                    await generateAndDownloadPDF();
+                } catch (error) {
+                    console.error('Error generating PDF:', error);
+                    showNotification('Error generating PDF', true);
+                }
+            });
+            
+            // Email PDF option
+            emailPdfOption.addEventListener('click', () => {
+                emailForm.classList.add('show');
+            });
+            
+            // Cancel email
+            cancelEmailButton.addEventListener('click', () => {
+                emailForm.classList.remove('show');
+            });
+            
+            // Send email with PDF
+            sendEmailButton.addEventListener('click', async () => {
+                const recipientEmail = document.getElementById('recipientEmail').value;
+                const emailSubject = document.getElementById('emailSubject').value;
+                const emailMessage = document.getElementById('emailMessage').value;
+                
+                if (!recipientEmail) {
+                    showNotification('Recipient email is required', true);
+                    return;
+                }
+                
+                try {
+                    showNotification('Sending email...', false);
+                    await sendPdfViaEmail(recipientEmail, emailSubject, emailMessage);
+                    shareModal.classList.remove('show');
+                } catch (error) {
+                    console.error('Error sending email:', error);
+                    showNotification('Error sending email', true);
+                }
+            });
+            
+            // Generate and download PDF
+            async function generateAndDownloadPDF() {
+                // Show loading notification
+                showNotification('Generating PDF...', false);
+                
+                try {
+                    // Use html2pdf.js library instead of server-side generation
+                    // First, let's hide buttons and notifications that shouldn't be in the PDF
+                    const syncButton = document.getElementById('syncButton');
+                    const shareButton = document.getElementById('shareButton');
+                    const notification = document.getElementById('notification');
+                    
+                    // Store original display state
+                    const syncButtonDisplay = syncButton.style.display;
+                    const shareButtonDisplay = shareButton.style.display;
+                    const notificationDisplay = notification.style.display;
+                    
+                    // Hide elements
+                    syncButton.style.display = 'none';
+                    shareButton.style.display = 'none';
+                    notification.style.display = 'none';
+                    
+                    // Create a clone of the dashboard for PDF generation
+                    const dashboardContent = document.querySelector('.dashboard').cloneNode(true);
+                    const tempDiv = document.createElement('div');
+                    tempDiv.appendChild(dashboardContent);
+                    
+                    // Set to print mode for better PDF output
+                    document.body.classList.add('print-mode');
+                    
+                    // Use browser's print functionality to save as PDF
+                    const printWindow = window.open('', '_blank');
+                    printWindow.document.write(`
+                        <html>
+                        <head>
+                            <title>Contractor Growth Systems Dashboard</title>
+                            <style>
+                                body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; }
+                                .dashboard { max-width: 100%; margin: 0 auto; }
+                                h1 { color: #2563eb; }
+                                h2 { color: #111827; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; }
+                                .task-section { margin-bottom: 30px; page-break-inside: avoid; }
+                                .task-id, .ai-task-id, .backlog-task-id { 
+                                    font-weight: 600;
+                                    padding: 2px 6px;
+                                    border-radius: 4px;
+                                    margin-right: 5px;
+                                }
+                                .task-id { background-color: #e0e7ff; color: #2563eb; }
+                                .ai-task-id { background-color: #ede9fe; color: #6d28d9; }
+                                .backlog-task-id { background-color: #e0f2fe; color: #0284c7; }
+                                .task-complete { text-decoration: line-through; color: #9ca3af; }
+                                @media print {
+                                    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            ${tempDiv.innerHTML}
+                        </body>
+                        </html>
+                    `);
+                    
+                    printWindow.document.close();
+                    
+                    // Wait for resources to load
+                    printWindow.onload = function() {
+                        // Print the document (this will show the print dialog where PDF can be selected)
+                        printWindow.print();
+                        
+                        // Close the window after printing
+                        printWindow.onafterprint = function() {
+                            printWindow.close();
+                            
+                            // Restore original display state
+                            syncButton.style.display = syncButtonDisplay;
+                            shareButton.style.display = shareButtonDisplay;
+                            notification.style.display = notificationDisplay;
+                            document.body.classList.remove('print-mode');
+                            
+                            // Show success notification
+                            showNotification('Print dialog opened. Please save as PDF.', false);
+                            
+                            // Close the modal
+                            shareModal.classList.remove('show');
+                        };
+                    };
+                    
+                } catch (error) {
+                    console.error('Error generating PDF:', error);
+                    showNotification('Error generating PDF. Please try again.', true);
+                }
+            }
+            
+            // Send PDF via email
+            async function sendPdfViaEmail(recipientEmail, subject, message) {
+                try {
+                    showNotification('Preparing email...', false);
+                    
+                    // Create a simpler approach using mailto link for email
+                    const emailSubject = encodeURIComponent(subject || 'Contractor Growth Systems Dashboard Report');
+                    const emailBody = encodeURIComponent(message || 'Please find attached the latest dashboard report.');
+                    
+                    // Create mailto link
+                    const mailtoLink = `mailto:${recipientEmail}?subject=${emailSubject}&body=${emailBody}`;
+                    
+                    // Open default email client
+                    window.location.href = mailtoLink;
+                    
+                    // Close modal after a delay
+                    setTimeout(() => {
+                        shareModal.classList.remove('show');
+                        showNotification('Email client opened', false);
+                    }, 1000);
+                } catch (error) {
+                    console.error('Error sending email:', error);
+                    showNotification('Error sending email', true);
+                }
+            }
         });
     </script>
 </body>

@@ -113,6 +113,12 @@ const Navbar = () => {
                     New
                   </span>
                 </NavLink>
+                <NavLink 
+                  to="/project-dashboard" 
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Project Dashboard
+                </NavLink>
               </div>
             </div>
           </div>
@@ -216,6 +222,14 @@ const Navbar = () => {
                         New
                       </span>
                     </div>
+                  </NavLink>
+                  <NavLink 
+                    to="/project-dashboard"
+                    className={({ isActive }) => 
+                      `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
+                    }
+                  >
+                    Project Dashboard
                   </NavLink>
                 </div>
               </div>

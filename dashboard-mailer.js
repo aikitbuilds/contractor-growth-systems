@@ -22,11 +22,17 @@ const DASHBOARD_FILE = path.join(OUTPUT_DIR, 'board.md');
 const PDF_FILE = path.join(OUTPUT_DIR, 'BDC-Dashboard.pdf');
 const WEBSITE_URL = 'https://www.solarsales.pro';
 const EMAIL_CONFIG = {
-  user: 'dashboard@solarsales.pro',
-  pass: process.env.EMAIL_PASSWORD || 'your-password-here',
-  host: 'mail.solarsales.pro',
+  host: 'solarsales.pro',
   port: 465,
-  secure: true
+  secure: true,
+  auth: {
+    user: 'mail@solarsales.pro', 
+    pass: 's~p)]!8&Dcjo'
+  },
+  tls: {
+    // Do not fail on invalid certs
+    rejectUnauthorized: false
+  }
 };
 const REQUESTS_LOG_FILE = path.join(OUTPUT_DIR, 'email-requests.md');
 
@@ -57,7 +63,6 @@ async function generateDashboardPDF() {
       <head>
         <meta charset="UTF-8">
         <title>BDC Dashboard</title>
-        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
         <style>
           body { 
             font-family: Arial, sans-serif;
@@ -95,12 +100,41 @@ async function generateDashboardPDF() {
             color: white;
           }
           
-          /* Mermaid diagram styling */
-          .mermaid {
-            background-color: #f9f9f9;
-            padding: 15px;
+          /* Flowchart styling */
+          .flowchart {
+            background-color: #f5f5f5;
+            padding: 20px;
             border-radius: 5px;
             margin: 20px 0;
+            width: 100%;
+            overflow: auto;
+          }
+          .flowchart-content {
+            font-family: monospace;
+            white-space: pre;
+            line-height: 1.6;
+          }
+          .node {
+            font-weight: bold;
+            margin-bottom: 6px;
+          }
+          .arrow {
+            color: #666;
+            margin-right: 5px;
+          }
+          .active-node {
+            color: #2563eb;
+          }
+          .completed-node {
+            color: #10b981;
+          }
+          .pending-node {
+            color: #f59e0b;
+          }
+          .flowchart h3 {
+            margin-top: 0;
+            color: #2563eb;
+            margin-bottom: 15px;
           }
         </style>
       </head>
@@ -108,18 +142,6 @@ async function generateDashboardPDF() {
         <div id="content">
           ${processMarkdown(markdownContent)}
         </div>
-        <script>
-          // Initialize mermaid
-          mermaid.initialize({
-            startOnLoad: true,
-            theme: 'default',
-            securityLevel: 'loose'
-          });
-          // Process all mermaid diagrams
-          setTimeout(() => {
-            mermaid.init(undefined, '.mermaid');
-          }, 1000);
-        </script>
       </body>
       </html>
     `;
@@ -133,28 +155,6 @@ async function generateDashboardPDF() {
     
     // Set the HTML content directly instead of loading a file
     await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
-    
-    // Wait for any JavaScript to execute (for mermaid diagrams)
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Handle mermaid diagrams specially
-    await page.evaluate(() => {
-      // Extract mermaid code blocks
-      const mermaidBlocks = document.querySelectorAll('pre code.language-mermaid');
-      mermaidBlocks.forEach(block => {
-        const code = block.textContent;
-        // Create a div for mermaid
-        const div = document.createElement('div');
-        div.className = 'mermaid';
-        div.textContent = code;
-        // Replace the pre element with the mermaid div
-        const pre = block.parentElement;
-        pre.parentElement.replaceChild(div, pre);
-      });
-    });
-    
-    // Wait again for mermaid to render
-    await new Promise(resolve => setTimeout(resolve, 2000));
     
     // Generate PDF
     const pdfPath = path.join(__dirname, 'BDC-Dashboard.pdf');
@@ -183,8 +183,32 @@ async function generateDashboardPDF() {
 
 // Process markdown and handle task checkboxes
 function processMarkdown(markdown) {
+  // Handle the flowchart diagram specifically first
+  let processedMarkdown = markdown;
+  
+  // Extract flowchart content
+  const flowchartMatch = markdown.match(/```mermaid\n([\s\S]*?)\n```/);
+  if (flowchartMatch?.[1]) {
+    const flowchartContent = flowchartMatch[1];
+    
+    // Format the flowchart content to be more visually structured
+    const formattedFlowchart = formatFlowchart(flowchartContent);
+    
+    // Create a visual representation of the flowchart
+    const visualFlowchart = `
+    <div class="flowchart">
+      <h3>Website Flow Diagram</h3>
+      <div class="flowchart-content">
+${formattedFlowchart}
+      </div>
+    </div>`;
+    
+    // Replace the mermaid code block with our visual representation
+    processedMarkdown = processedMarkdown.replace(/```mermaid\n[\s\S]*?\n```/, visualFlowchart);
+  }
+  
   // Handle checkboxes in markdown
-  const processedMarkdown = markdown.replace(/- \[([ x])\] (\w+[\d:]*)(.*)/g, (match, check, taskId, text) => {
+  processedMarkdown = processedMarkdown.replace(/- \[([ x])\] (\w+[\d:]*)(.*)/g, (match, check, taskId, text) => {
     const isChecked = check === 'x';
     return `<div class="task-item">
       <span class="checkbox ${isChecked ? 'checked' : ''}">${isChecked ? '✓' : ''}</span>
@@ -193,10 +217,53 @@ function processMarkdown(markdown) {
   });
   
   // Convert markdown to HTML
-  const html = marked(processedMarkdown);
+  return marked(processedMarkdown);
+}
+
+// Function to format flowchart content
+function formatFlowchart(flowchartContent) {
+  // Extract nodes and connections from flowchart content
+  const lines = flowchartContent.trim().split('\n');
   
-  // We no longer need to replace mermaid diagrams since we'll render them properly
-  return html;
+  // Process each line to add styling
+  const formattedLines = lines.map(line => {
+    // Skip empty lines and comments
+    if (!line.trim() || line.trim().startsWith('%')) {
+      return line;
+    }
+    
+    // Handle flowchart TD line
+    if (line.includes('flowchart TD')) {
+      return `<span class="node active-node">flowchart TD</span>`;
+    }
+    
+    // Handle node definitions with arrows (A --> B)
+    if (line.includes('-->')) {
+      const parts = line.split('-->').map(p => p.trim());
+      if (parts.length === 2) {
+        return `<span class="node">${parts[0]}</span> <span class="arrow">--></span> <span class="node">${parts[1]}</span>`;
+      }
+    }
+    
+    // Handle class definitions
+    if (line.includes('classDef')) {
+      const status = line.includes('completed') ? 'completed-node' : 
+                     line.includes('active') ? 'active-node' : 
+                     line.includes('pending') ? 'pending-node' : '';
+      
+      return `<span class="node ${status}">${line}</span>`;
+    }
+    
+    // Handle class declarations
+    if (line.includes('class')) {
+      return `<span class="node">${line}</span>`;
+    }
+    
+    // Default formatting
+    return `<span>${line}</span>`;
+  });
+  
+  return formattedLines.join('\n');
 }
 
 // Function to send dashboard email using markdown directly 
@@ -407,13 +474,8 @@ async function logEmailRequest(request) {
       existingContent = '# Email Requests Log\n\n';
     }
     
-    // Format the new request
-    const requestEntry = `## Request on ${new Date(request.date).toLocaleString()}\n\n` +
-      `- **From:** ${request.from}\n` +
-      `- **Subject:** ${request.subject}\n` +
-      `- **Status:** Pending\n\n` +
-      `### Message\n\n${request.body}\n\n` +
-      `---\n\n`;
+    // Format the new request using a single template literal
+    const requestEntry = `## Request on ${new Date(request.date).toLocaleString()}\n\n- **From:** ${request.from}\n- **Subject:** ${request.subject}\n- **Status:** Pending\n\n### Message\n\n${request.body}\n\n---\n\n`;
     
     // Add the new request to the top of the file after the header
     const updatedContent = existingContent.replace(/# Email Requests Log\n\n/, 

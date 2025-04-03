@@ -1,4 +1,4 @@
-# BDC - Billion Dollar Contractor Solar Dashboard
+# Contractor Growth Systems Dashboard
 
 ## 🔄 Website Flow
 

@@ -2,6 +2,8 @@ import express from 'express';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import puppeteer from 'puppeteer';
+import nodemailer from 'nodemailer';
 
 const app = express();
 const port = 3001;
@@ -19,6 +21,28 @@ app.use(express.json());
 // Serve static files
 app.use(express.static('public'));
 
+// Main dashboard route
+app.get('/bdc-dashboard', (req, res) => {
+  res.sendFile(join(__dirname, 'public', 'bdc-dashboard.html'));
+});
+
+// Also serve dashboard.html at root path for iframe access
+app.get('/dashboard.html', (req, res) => {
+  res.sendFile(join(__dirname, 'public', 'dashboard.html'));
+});
+
+// API endpoint to get dashboard content
+app.get('/api/dashboard-content', (req, res) => {
+  try {
+    const boardPath = join(__dirname, 'public', DASHBOARD_FILE);
+    const boardContent = readFileSync(boardPath, 'utf8');
+    res.send(boardContent);
+  } catch (error) {
+    console.error('Error reading dashboard file:', error);
+    res.status(500).send('Error loading dashboard content');
+  }
+});
+
 // API endpoint to synchronize the board
 app.get('/api/sync-board', (req, res) => {
   try {
@@ -26,13 +50,13 @@ app.get('/api/sync-board', (req, res) => {
     // For now, we'll just return success
     res.json({
       success: true,
-      message: 'BDC Dashboard synchronized successfully'
+      message: 'Contractor Growth Systems Dashboard synchronized successfully'
     });
   } catch (error) {
     console.error('Error syncing dashboard:', error);
     res.status(500).json({
       success: false,
-      message: `Failed to sync BDC dashboard: ${error.message}`
+      message: `Failed to sync Contractor Growth Systems dashboard: ${error.message}`
     });
   }
 });
@@ -201,9 +225,164 @@ app.get('/api/daily-summary', (req, res) => {
   }
 });
 
-// Create a route to serve the dashboard page
-app.get('/bdc-dashboard', (req, res) => {
-  res.sendFile(join(__dirname, 'public', 'dashboard.html'));
+// API endpoint to generate PDF
+app.post('/api/generate-pdf', async (req, res) => {
+  try {
+    // Launch a browser instance
+    const browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+    
+    // Create a new page
+    const page = await browser.newPage();
+    
+    // Get the server URL
+    const serverUrl = `http://localhost:${port}/bdc-dashboard`;
+    
+    // Navigate to the dashboard page
+    await page.goto(serverUrl, { waitUntil: 'networkidle2' });
+    
+    // Wait for content to load
+    await page.waitForSelector('.dashboard', { visible: true });
+    await page.waitForSelector('#dashboard-content:not(.loading)', { visible: true });
+    
+    // Hide buttons that shouldn't be in PDF
+    await page.addStyleTag({
+      content: `
+        .sync-button, .share-button, .notification { display: none !important; }
+        @page { margin: 1cm; }
+        body { -webkit-print-color-adjust: exact; }
+      `
+    });
+    
+    // Generate PDF
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      margin: {
+        top: '1cm',
+        right: '1cm',
+        bottom: '1cm',
+        left: '1cm'
+      }
+    });
+    
+    // Close the browser
+    await browser.close();
+    
+    // Set response headers
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=Contractor_Growth_Systems_Dashboard.pdf');
+    
+    // Send the PDF
+    res.send(pdfBuffer);
+  } catch (error) {
+    console.error('Error generating PDF:', error);
+    res.status(500).json({
+      success: false,
+      message: `Failed to generate PDF: ${error.message}`
+    });
+  }
+});
+
+// API endpoint to send PDF via email
+app.post('/api/email-pdf', async (req, res) => {
+  try {
+    const { email, subject, message } = req.body;
+    
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email is required'
+      });
+    }
+    
+    // Launch a browser instance
+    const browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+    
+    // Create a new page
+    const page = await browser.newPage();
+    
+    // Get the server URL
+    const serverUrl = `http://localhost:${port}/bdc-dashboard`;
+    
+    // Navigate to the dashboard page
+    await page.goto(serverUrl, { waitUntil: 'networkidle2' });
+    
+    // Wait for content to load
+    await page.waitForSelector('.dashboard', { visible: true });
+    await page.waitForSelector('#dashboard-content:not(.loading)', { visible: true });
+    
+    // Hide buttons that shouldn't be in PDF
+    await page.addStyleTag({
+      content: `
+        .sync-button, .share-button, .notification { display: none !important; }
+        @page { margin: 1cm; }
+        body { -webkit-print-color-adjust: exact; }
+      `
+    });
+    
+    // Generate PDF
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      margin: {
+        top: '1cm',
+        right: '1cm',
+        bottom: '1cm',
+        left: '1cm'
+      }
+    });
+    
+    // Close the browser
+    await browser.close();
+    
+    // Create email transporter - usually you would use environment variables for these
+    // but for the sake of this demo, we'll use a temporary test account via Ethereal
+    const testAccount = await nodemailer.createTestAccount();
+    
+    const transporter = nodemailer.createTransport({
+      host: "smtp.ethereal.email",
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: testAccount.user, // generated ethereal user
+        pass: testAccount.pass, // generated ethereal password
+      },
+    });
+    
+    // Send email
+    const info = await transporter.sendMail({
+      from: '"Contractor Growth Systems" <dashboard@contractorgrowth.systems>',
+      to: email,
+      subject: subject || 'Contractor Growth Systems Dashboard Report',
+      text: message || 'Please find attached the latest dashboard report.',
+      attachments: [
+        {
+          filename: `Contractor_Growth_Systems_Dashboard_${new Date().toISOString().split('T')[0]}.pdf`,
+          content: pdfBuffer,
+          contentType: 'application/pdf'
+        }
+      ]
+    });
+    
+    console.log("Email sent: %s", info.messageId);
+    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    
+    res.json({
+      success: true,
+      message: 'Email sent successfully',
+      previewUrl: nodemailer.getTestMessageUrl(info)
+    });
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).json({
+      success: false,
+      message: `Failed to send email: ${error.message}`
+    });
+  }
 });
 
 // Redirect the old route to the new one
@@ -213,5 +392,5 @@ app.get('/project-dashboard', (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-  console.log(`BDC Dashboard server running at http://localhost:${port}/bdc-dashboard`);
+  console.log(`Contractor Growth Systems Dashboard server running at http://localhost:${port}/bdc-dashboard`);
 }); 

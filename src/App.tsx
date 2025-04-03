@@ -12,6 +12,7 @@ import AIImageTools from "./pages/AIImageTools";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import ProjectDashboard from "./pages/ProjectDashboard";
 import Services from "./pages/Services";
 import Footer from "./components/Footer";
 import AIChatbot from "./components/AIChatbot";
@@ -36,6 +37,7 @@ const App = () => (
               <Route path="/services" element={<Services />} />
               <Route path="/login" element={<Login />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/project-dashboard" element={<ProjectDashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
