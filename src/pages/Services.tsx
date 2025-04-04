@@ -167,9 +167,20 @@ const Services = () => {
                 <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
                   Powering Your Systems: ContractorScale AI™
                 </h2>
-                <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+                <p className="text-lg text-gray-700 max-w-3xl mx-auto mb-8">
                   Work smarter, not just harder. ContractorScale AI is the intelligence engine designed to automate tasks, provide critical insights, and amplify the effectiveness of the systems BDC implements.
                 </p>
+                
+                <div className="aspect-video w-full max-w-3xl mx-auto rounded-xl overflow-hidden shadow-lg mb-8">
+                  <iframe
+                    className="w-full h-full"
+                    src="https://www.youtube.com/embed/YmpeNG7K7TY?si=dUwpsoajOt7d1OyB"
+                    title="ContractorScale AI Overview"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
               </div>
               
               <div className="mb-12">

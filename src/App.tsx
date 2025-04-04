@@ -18,6 +18,8 @@ import Footer from "./components/Footer";
 import AIChatbot from "./components/AIChatbot";
 import RoofSalesBootcamp from './pages/RoofSalesBootcamp';
 import BootcampDetails from './pages/BootcampDetails';
+import TexasContractorCaseStudy from './pages/TexasContractorCaseStudy';
+import PetersonDeanCaseStudy from './pages/PetersonDeanCaseStudy';
 
 const queryClient = new QueryClient();
 
@@ -42,6 +44,8 @@ const App = () => (
               <Route path="/project-dashboard" element={<ProjectDashboard />} />
               <Route path="/roof-sales-bootcamp" element={<RoofSalesBootcamp />} />
               <Route path="/bootcamp-details" element={<BootcampDetails />} />
+              <Route path="/texas-contractor-case" element={<TexasContractorCaseStudy />} />
+              <Route path="/peterson-dean-case" element={<PetersonDeanCaseStudy />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
