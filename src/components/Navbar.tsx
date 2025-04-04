@@ -123,6 +123,12 @@ const Navbar = () => {
               </span>
               <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                 <NavLink 
+                  to="/resources" 
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Free Downloads & Tools
+                </NavLink>
+                <NavLink 
                   to="/ai-image-tools" 
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
@@ -249,6 +255,14 @@ const Navbar = () => {
               <div className="px-3 py-2">
                 <p className="text-white font-medium mb-2">Resources</p>
                 <div className="pl-4 space-y-2">
+                  <NavLink 
+                    to="/resources" 
+                    className={({ isActive }) => 
+                      `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
+                    }
+                  >
+                    Free Downloads & Tools
+                  </NavLink>
                   <NavLink 
                     to="/ai-image-tools"
                     className={({ isActive }) => 

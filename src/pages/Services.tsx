@@ -461,6 +461,100 @@ const Services = () => {
           </div>
         </section>
         
+        {/* Client Testimonials */}
+        <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+                  Real Results, Real Leaders
+                </h2>
+                <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+                  Success stories from leaders who've experienced the BDC approach to systematic growth and sales transformation:
+                </p>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-8 mb-12">
+                {/* Featured Testimonial 1 */}
+                <div className="bg-white rounded-xl shadow-md overflow-hidden">
+                  <div className="p-6">
+                    <p className="text-gray-700 italic text-lg mb-4">
+                      "Steve's leadership was a significant factor in our company's sales growth success. His combination of intelligence, aptitude, and unyielding drive turns 'impossible' goals into reality, and his ability to chart success through new business disciplines is unparalleled."
+                    </p>
+                    <div className="flex items-center">
+                      <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold mr-4">GL</div>
+                      <div>
+                        <p className="font-bold text-gray-900">Gary Liardon</p>
+                        <p className="text-sm text-gray-600">Chief Operations Officer</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Featured Testimonial 2 */}
+                <div className="bg-white rounded-xl shadow-md overflow-hidden">
+                  <div className="p-6">
+                    <p className="text-gray-700 italic text-lg mb-4">
+                      "Steve has an unmatched focus on building and growing the business. He continuously innovates across all aspects of the company, ensuring that growth can not only be achieved but sustained. A consummate professional."
+                    </p>
+                    <div className="flex items-center">
+                      <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold mr-4">JB</div>
+                      <div>
+                        <p className="font-bold text-gray-900">Justin Brach</p>
+                        <p className="text-sm text-gray-600">CEO of Subcontractorhub & ExpansionJS</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="grid md:grid-cols-3 gap-6">
+                {/* Testimonial 1 */}
+                <div className="bg-white p-5 rounded-lg shadow-sm">
+                  <p className="text-gray-700 italic mb-4">
+                    "Steve tackles challenges head-on and presents simplified solutions everyone can grasp. His systematic approach to sales, processes, and customer engagement is second to none."
+                  </p>
+                  <div className="flex items-center">
+                    <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm mr-3">JM</div>
+                    <div>
+                      <p className="font-bold text-gray-900">James Murray</p>
+                      <p className="text-xs text-gray-600">CA Business Development Manager</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Testimonial 2 */}
+                <div className="bg-white p-5 rounded-lg shadow-sm">
+                  <p className="text-gray-700 italic mb-4">
+                    "Working under Steve for five years at two companies, I always felt he truly listened and made decisions based on everyone's input. He encouraged personal and professional growth."
+                  </p>
+                  <div className="flex items-center">
+                    <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm mr-3">CC</div>
+                    <div>
+                      <p className="font-bold text-gray-900">Casey Carhart</p>
+                      <p className="text-xs text-gray-600">Home Improvement Sales Specialist</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Testimonial 3 */}
+                <div className="bg-white p-5 rounded-lg shadow-sm">
+                  <p className="text-gray-700 italic mb-4">
+                    "Steve is everything a manager can ask for in a VP. He always has an open door, goes above and beyond to solve problems, and genuinely desires to help his management team grow."
+                  </p>
+                  <div className="flex items-center">
+                    <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm mr-3">JW</div>
+                    <div>
+                      <p className="font-bold text-gray-900">Jordan Wise</p>
+                      <p className="text-xs text-gray-600">Sales & Operations Growth Leader</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
         {/* Final CTA Section */}
         <section className="py-16 bg-primary text-white">
           <div className="container mx-auto px-4">

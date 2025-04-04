@@ -13,6 +13,61 @@ const Index = () => {
   const [chartHeights, setChartHeights] = useState([0, 0, 0, 0, 0, 0]);
   const [metricsVisible, setMetricsVisible] = useState(false);
   
+  // ROI Calculator states
+  const [monthlyRevenue, setMonthlyRevenue] = useState('');
+  const [teamMembers, setTeamMembers] = useState('');
+  const [projectValue, setProjectValue] = useState('');
+  const [closingRate, setClosingRate] = useState('');
+  const [calculationResult, setCalculationResult] = useState<null | {
+    projectedRevenue: number;
+    dealIncrease: number;
+    profitIncrease: number;
+    roi: number;
+  }>(null);
+  const [showResults, setShowResults] = useState(false);
+
+  // Format number as currency
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0
+    }).format(value);
+  };
+  
+  // Calculate ROI based on input values
+  const calculateROI = () => {
+    // Parse inputs
+    const revenue = parseFloat(monthlyRevenue.replace(/,/g, ''));
+    const team = parseInt(teamMembers);
+    const avgValue = parseFloat(projectValue.replace(/,/g, ''));
+    const rate = parseFloat(closingRate);
+    
+    if (isNaN(revenue) || isNaN(team) || isNaN(avgValue) || isNaN(rate)) {
+      return;
+    }
+    
+    // Calculate projections
+    const currentDealsPerMonth = revenue / avgValue;
+    const improvedClosingRate = Math.min(rate * 1.3, 100); // 30% improvement in closing rate, max 100%
+    const projectedDealsPerMonth = currentDealsPerMonth * (improvedClosingRate / rate);
+    const dealIncrease = projectedDealsPerMonth - currentDealsPerMonth;
+    const revenueIncrease = dealIncrease * avgValue;
+    const profitIncrease = revenueIncrease * 0.25; // Assuming 25% profit margin
+    const annualIncrease = profitIncrease * 12;
+    const implementationCost = 5000 + (team * 500); // Base cost + per team member
+    const roi = (annualIncrease / implementationCost) * 100;
+    
+    setCalculationResult({
+      projectedRevenue: revenue + revenueIncrease,
+      dealIncrease: dealIncrease,
+      profitIncrease: profitIncrease,
+      roi: roi
+    });
+    
+    setShowResults(true);
+  };
+  
   // Animate metrics when component mounts or when metrics become visible
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -190,6 +245,49 @@ const Index = () => {
         </div>
       </section>
 
+      {/* The Tuesday Tuneup Banner */}
+      <section className="bg-gradient-to-r from-blue-800 to-indigo-900 text-white py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            <div className="md:col-span-8">
+              <div className="max-w-3xl">
+                <h2 className="text-3xl font-bold mb-4">The Tuesday Tuneup</h2>
+                <p className="text-lg mb-6">
+                  Join thousands of contractors receiving Steve Huber's weekly newsletter.
+                  Get actionable insights on sales, marketing, and business growth delivered
+                  straight to your inbox every Tuesday.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <a 
+                    href="https://www.thetuesdaytuneup.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-white text-blue-800 hover:bg-blue-100 px-6 py-3 rounded-lg font-medium transition duration-300"
+                  >
+                    Subscribe Now
+                  </a>
+                  <a 
+                    href="https://www.thetuesdaytuneup.com/archive" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-transparent border border-white hover:bg-white hover:text-blue-800 text-white px-6 py-3 rounded-lg font-medium transition duration-300"
+                  >
+                    View Archive
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div className="md:col-span-4">
+              <img 
+                src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=400&ixid=MnwxfDB8MXxyYW5kb218MHx8b2ZmaWNlLG5vdGVib29rLHdyaXRpbmd8fHx8fHwxNjg4NjU2Njcw&ixlib=rb-4.0.3&q=80&w=600" 
+                alt="Newsletter" 
+                className="w-full h-auto rounded-lg shadow-lg"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Problem/Solution Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
@@ -343,6 +441,80 @@ const Index = () => {
         </div>
       </section>
       
+      {/* Bootcamp Promotion */}
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100 relative overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-blue-200/40 blur-3xl" />
+        <div className="absolute left-10 bottom-10 w-40 h-40 rounded-full bg-indigo-200/30 blur-3xl" />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden">
+            <div className="flex flex-col md:flex-row">
+              {/* Image Column */}
+              <div className="md:w-2/5 bg-secondary relative overflow-hidden">
+                <div className="aspect-video w-full h-full">
+                  <iframe 
+                    src="https://www.youtube.com/embed/iNzZCZz-cgw" 
+                    title="Bootcamp Overview Video"
+                    className="w-full h-full object-cover"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+              
+              {/* Content Column */}
+              <div className="md:w-3/5 p-8 md:p-10">
+                <div className="max-w-xl">
+                  <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+                    Master Solar + Roof Integration: The Ultimate Revenue Booster
+                  </h2>
+                  
+                  <p className="text-lg text-gray-600 mb-6">
+                    Learn the proven systems, sales process, and operational insights to seamlessly sell and manage roofing alongside your solar projects. Increase your average ticket and eliminate lost deals.
+                  </p>
+                  
+                  <div className="space-y-3 mb-8">
+                    <div className="flex items-start">
+                      <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" />
+                      <p className="text-gray-700">Close your first profitable deal in just 30 days</p>
+                    </div>
+                    <div className="flex items-start">
+                      <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" />
+                      <p className="text-gray-700">Includes AI-powered tools and done-for-you marketing assets</p>
+                    </div>
+                    <div className="flex items-start">
+                      <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" />
+                      <p className="text-gray-700">Small group with personalized attention (limited to 15 participants)</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Link to="/bootcamp-details">
+                      <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium">
+                        Explore the Bootcamp Curriculum <ArrowRight className="ml-2 h-5 w-5" />
+                      </Button>
+                    </Link>
+                    <Link to="/roof-sales-bootcamp">
+                      <Button size="lg" variant="outline" className="border-secondary text-secondary hover:bg-secondary/5">
+                        Get Bootcamp Details
+                      </Button>
+                    </Link>
+                  </div>
+                  
+                  <div className="mt-4">
+                    <Link to="#" className="text-secondary hover:text-secondary-700 text-sm flex items-center">
+                      <FileText className="h-4 w-4 mr-1" />
+                      Download the Bootcamp Info Pack
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
       {/* Social Proof - Case Studies */}
       <section className="py-16 relative">
         {/* Background image with overlay */}
@@ -424,54 +596,108 @@ const Index = () => {
               
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Current Monthly Revenue</label>
+                  <label htmlFor="monthlyRevenue" className="block text-sm font-medium text-gray-700 mb-1">Current Monthly Revenue</label>
                   <div className="relative">
                     <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">$</span>
                     <input 
+                      id="monthlyRevenue"
                       type="text" 
                       className="w-full rounded-md border border-gray-300 py-2.5 pl-8 pr-3 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary" 
                       placeholder="10,000"
+                      value={monthlyRevenue}
+                      onChange={(e) => setMonthlyRevenue(e.target.value)}
                     />
                   </div>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Number of Team Members</label>
+                  <label htmlFor="teamMembers" className="block text-sm font-medium text-gray-700 mb-1">Number of Team Members</label>
                   <input 
+                    id="teamMembers"
                     type="number" 
                     className="w-full rounded-md border border-gray-300 py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary" 
                     placeholder="5"
+                    value={teamMembers}
+                    onChange={(e) => setTeamMembers(e.target.value)}
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Average Project Value</label>
+                  <label htmlFor="projectValue" className="block text-sm font-medium text-gray-700 mb-1">Average Project Value</label>
                   <div className="relative">
                     <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">$</span>
                     <input 
+                      id="projectValue"
                       type="text" 
                       className="w-full rounded-md border border-gray-300 py-2.5 pl-8 pr-3 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary" 
                       placeholder="25,000"
+                      value={projectValue}
+                      onChange={(e) => setProjectValue(e.target.value)}
                     />
                   </div>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Closing Rate (%)</label>
+                  <label htmlFor="closingRate" className="block text-sm font-medium text-gray-700 mb-1">Closing Rate (%)</label>
                   <div className="relative">
                     <input 
+                      id="closingRate"
                       type="number" 
                       className="w-full rounded-md border border-gray-300 py-2.5 pl-3 pr-8 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary" 
                       placeholder="25"
                       max="100"
+                      value={closingRate}
+                      onChange={(e) => setClosingRate(e.target.value)}
                     />
                     <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">%</span>
                   </div>
                 </div>
               </div>
               
+              {showResults && calculationResult && (
+                <div className="mb-8 p-6 bg-primary-50 rounded-lg border border-primary-100">
+                  <h3 className="text-xl font-bold text-primary mb-4">Your Growth Potential</h3>
+                  
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="bg-white p-4 rounded-lg shadow-sm">
+                      <p className="text-sm text-gray-500 mb-1">Monthly Revenue</p>
+                      <p className="text-xl font-bold text-primary">{formatCurrency(calculationResult.projectedRevenue)}</p>
+                      <p className="text-xs text-green-500 mt-1 flex items-center">
+                        <ArrowUpIcon className="h-3 w-3 mr-1" />
+                        {formatCurrency(calculationResult.projectedRevenue - parseFloat(monthlyRevenue.replace(/,/g, '')))}
+                      </p>
+                    </div>
+                    
+                    <div className="bg-white p-4 rounded-lg shadow-sm">
+                      <p className="text-sm text-gray-500 mb-1">Additional Deals</p>
+                      <p className="text-xl font-bold text-primary">{calculationResult.dealIncrease.toFixed(1)}/mo</p>
+                    </div>
+                    
+                    <div className="bg-white p-4 rounded-lg shadow-sm">
+                      <p className="text-sm text-gray-500 mb-1">Monthly Profit Gain</p>
+                      <p className="text-xl font-bold text-primary">{formatCurrency(calculationResult.profitIncrease)}</p>
+                    </div>
+                    
+                    <div className="bg-white p-4 rounded-lg shadow-sm">
+                      <p className="text-sm text-gray-500 mb-1">ROI</p>
+                      <p className="text-xl font-bold text-primary">{calculationResult.roi.toFixed(0)}%</p>
+                      <p className="text-xs text-gray-500 mt-1">First year</p>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 text-center">
+                    <p className="text-primary font-medium mb-2">Ready to see how our systems can transform your business?</p>
+                    <Link to="/contact">
+                      <Button className="bg-primary hover:bg-primary-600 text-white mt-2">
+                        Schedule a Strategy Call <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              )}
+              
               <div className="flex justify-center">
-                <Button className="bg-secondary hover:bg-secondary-600 text-white font-medium px-8">
+                <Button className="bg-secondary hover:bg-secondary-600 text-white font-medium px-8" onClick={calculateROI}>
                   Calculate Growth Potential
                 </Button>
               </div>

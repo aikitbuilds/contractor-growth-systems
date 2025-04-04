@@ -81,7 +81,7 @@ const About = () => {
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
-                  />
+                  ></iframe>
                 </div>
               </div>
             </div>
@@ -259,6 +259,121 @@ const About = () => {
                           <ArrowRight className="ml-2 h-5 w-5" />
                         </Button>
                       </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Leadership Testimonials */}
+        <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+                  What Industry Leaders Say About Steve
+                </h2>
+                <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                  Leaders across the industry recognize Steve's unique approach to scaling businesses and building high-performance teams:
+                </p>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Executive Level Testimonial */}
+                <div className="bg-white p-8 rounded-xl shadow-md">
+                  <p className="text-gray-700 italic text-lg mb-6">
+                    "Steve possesses a unique ability to organize, unite, and scale sales teams. He implements improved communication, builds robust systems, and simplifies processes, while also acting as a 'sales ambassador' who fosters crucial cooperation across departments to improve the customer experience."
+                  </p>
+                  <div className="flex items-center">
+                    <div className="mr-4">
+                      <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold text-xl">
+                        RS
+                      </div>
+                    </div>
+                    <div>
+                      <p className="font-bold text-gray-900">RJ Sparks</p>
+                      <p className="text-gray-600">COO / CFO (Construction, Renewable Energy, Professional Services)</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Executive Level Testimonial */}
+                <div className="bg-white p-8 rounded-xl shadow-md">
+                  <p className="text-gray-700 italic text-lg mb-6">
+                    "I watched Steve methodically build an inside sales team from nothing into the most profitable effort in our company. He didn't just chase flash; he built the essential infrastructure that allowed his employees to excel and genuinely enjoy their jobs, leading to incredible productivity."
+                  </p>
+                  <div className="flex items-center">
+                    <div className="mr-4">
+                      <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold text-xl">
+                        SD
+                      </div>
+                    </div>
+                    <div>
+                      <p className="font-bold text-gray-900">Steve Doll</p>
+                      <p className="text-gray-600">CFO @ Subcontractor Hub</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Management Level Testimonials Grid */}
+                <div className="md:col-span-2 mt-6">
+                  <h3 className="text-2xl font-bold text-primary mb-6">From Those Who've Worked With Steve:</h3>
+                  
+                  <div className="grid md:grid-cols-3 gap-6">
+                    {/* Testimonial 1 */}
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
+                      <p className="text-gray-700 italic mb-4">
+                        "Managers are common, but leaders like Steve are rare. His easy-going style inspires those around him to achieve their best, fostering an environment of cooperation and team spirit instead of tension. That's a winning environment."
+                      </p>
+                      <div className="flex items-center">
+                        <div className="mr-3">
+                          <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm">
+                            MR
+                          </div>
+                        </div>
+                        <div>
+                          <p className="font-bold text-gray-900">Mel Roberts</p>
+                          <p className="text-sm text-gray-600">Regional Sales Manager / Semper Solaris</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Testimonial 2 */}
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
+                      <p className="text-gray-700 italic mb-4">
+                        "Where Steve shows brilliance is his consistent ability to see challenges and opportunities before they arrive, creating innovative solutions that lead to a stronger, more efficient, and scalable organization. He's been a cornerstone of our growth."
+                      </p>
+                      <div className="flex items-center">
+                        <div className="mr-3">
+                          <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm">
+                            MM
+                          </div>
+                        </div>
+                        <div>
+                          <p className="font-bold text-gray-900">Matthew Monnig</p>
+                          <p className="text-sm text-gray-600">Executive Director of Sales at Semper Solaris</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Testimonial 3 */}
+                    <div className="bg-white p-6 rounded-xl shadow-sm">
+                      <p className="text-gray-700 italic mb-4">
+                        "For over 9 years, I've seen Steve consistently demonstrate limitless bandwidth and tenacity. He's an effective leader who always looks for ways to improve the business and makes a positive impact, all while maintaining impressive integrity and work-life balance."
+                      </p>
+                      <div className="flex items-center">
+                        <div className="mr-3">
+                          <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-sm">
+                            JP
+                          </div>
+                        </div>
+                        <div>
+                          <p className="font-bold text-gray-900">Jeff Peterson</p>
+                          <p className="text-sm text-gray-600">Director of Strategic Partnerships (Goettl / previous role)</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
