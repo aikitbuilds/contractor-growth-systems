@@ -497,6 +497,134 @@ function RoofSalesBootcamp() {
         </div>
       </section>
 
+      {/* Industry Expert Testimonials */}
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Industry Leaders Trust Steve</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Here's what industry professionals say about Steve Huber's expertise, leadership, and impact:
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {/* Testimonial 1 */}
+            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary">
+              <p className="text-gray-700 italic mb-4">
+                "I've had the privilege of working with Steve for several years. He stands out for his innovative problem-solving, unwavering commitment to excellence, and ability to inspire and unite a team, fostering a culture of collaboration and respect."
+              </p>
+              <div className="flex items-center">
+                <div className="mr-3">
+                  <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold">
+                    AC
+                  </div>
+                </div>
+                <div>
+                  <p className="font-bold text-gray-900">Armando Champagne</p>
+                  <p className="text-sm text-gray-600">Eliovation | Digital A.I. Marketing Masters</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 2 */}
+            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary">
+              <p className="text-gray-700 italic mb-4">
+                "Steve is a very dedicated sales professional who drives the team effectively by always encouraging and enabling everyone. His outgoing nature makes him easily approachable and a great person to work with across departments."
+              </p>
+              <div className="flex items-center">
+                <div className="mr-3">
+                  <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold">
+                    DS
+                  </div>
+                </div>
+                <div>
+                  <p className="font-bold text-gray-900">Danielle Shackelford</p>
+                  <p className="text-sm text-gray-600">Director of Compliance</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 3 */}
+            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary">
+              <p className="text-gray-700 italic mb-4">
+                "Working alongside Steve, I became excited to see the synergy he created with the Operations Team. He listens to his teams and utilizes that knowledge to better the processes for the whole organization."
+              </p>
+              <div className="flex items-center">
+                <div className="mr-3">
+                  <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold">
+                    CP
+                  </div>
+                </div>
+                <div>
+                  <p className="font-bold text-gray-900">Chad Pricolo</p>
+                  <p className="text-sm text-gray-600">(Previous Role)</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 4 */}
+            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary">
+              <p className="text-gray-700 italic mb-4">
+                "Steve is wonderful to work with. He's responsive and a great motivator, not just for his own group but infectious to others. Excellent team building and teaching skills to help people reach their potential."
+              </p>
+              <div className="flex items-center">
+                <div className="mr-3">
+                  <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold">
+                    BN
+                  </div>
+                </div>
+                <div>
+                  <p className="font-bold text-gray-900">Becky Norton</p>
+                  <p className="text-sm text-gray-600">Call Center Manager Semper Solaris</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 5 */}
+            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary">
+              <p className="text-gray-700 italic mb-4">
+                "As Steve's advertising agency partner, I saw him as a consummate professional, a tremendous manager of talent, and a builder of profits! He was instrumental, actively providing feedback that helped shape our messaging and effectiveness."
+              </p>
+              <div className="flex items-center">
+                <div className="mr-3">
+                  <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold">
+                    DP
+                  </div>
+                </div>
+                <div>
+                  <p className="font-bold text-gray-900">David Pell</p>
+                  <p className="text-sm text-gray-600">EVP of Business Development at Ad Leverage</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 6 */}
+            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-primary">
+              <p className="text-gray-700 italic mb-4">
+                "In my 12+ years in solar, I've never seen anyone architect a multi-million dollar inside sales team like Steve. He built the systems, processes, and culture for complex, multi-product sales (solar, roofing, storage, HVAC) over the phone/chat that directly drove 40% of our consumer revenue and profitability."
+              </p>
+              <div className="flex items-center">
+                <div className="mr-3">
+                  <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold">
+                    TR
+                  </div>
+                </div>
+                <div>
+                  <p className="font-bold text-gray-900">Tim Ramage</p>
+                  <p className="text-sm text-gray-600">EVP of Sales Operations (SubcontractorHub / previous role)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-8">
+            <Button size="lg" className="bg-primary hover:bg-primary-700 text-white">
+              View More Testimonials
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Investment Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">

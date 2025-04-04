@@ -14,12 +14,15 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ProjectDashboard from "./pages/ProjectDashboard";
 import Services from "./pages/Services";
+import Resources from "./pages/Resources";
 import Footer from "./components/Footer";
 import AIChatbot from "./components/AIChatbot";
 import RoofSalesBootcamp from './pages/RoofSalesBootcamp';
 import BootcampDetails from './pages/BootcampDetails';
 import TexasContractorCaseStudy from './pages/TexasContractorCaseStudy';
 import PetersonDeanCaseStudy from './pages/PetersonDeanCaseStudy';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 
 const queryClient = new QueryClient();
 
@@ -39,6 +42,7 @@ const App = () => (
               <Route path="/ai-image-tools" element={<AIImageTools />} />
               <Route path="/about" element={<About />} />
               <Route path="/services" element={<Services />} />
+              <Route path="/resources" element={<Resources />} />
               <Route path="/login" element={<Login />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/project-dashboard" element={<ProjectDashboard />} />
@@ -46,6 +50,8 @@ const App = () => (
               <Route path="/bootcamp-details" element={<BootcampDetails />} />
               <Route path="/texas-contractor-case" element={<TexasContractorCaseStudy />} />
               <Route path="/peterson-dean-case" element={<PetersonDeanCaseStudy />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
