@@ -84,6 +84,12 @@ const Navbar = () => {
             >
               Services
             </NavLink>
+            <NavLink 
+              to="/pricing" 
+              className={({ isActive }) => linkClass(isActive)}
+            >
+              Pricing
+            </NavLink>
             <div className="relative group px-3 py-2">
               <span className="text-sm font-medium cursor-pointer flex items-center text-white hover:text-secondary">
                 Case Studies
@@ -129,10 +135,22 @@ const Navbar = () => {
                   Free Downloads & Tools
                 </NavLink>
                 <NavLink 
-                  to="/ai-image-tools" 
+                  to="/blog"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
-                  AI Image Tools
+                  Blog
+                </NavLink>
+                <NavLink
+                  to="/contractorai"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Contractor's Guide to AI
+                </NavLink>
+                <NavLink
+                  to="/events"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Webinars & Events
                 </NavLink>
                 <NavLink 
                   to="/course-coming-soon" 
@@ -221,6 +239,14 @@ const Navbar = () => {
               >
                 Services
               </NavLink>
+              <NavLink 
+                to="/pricing"
+                className={({ isActive }) => 
+                  `px-3 py-2 text-white ${isActive ? 'bg-primary-600 rounded' : ''}`
+                }
+              >
+                Pricing
+              </NavLink>
               
               <div className="px-3 py-2">
                 <p className="text-white font-medium mb-2">Case Studies</p>
@@ -264,12 +290,28 @@ const Navbar = () => {
                     Free Downloads & Tools
                   </NavLink>
                   <NavLink 
-                    to="/ai-image-tools"
+                    to="/blog"
                     className={({ isActive }) => 
                       `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
                     }
                   >
-                    AI Image Tools
+                    Blog
+                  </NavLink>
+                  <NavLink 
+                    to="/contractorai"
+                    className={({ isActive }) => 
+                      `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
+                    }
+                  >
+                    Contractor's Guide to AI
+                  </NavLink>
+                  <NavLink 
+                    to="/events"
+                    className={({ isActive }) => 
+                      `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
+                    }
+                  >
+                    Webinars & Events
                   </NavLink>
                   <NavLink 
                     to="/course-coming-soon"

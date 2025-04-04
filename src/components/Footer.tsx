@@ -10,21 +10,21 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Column 1 - Logo and About */}
           <div className="space-y-4">
-            <Logo variant="white" />
+            <Logo />
             <p className="mt-4 text-gray-300">
               Helping small and medium-sized contractors scale their businesses through systematic approaches to sales, marketing, and operations.
             </p>
             <div className="flex space-x-4 mt-6">
-              <a href="#" className="text-white hover:text-secondary transition-colors">
+              <a href="https://facebook.com" className="text-white hover:text-secondary transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-white hover:text-secondary transition-colors">
+              <a href="https://instagram.com" className="text-white hover:text-secondary transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="#" className="text-white hover:text-secondary transition-colors">
+              <a href="https://linkedin.com" className="text-white hover:text-secondary transition-colors">
                 <Linkedin size={20} />
               </a>
-              <a href="#" className="text-white hover:text-secondary transition-colors">
+              <a href="https://youtube.com" className="text-white hover:text-secondary transition-colors">
                 <Youtube size={20} />
               </a>
             </div>
@@ -82,7 +82,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/resources" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/contractorai" className="text-gray-300 hover:text-white transition-colors">
                   Contractor's Guide to AI
                 </Link>
               </li>
