@@ -23,6 +23,10 @@ import TexasContractorCaseStudy from './pages/TexasContractorCaseStudy';
 import PetersonDeanCaseStudy from './pages/PetersonDeanCaseStudy';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
+import ContractorAI from "./pages/ContractorAI";
+import Events from "./pages/Events";
+import Checkout from "./pages/Checkout";
+import Pricing from "./pages/Pricing";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +47,8 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/services" element={<Services />} />
               <Route path="/resources" element={<Resources />} />
+              <Route path="/contractorai" element={<ContractorAI />} />
+              <Route path="/events" element={<Events />} />
               <Route path="/login" element={<Login />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/project-dashboard" element={<ProjectDashboard />} />
@@ -52,6 +58,8 @@ const App = () => (
               <Route path="/peterson-dean-case" element={<PetersonDeanCaseStudy />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/pricing" element={<Pricing />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
