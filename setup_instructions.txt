@@ -1,0 +1,122 @@
+AI PLATFORM SERVER SETUP INSTRUCTIONS
+
+# Create Project Directory Structure
+sudo mkdir -p /var/www/ai_platform/backend /var/www/ai_platform/frontend
+sudo chown -R admin:admin /var/www/ai_platform
+
+# Set Up Backend
+cd /var/www/ai_platform/backend
+npm init -y
+npm install fastify socket.io dotenv axios
+
+# Create Server.js File
+cat > /var/www/ai_platform/backend/server.js << 'EOF'
+require('dotenv').config();
+const fastify = require('fastify')({ logger: true });
+const { Server } = require('socket.io');
+
+// Get port from environment or use default
+const PORT = process.env.BACKEND_PORT || 3001;
+
+// Socket.io setup
+const io = new Server(fastify.server, {
+  cors: {
+    origin: '*'
+  }
+});
+
+// Socket.io event handling
+io.on('connection', (socket) => {
+  console.log('Client connected:', socket.id);
+  
+  socket.on('disconnect', () => {
+    console.log('Client disconnected:', socket.id);
+  });
+});
+
+// API Routes
+fastify.get('/', async (request, reply) => {
+  return { status: 'ok', message: 'AI Platform Backend API is running' };
+});
+
+// Health check endpoint
+fastify.get('/health', async (request, reply) => {
+  return { status: 'healthy' };
+});
+
+// Start the server
+const start = async () => {
+  try {
+    await fastify.listen({ port: PORT, host: '0.0.0.0' });
+    console.log(`Server is running on http://localhost:${PORT}`);
+  } catch (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  }
+};
+
+start();
+EOF
+
+# Create .env File
+echo "BACKEND_PORT=3001" > /var/www/ai_platform/backend/.env
+
+# Create Memory Bank Structure
+mkdir -p /var/www/ai_platform/backend/.memorybank
+touch /var/www/ai_platform/backend/.memorybank/projectbrief.md
+touch /var/www/ai_platform/backend/.memorybank/productContext.md
+touch /var/www/ai_platform/backend/.memorybank/activeContext.md
+touch /var/www/ai_platform/backend/.memorybank/systemPatterns.md
+touch /var/www/ai_platform/backend/.memorybank/techContext.md
+touch /var/www/ai_platform/backend/.memorybank/progress.md
+
+# Configure Nginx
+sudo bash -c 'cat > /etc/nginx/sites-available/ai_platform << EOF
+server {
+    listen 80;
+    server_name server1.aininjas.pro;
+
+    # API Endpoints
+    location /api/ {
+        proxy_pass http://localhost:3001/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_cache_bypass \$http_upgrade;
+    }
+
+    # WebSocket Support
+    location /socket.io/ {
+        proxy_pass http://localhost:3001/socket.io/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_cache_bypass \$http_upgrade;
+    }
+
+    # Frontend (placeholder for now)
+    location / {
+        # Will serve frontend static files once built
+        root /var/www/ai_platform/frontend/dist;
+        try_files \$uri \$uri/ /index.html;
+    }
+}
+EOF'
+
+# Enable site and restart Nginx
+sudo ln -sf /etc/nginx/sites-available/ai_platform /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl reload nginx
+
+# Set Up PM2 for Backend
+cd /var/www/ai_platform/backend
+pm2 start server.js --name ai-platform-backend
+pm2 save
+sudo env PATH=$PATH:/usr/bin pm2 startup systemd -u admin --hp /home/admin 
