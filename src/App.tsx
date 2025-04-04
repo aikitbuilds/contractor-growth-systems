@@ -16,6 +16,8 @@ import ProjectDashboard from "./pages/ProjectDashboard";
 import Services from "./pages/Services";
 import Footer from "./components/Footer";
 import AIChatbot from "./components/AIChatbot";
+import RoofSalesBootcamp from './pages/RoofSalesBootcamp';
+import BootcampDetails from './pages/BootcampDetails';
 
 const queryClient = new QueryClient();
 
@@ -38,6 +40,8 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/project-dashboard" element={<ProjectDashboard />} />
+              <Route path="/roof-sales-bootcamp" element={<RoofSalesBootcamp />} />
+              <Route path="/bootcamp-details" element={<BootcampDetails />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
