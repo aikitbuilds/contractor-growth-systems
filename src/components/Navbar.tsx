@@ -84,16 +84,40 @@ const Navbar = () => {
             >
               Services
             </NavLink>
-            <NavLink 
-              to="/case-study/semper-solaris" 
-              className={({ isActive }) => linkClass(isActive)}
-            >
-              Case Studies
-            </NavLink>
+            <div className="relative group px-3 py-2">
+              <span className="text-sm font-medium cursor-pointer flex items-center text-white hover:text-secondary">
+                Case Studies
+                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <title>Dropdown indicator</title>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+              <div className="absolute left-0 mt-2 w-60 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                <NavLink 
+                  to="/case-study/semper-solaris" 
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Semper Solaris
+                </NavLink>
+                <NavLink 
+                  to="/texas-contractor-case" 
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Texas Contractor Success Story
+                </NavLink>
+                <NavLink 
+                  to="/peterson-dean-case" 
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Peterson Dean Solar Growth
+                </NavLink>
+              </div>
+            </div>
             <div className="relative group px-3 py-2">
               <span className="text-sm font-medium cursor-pointer flex items-center text-white hover:text-secondary">
                 Resources
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <title>Dropdown indicator</title>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </span>
@@ -151,6 +175,7 @@ const Navbar = () => {
           
           {/* Mobile Menu Button */}
           <button 
+            type="button"
             className="md:hidden text-white"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle Menu"
@@ -190,14 +215,36 @@ const Navbar = () => {
               >
                 Services
               </NavLink>
-              <NavLink 
-                to="/case-study/semper-solaris"
-                className={({ isActive }) => 
-                  `px-3 py-2 text-white ${isActive ? 'bg-primary-600 rounded' : ''}`
-                }
-              >
-                Case Studies
-              </NavLink>
+              
+              <div className="px-3 py-2">
+                <p className="text-white font-medium mb-2">Case Studies</p>
+                <div className="pl-4 space-y-2">
+                  <NavLink 
+                    to="/case-study/semper-solaris"
+                    className={({ isActive }) => 
+                      `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
+                    }
+                  >
+                    Semper Solaris
+                  </NavLink>
+                  <NavLink 
+                    to="/texas-contractor-case"
+                    className={({ isActive }) => 
+                      `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
+                    }
+                  >
+                    Texas Contractor Success Story
+                  </NavLink>
+                  <NavLink 
+                    to="/peterson-dean-case"
+                    className={({ isActive }) => 
+                      `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
+                    }
+                  >
+                    Peterson Dean Solar Growth
+                  </NavLink>
+                </div>
+              </div>
               
               <div className="px-3 py-2">
                 <p className="text-white font-medium mb-2">Resources</p>

@@ -69,9 +69,20 @@ const About = () => {
                 <h3 className="text-2xl md:text-3xl font-bold text-primary mb-4">
                   That's Why BDC Exists.
                 </h3>
-                <p className="text-lg text-gray-700">
+                <p className="text-lg text-gray-700 mb-6">
                   I founded Billion Dollar Contractor with a clear mission: to provide contractors like you with the practical systems and hands-on support needed to break through growth ceilings and scale predictably. We don't just hand you a plan and wish you luck; we roll up our sleeves and build your growth engine alongside you.
                 </p>
+                
+                <div className="aspect-video w-full rounded-xl overflow-hidden shadow-lg mb-6">
+                  <iframe
+                    className="w-full h-full"
+                    src="https://www.youtube.com/embed/eLigBqphoQw?si=49UgkectfFFfyLej"
+                    title="A Message from Steve Huber, Founder of BDC"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
               </div>
             </div>
           </div>
