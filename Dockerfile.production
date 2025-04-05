@@ -1,0 +1,35 @@
+FROM node:18-slim as build
+
+WORKDIR /app
+
+COPY package.json .
+COPY package-lock.json* .
+COPY .npmrc* .
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+# Create production image
+FROM node:18-slim
+
+WORKDIR /app
+
+# Copy built files from build stage
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/server-prod.js .
+COPY --from=build /app/package.json .
+
+# Install only production dependencies
+RUN npm install --only=production
+
+# Create the dist-server directory and copy the server file
+RUN mkdir -p dist-server && \
+    cp server-prod.js dist-server/server.js && \
+    echo '{"type":"module"}' > dist-server/package.json
+
+EXPOSE 3000
+
+CMD ["npm", "start"] 

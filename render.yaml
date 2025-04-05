@@ -1,18 +1,11 @@
 services:
   - type: web
     name: contractor-growth-systems
-    env: node
-    buildCommand: |
-      npm install -g node-gyp
-      export NODE_OPTIONS="--max-old-space-size=4096"
-      npm install
-      npm run build
-      mkdir -p dist-server
-      cp server-prod.js dist-server/server.js
-      echo '{"type":"module"}' > dist-server/package.json
-    startCommand: npm start
+    env: docker
+    dockerfilePath: ./Dockerfile.production
+    dockerContext: .
+    plan: free
+    healthCheckPath: /
     envVars:
-      - key: NODE_VERSION
-        value: 18
       - key: NODE_ENV
         value: production 
