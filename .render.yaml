@@ -2,5 +2,5 @@ services:
   - type: web
     name: contractor-growth-systems
     env: node
-    buildCommand: bun install && npm run build && mkdir -p dist-server && cp server-prod.js dist-server/server.js && echo '{"type":"module"}' > dist-server/package.json
+    buildCommand: npm install && npm run build && mkdir -p dist-server && cp server-prod.js dist-server/server.js && echo '{"type":"module"}' > dist-server/package.json
     startCommand: npm start 
