@@ -1,0 +1,5 @@
+build:
+  packages:
+    - build-essential
+    - python3
+    - node-gyp 
