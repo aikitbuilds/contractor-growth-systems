@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: contractor-growth-systems
+    env: node
+    buildCommand: apt-get update && apt-get install -y build-essential python3 node-gyp && bun install && npm run build && mkdir -p dist-server && cp server-prod.js dist-server/server.js && echo '{"type":"module"}' > dist-server/package.json
+    startCommand: npm start 
