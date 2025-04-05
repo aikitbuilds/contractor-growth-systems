@@ -13,6 +13,11 @@ const PORT = process.env.PORT || 3000;
 // Serve static files from the dist directory
 app.use(express.static(join(__dirname, 'dist')));
 
+// Health check endpoint for Render
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'healthy' });
+});
+
 // API endpoints can be added here
 
 // Fallback to index.html for SPA routing

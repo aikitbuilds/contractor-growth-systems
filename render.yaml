@@ -2,10 +2,13 @@ services:
   - type: web
     name: contractor-growth-systems
     env: docker
-    dockerfilePath: ./Dockerfile.production
-    dockerContext: .
+    dockerfilePath: Dockerfile.production
     plan: free
-    healthCheckPath: /
+    healthCheckPath: /health
     envVars:
       - key: NODE_ENV
-        value: production 
+        value: production
+      - key: PORT
+        value: 3000
+      - key: ROLLUP_NATIVE
+        value: 0 

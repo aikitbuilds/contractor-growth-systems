@@ -2,20 +2,30 @@ FROM node:18-slim as build
 
 WORKDIR /app
 
+# Set environment variables to disable Rollup native extensions
+ENV ROLLUP_NATIVE=0
+ENV NODE_ENV=production
+
 COPY package.json .
 COPY package-lock.json* .
 COPY .npmrc* .
 
-RUN npm install
+# Use npm install with omit=optional to avoid problematic native dependencies
+RUN npm install --omit=optional
 
 COPY . .
 
-RUN npm run build
+# Build with ROLLUP_NATIVE=0 to prevent native extension issues
+RUN ROLLUP_NATIVE=0 npm run build
 
 # Create production image
 FROM node:18-slim
 
 WORKDIR /app
+
+# Set environment variables
+ENV NODE_ENV=production
+ENV ROLLUP_NATIVE=0
 
 # Copy built files from build stage
 COPY --from=build /app/dist ./dist
@@ -23,7 +33,7 @@ COPY --from=build /app/server-prod.js .
 COPY --from=build /app/package.json .
 
 # Install only production dependencies
-RUN npm install --only=production
+RUN npm install --omit=optional --only=production
 
 # Create the dist-server directory and copy the server file
 RUN mkdir -p dist-server && \
