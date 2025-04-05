@@ -9,6 +9,4 @@ services:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 3000
-      - key: ROLLUP_NATIVE
-        value: 0 
+        value: 3000 
