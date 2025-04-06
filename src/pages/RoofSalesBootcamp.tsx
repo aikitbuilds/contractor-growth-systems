@@ -114,7 +114,7 @@ function RoofSalesBootcamp() {
               <div className="relative">
                 <div className="rounded-xl overflow-hidden">
                   <img 
-                    src="/Images/little-girl-with-her-dad-holding-paper-model-of-ho-2024-10-22-04-39-00-utc.jpg" 
+                    src="/Images/about-thumb.jpg"
                     alt="Solar and roof sales training" 
                     className="w-full h-auto"
                   />
@@ -162,9 +162,11 @@ function RoofSalesBootcamp() {
               </p>
               
               <div className="flex justify-center mt-8">
-                <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium">
-                  Secure Your Spot Now <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
+                <Link to="/checkout">
+                  <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium">
+                    Secure Your Spot Now <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -673,9 +675,11 @@ function RoofSalesBootcamp() {
                   </div>
                 </div>
                 
-                <Button size="lg" className="w-full bg-secondary hover:bg-secondary-600 text-white font-medium">
-                  Enroll Now - Early Bird Price
-                </Button>
+                <Link to="/checkout">
+                  <Button size="lg" className="w-full bg-secondary hover:bg-secondary-600 text-white font-medium text-lg">
+                    Enroll Now - Early Bird Price
+                  </Button>
+                </Link>
                 <p className="text-xs text-gray-500 mt-3">Only 4 spots remaining at this price!</p>
               </div>
             </div>
@@ -717,9 +721,11 @@ function RoofSalesBootcamp() {
                   </div>
                 </div>
                 
-                <Button size="lg" className="w-full bg-gray-700 hover:bg-gray-600 text-white font-medium">
-                  Enroll at Standard Price
-                </Button>
+                <Link to="/checkout">
+                  <Button size="lg" className="w-full bg-gray-700 hover:bg-gray-600 text-white font-medium">
+                    Enroll at Standard Price
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -746,9 +752,11 @@ function RoofSalesBootcamp() {
                 Don't miss this opportunity to add a powerful new revenue stream to your business with a proven system and expert guidance.
               </p>
               
-              <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium px-8 py-6 text-xl">
-                Enroll Now - Secure Your Spot <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              <Link to="/checkout">
+                <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium px-8 py-6 text-xl">
+                  Enroll Now - Secure Your Spot <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
               
               <p className="text-sm text-gray-500 mt-4">
                 Secure payment processing. Immediate access to system upon enrollment.

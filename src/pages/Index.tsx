@@ -38,12 +38,12 @@ const Index = () => {
   // Calculate ROI based on input values
   const calculateROI = () => {
     // Parse inputs
-    const revenue = parseFloat(monthlyRevenue.replace(/,/g, ''));
-    const team = parseInt(teamMembers);
-    const avgValue = parseFloat(projectValue.replace(/,/g, ''));
-    const rate = parseFloat(closingRate);
+    const revenue = Number.parseFloat(monthlyRevenue.replace(/,/g, ''));
+    const team = Number.parseInt(teamMembers);
+    const avgValue = Number.parseFloat(projectValue.replace(/,/g, ''));
+    const rate = Number.parseFloat(closingRate);
     
-    if (isNaN(revenue) || isNaN(team) || isNaN(avgValue) || isNaN(rate)) {
+    if (Number.isNaN(revenue) || Number.isNaN(team) || Number.isNaN(avgValue) || Number.isNaN(rate)) {
       return;
     }
     
@@ -133,7 +133,7 @@ const Index = () => {
             alt="Contractor business growth" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40" />
         </div>
         
         <div className="container mx-auto px-4 relative z-10 py-16 md:py-24">
@@ -165,7 +165,7 @@ const Index = () => {
                 <div className="flex justify-between items-center mb-6">
                   <h3 className="text-white text-xl font-bold">Performance Metrics</h3>
                   <div className="bg-secondary/20 text-secondary text-xs py-1 px-3 rounded-full flex items-center">
-                    <span className="w-2 h-2 bg-secondary rounded-full mr-1 animate-pulse"></span>
+                    <span className="w-2 h-2 bg-secondary rounded-full mr-1 animate-pulse" />
                     Live Data
                   </div>
                 </div>
@@ -182,7 +182,7 @@ const Index = () => {
                       </div>
                     </div>
                     <div className="mt-2 h-2 bg-white/20 rounded-full overflow-hidden">
-                      <div className="bg-emerald-400 h-full rounded-full transition-all duration-1000" style={{ width: `${(salesGrowth/143)*78}%` }}></div>
+                      <div className="bg-emerald-400 h-full rounded-full transition-all duration-1000" style={{ width: `${(salesGrowth/143)*78}%` }} />
                     </div>
                   </div>
                   
@@ -197,7 +197,7 @@ const Index = () => {
                       </div>
                     </div>
                     <div className="mt-2 h-2 bg-white/20 rounded-full overflow-hidden">
-                      <div className="bg-emerald-400 h-full rounded-full transition-all duration-1000" style={{ width: `${(leadConversion/34.7)*65}%` }}></div>
+                      <div className="bg-emerald-400 h-full rounded-full transition-all duration-1000" style={{ width: `${(leadConversion/34.7)*65}%` }} />
                     </div>
                   </div>
                 </div>
@@ -211,14 +211,14 @@ const Index = () => {
                   
                   <div className="relative h-20">
                     <div className="absolute bottom-0 left-0 w-full h-full flex items-end">
-                      <div className="w-1/6 h-[30%] bg-secondary/50 rounded-sm mx-[2px] transform transition-all duration-700" style={{ height: `${chartHeights[0]}%` }}></div>
-                      <div className="w-1/6 h-[40%] bg-secondary/50 rounded-sm mx-[2px] transform transition-all duration-700 delay-100" style={{ height: `${chartHeights[1]}%` }}></div>
-                      <div className="w-1/6 h-[35%] bg-secondary/50 rounded-sm mx-[2px] transform transition-all duration-700 delay-200" style={{ height: `${chartHeights[2]}%` }}></div>
-                      <div className="w-1/6 h-[60%] bg-secondary/50 rounded-sm mx-[2px] transform transition-all duration-700 delay-300" style={{ height: `${chartHeights[3]}%` }}></div>
-                      <div className="w-1/6 h-[75%] bg-secondary/50 rounded-sm mx-[2px] transform transition-all duration-700 delay-400" style={{ height: `${chartHeights[4]}%` }}></div>
-                      <div className="w-1/6 h-[95%] bg-secondary/70 rounded-sm mx-[2px] transform transition-all duration-700 delay-500 hover:bg-secondary" style={{ height: `${chartHeights[5]}%` }}></div>
+                      <div className="w-1/6 h-[30%] bg-secondary/50 rounded-sm mx-[2px] transform transition-all duration-700" style={{ height: `${chartHeights[0]}%` }} />
+                      <div className="w-1/6 h-[40%] bg-secondary/50 rounded-sm mx-[2px] transform transition-all duration-700 delay-100" style={{ height: `${chartHeights[1]}%` }} />
+                      <div className="w-1/6 h-[35%] bg-secondary/50 rounded-sm mx-[2px] transform transition-all duration-700 delay-200" style={{ height: `${chartHeights[2]}%` }} />
+                      <div className="w-1/6 h-[60%] bg-secondary/50 rounded-sm mx-[2px] transform transition-all duration-700 delay-300" style={{ height: `${chartHeights[3]}%` }} />
+                      <div className="w-1/6 h-[75%] bg-secondary/50 rounded-sm mx-[2px] transform transition-all duration-700 delay-400" style={{ height: `${chartHeights[4]}%` }} />
+                      <div className="w-1/6 h-[95%] bg-secondary/70 rounded-sm mx-[2px] transform transition-all duration-700 delay-500 hover:bg-secondary" style={{ height: `${chartHeights[5]}%` }} />
                     </div>
-                    <div className="absolute bottom-0 left-0 w-full h-[20%] bg-gradient-to-t from-secondary/20 to-transparent rounded-b-sm"></div>
+                    <div className="absolute bottom-0 left-0 w-full h-[20%] bg-gradient-to-t from-secondary/20 to-transparent rounded-b-sm" />
                   </div>
                   
                   <div className="flex justify-between text-white/50 text-xs mt-2">
@@ -238,6 +238,71 @@ const Index = () => {
                       <ArrowRight className="h-3 w-3 ml-1 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Bootcamp Promotion Section */}
+      <section className="py-16 md:py-20 bg-white border-y border-gray-200 relative overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-blue-200/40 blur-3xl" />
+        <div className="absolute left-10 bottom-10 w-40 h-40 rounded-full bg-indigo-200/30 blur-3xl" />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-6xl mx-auto bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl shadow-xl overflow-hidden">
+            <div className="flex flex-col md:flex-row">
+              {/* Image Column */}
+              <div className="md:w-2/5 bg-secondary relative overflow-hidden">
+                <div className="aspect-video w-full h-full">
+                  <iframe 
+                    src="https://www.youtube.com/embed/iNzZCZz-cgw" 
+                    title="Bootcamp Overview Video"
+                    className="w-full h-full object-cover"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+              
+              {/* Content Column */}
+              <div className="md:w-3/5 p-8 md:p-12">
+                <div className="max-w-xl">
+                  <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+                    Master Solar + Roof Integration: The Ultimate Revenue Booster
+                  </h2>
+                  
+                  <p className="text-lg text-gray-600 mb-6">
+                    Learn the proven systems, sales process, and operational insights to seamlessly sell and manage roofing alongside your solar projects. Increase your average ticket and eliminate lost deals.
+                  </p>
+                  
+                  <div className="space-y-3 mb-8">
+                    <div className="flex items-start">
+                      <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" />
+                      <p className="text-gray-700">Close your first profitable deal in just 30 days</p>
+                    </div>
+                    <div className="flex items-start">
+                      <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" />
+                      <p className="text-gray-700">Includes AI-powered tools and done-for-you marketing assets</p>
+                    </div>
+                    <div className="flex items-start">
+                      <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" />
+                      <p className="text-gray-700">Small group with personalized attention (limited to 15 participants)</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Link to="/roof-sales-bootcamp">
+                      <Button 
+                        size="lg" 
+                        className="w-full sm:w-auto bg-orange-600 hover:bg-orange-700 text-white font-medium text-lg px-8 py-4 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 animate-pulse-slow"
+                      >
+                        Sign Up Now. Limited Seats <ArrowRight className="ml-2 h-5 w-5" />
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -354,7 +419,7 @@ const Index = () => {
                     className="w-full h-auto"
                   />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-secondary/30 to-transparent mix-blend-overlay"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-secondary/30 to-transparent mix-blend-overlay" />
               </div>
             </div>
             <div className="md:w-1/2 md:pl-12">
@@ -441,80 +506,6 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Bootcamp Promotion */}
-      <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100 relative overflow-hidden">
-        {/* Decorative Elements */}
-        <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-blue-200/40 blur-3xl" />
-        <div className="absolute left-10 bottom-10 w-40 h-40 rounded-full bg-indigo-200/30 blur-3xl" />
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden">
-            <div className="flex flex-col md:flex-row">
-              {/* Image Column */}
-              <div className="md:w-2/5 bg-secondary relative overflow-hidden">
-                <div className="aspect-video w-full h-full">
-                  <iframe 
-                    src="https://www.youtube.com/embed/iNzZCZz-cgw" 
-                    title="Bootcamp Overview Video"
-                    className="w-full h-full object-cover"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
-              </div>
-              
-              {/* Content Column */}
-              <div className="md:w-3/5 p-8 md:p-10">
-                <div className="max-w-xl">
-                  <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-                    Master Solar + Roof Integration: The Ultimate Revenue Booster
-                  </h2>
-                  
-                  <p className="text-lg text-gray-600 mb-6">
-                    Learn the proven systems, sales process, and operational insights to seamlessly sell and manage roofing alongside your solar projects. Increase your average ticket and eliminate lost deals.
-                  </p>
-                  
-                  <div className="space-y-3 mb-8">
-                    <div className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" />
-                      <p className="text-gray-700">Close your first profitable deal in just 30 days</p>
-                    </div>
-                    <div className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" />
-                      <p className="text-gray-700">Includes AI-powered tools and done-for-you marketing assets</p>
-                    </div>
-                    <div className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" />
-                      <p className="text-gray-700">Small group with personalized attention (limited to 15 participants)</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Link to="/bootcamp-details">
-                      <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium">
-                        Explore the Bootcamp Curriculum <ArrowRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    </Link>
-                    <Link to="/roof-sales-bootcamp">
-                      <Button size="lg" variant="outline" className="border-secondary text-secondary hover:bg-secondary/5">
-                        Get Bootcamp Details
-                      </Button>
-                    </Link>
-                  </div>
-                  
-                  <div className="mt-4">
-                    <Link to="#" className="text-secondary hover:text-secondary-700 text-sm flex items-center">
-                      <FileText className="h-4 w-4 mr-1" />
-                      Download the Bootcamp Info Pack
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
       {/* Social Proof - Case Studies */}
       <section className="py-16 relative">
         {/* Background image with overlay */}
@@ -524,7 +515,7 @@ const Index = () => {
             alt="Semper Solaris background" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/70"></div>
+          <div className="absolute inset-0 bg-black/70" />
         </div>
         
         <div className="container mx-auto px-4 relative z-10">
@@ -664,7 +655,7 @@ const Index = () => {
                       <p className="text-xl font-bold text-primary">{formatCurrency(calculationResult.projectedRevenue)}</p>
                       <p className="text-xs text-green-500 mt-1 flex items-center">
                         <ArrowUpIcon className="h-3 w-3 mr-1" />
-                        {formatCurrency(calculationResult.projectedRevenue - parseFloat(monthlyRevenue.replace(/,/g, '')))}
+                        {formatCurrency(calculationResult.projectedRevenue - Number.parseFloat(monthlyRevenue.replace(/,/g, '')))}
                       </p>
                     </div>
                     

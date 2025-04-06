@@ -78,6 +78,56 @@ graph TD
   - [ ] 3d. Build client portal for project tracking
   - [ ] 3e. Develop admin dashboard
 
+- [ ] 4. Phase 4: Optimization & Launch
+  - [ ] 4a. Performance Testing & Optimization
+  - [ ] 4b. SEO Implementation & Validation
+  - [ ] 4c. Setup Analytics
+  - [ ] 4d. Final User Acceptance Testing (UAT)
+  - [ ] 4e. Deployment to Production
+  - [ ] 4f. Create Project Documentation
+
+- [ ] 5. Checkout & Payment System (New Section)
+  - [ ] 5a. **Set up Stripe Integration:**
+    - [ ] Create Stripe account and obtain API keys (Secret & Publishable).
+    - [ ] Install Stripe libraries (`@stripe/stripe-js`, `@stripe/react-stripe-js`).
+    - [ ] Create backend endpoint (e.g., serverless function) to handle PaymentIntent creation.
+    - [ ] Implement Stripe Elements (`CardElement` or individual elements) on the frontend `Checkout.tsx` page.
+    - [ ] Implement frontend logic to call backend, get `clientSecret`, and confirm payment with Stripe.
+  - [ ] 5b. **Add Required Customer Information Fields:**
+    - [ ] Ensure fields for Name, Address, Phone Number, Company Website (Optional), and Email are present and collected during checkout.
+    - [ ] Store necessary customer information securely (Note: Full CC details are handled by Stripe Elements, not stored directly).
+  - [ ] 5c. **Display Security Information:**
+    - [ ] Add visual cues on the checkout page indicating secure payment (e.g., lock icon, "Processed securely by Stripe" text).
+    - [ ] (Optional) Consider embedding a Stripe security badge if available/appropriate.
+  - [ ] 5d. **Test Payment Workflow:**
+    - [ ] Use Stripe test card numbers to simulate successful payments.
+    - [ ] Test error handling for failed payments (e.g., declined card, incorrect CVC).
+    - [ ] Verify customer information capture.
+    - [ ] Test the upsell checkbox functionality and price calculation.
+
+### Checkout Workflow Overview
+
+```mermaid
+graph TD
+    A[User Clicks "Sign Up Now"] --> B[Navigate to /checkout];
+    B --> C{Checkout Page Loaded};
+    C --> D[User Reviews Order (Bootcamp + Bonus)];
+    C --> E[User Optionally Adds Upsell (Coaching)];
+    D --> F[User Enters Billing & Payment Info (Stripe Elements)];
+    E --> F;
+    F --> G[User Clicks "Complete Purchase"];
+    G --> H{Process Payment via Stripe};
+    H -- Success --> I[Show Confirmation / Thank You Page];
+    H -- Failure --> J[Show Error Message on Checkout Page];
+    I --> K[Trigger Welcome Email & Package Delivery];
+    K --> L[Send Login Info for Portal];
+    L --> M[User Accesses Courses & Training];
+    M --> N[🚀 Make $$ Selling Roof Contracts!];
+
+    style H fill:#f9f,stroke:#333,stroke-width:2px
+    style N fill:#cfc,stroke:#333,stroke-width:4px
+```
+
 ## Completed Tasks
 
 - [x] 0. Project Initialization
@@ -224,7 +274,7 @@ src/
    - [ ] Create PDF generation functionality
    - [ ] Set up email delivery system
 
-## 📝 Notes
+## �� Notes
 
 - Targeting small to medium-sized contractors looking to enhance their online presence
 - Focus on mobile-first design as many clients will browse on phones at job sites
