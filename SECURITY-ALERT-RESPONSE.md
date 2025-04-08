@@ -5,17 +5,17 @@ GitGuardian has detected exposed credentials in our repository. This document ou
 ## Exposed Credentials
 
 1. **Stripe API Keys**
-   - Stripe Secret Key: `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`
-   - Publishable Key: `pk_live_51QoTvoC5xbT6E2bKh9BRfNY10QuGrjiWoapFyJ4yNmfNss5ZTDwf0nKhYHvz8E0FVrIy9gWP97fpQ0HPihndU7Zu00FE2Devrn`
+   - Stripe Secret Key: `[REDACTED]`
+   - Publishable Key: `[REDACTED]`
 
 2. **SMTP Credentials**
    - Email: `growth@bdcteam.pro`
-   - Password: `oreh nmoa zwgg pdkp`
+   - Password: `[REDACTED]`
 
 3. **Database Credentials**
    - Host: `162.0.209.106`
    - User: `solaqmaj_admin`
-   - Password: `:#o=U;ks1q-PJ`
+   - Password: `[REDACTED]`
 
 ## Immediate Actions Required
 
@@ -24,7 +24,7 @@ GitGuardian has detected exposed credentials in our repository. This document ou
 1. **Revoke Exposed Keys**:
    - Log into the [Stripe Dashboard](https://dashboard.stripe.com/)
    - Go to Developers → API keys
-   - Find the exposed key (`sk_live_51QoTvoC5xbT6E2bK...`)
+   - Find the exposed key (`sk_live_51...`)
    - Click "Revoke" to invalidate the key
 
 2. **Create New Keys**:
