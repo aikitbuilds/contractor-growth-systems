@@ -27,8 +27,8 @@ function RoofSalesBootcamp() {
         </div>
         
         <div className="container mx-auto px-4 relative z-10 py-16 md:py-24">
-          <div className="flex flex-col md:flex-row items-center">
-            <div className="md:w-1/2 md:pr-8">
+          <div className="flex flex-col md:flex-row items-start md:items-center">
+            <div className="md:w-5/12 md:pr-12 mb-8 md:mb-0">
               <div className="bg-gray-800/80 p-6 rounded-lg backdrop-blur-sm">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
                   Solar to Roof Bootcamp
@@ -47,7 +47,7 @@ function RoofSalesBootcamp() {
             </div>
             
             {/* Video Component */}
-            <div className="md:w-1/2">
+            <div className="md:w-7/12">
               <div className="aspect-video rounded-lg overflow-hidden shadow-xl">
                 <iframe 
                   width="100%" 
@@ -767,12 +767,15 @@ function RoofSalesBootcamp() {
               <p className="text-gray-700 mb-6">
                 Don't miss this opportunity to add a powerful new revenue stream to your business with a proven system and expert guidance.
               </p>
-              
-              <Link to="/checkout?plan=early" onClick={handleScrollToTop}>
-                <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium px-8 py-6 text-xl">
-                  Enroll Now - Secure Your Spot <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
+
+              <div className="relative">
+                <div className="absolute -inset-1 bg-red-600 rounded-xl animate-pulse opacity-75"></div>
+                <Link to="/checkout?plan=early" onClick={handleScrollToTop} className="relative block">
+                  <Button size="lg" className="w-full bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-8 text-2xl shadow-lg">
+                    Sign Up Now. Limited Seats <ArrowRight className="ml-2 h-6 w-6" />
+                  </Button>
+                </Link>
+              </div>
               
               <p className="text-sm text-gray-500 mt-4">
                 Secure payment processing. Immediate access to system upon enrollment.

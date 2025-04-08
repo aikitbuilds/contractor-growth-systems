@@ -157,7 +157,7 @@ const Navbar = () => {
                   Webinars & Events
                 </NavLink>
                 <NavLink 
-                  to="/course-coming-soon" 
+                  to="/roof-sales-bootcamp" 
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
                   Solar to Roof - New
@@ -318,7 +318,7 @@ const Navbar = () => {
                     Webinars & Events
                   </NavLink>
                   <NavLink 
-                    to="/course-coming-soon"
+                    to="/roof-sales-bootcamp"
                     className={({ isActive }) => 
                       `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
                     }
