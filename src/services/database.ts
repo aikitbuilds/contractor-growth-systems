@@ -1,19 +1,48 @@
 import pg from 'pg';
 import { Submission } from './submission';
 
+/**
+ * Database Connection Configuration
+ * 
+ * For development: Use SSH tunnel to connect to the remote database
+ * - Set up SSH tunnel using: ssh -L 5432:localhost:5432 ssh_username@ssh_host
+ * - Connect to localhost:5432 which forwards to the remote PostgreSQL server
+ * 
+ * For production: Connect directly to localhost since the app and DB are on the same server
+ * - No SSH tunnel needed, direct connection to localhost:5432
+ */
+
 // Database connection config
 const dbConfig = {
   host: import.meta.env.VITE_DB_HOST,
   database: import.meta.env.VITE_DB_NAME,
   user: import.meta.env.VITE_DB_USER,
   password: import.meta.env.VITE_DB_PASSWORD,
-  port: import.meta.env.VITE_DB_PORT || 5432,
+  port: parseInt(import.meta.env.VITE_DB_PORT || '5432'),
   max: 10, // max number of clients in the pool
-  idleTimeoutMillis: 30000
+  idleTimeoutMillis: 30000,
+  // Additional options for stability
+  connectionTimeoutMillis: 10000,
+  ssl: import.meta.env.VITE_DB_SSL === 'true' ? { rejectUnauthorized: false } : false
 };
+
+// Log connection details (for debugging, mask sensitive info in production)
+console.log('Database connection config:', {
+  host: dbConfig.host,
+  database: dbConfig.database,
+  user: dbConfig.user,
+  password: dbConfig.password ? '****' : null,
+  port: dbConfig.port,
+  ssl: dbConfig.ssl ? 'enabled' : 'disabled'
+});
 
 // Create a connection pool
 const pool = new pg.Pool(dbConfig);
+
+// Handle pool errors
+pool.on('error', (err: Error) => {
+  console.error('Unexpected error on idle PostgreSQL client', err);
+});
 
 // Initialize database by creating tables if they don't exist
 export async function initDatabase() {
@@ -58,7 +87,7 @@ export async function saveSubmission(submission: Submission): Promise<Submission
     const createdAt = submission.createdAt || new Date();
     
     // Prepare values based on submission type
-    const values: any = {
+    const values: Record<string, any> = {
       id,
       type: submission.type,
       email: submission.email,
@@ -126,10 +155,10 @@ export async function updateSubmission(id: string, updates: Partial<Submission>)
     
     // Convert camelCase keys to snake_case for database columns
     const dbUpdates: Record<string, any> = {};
-    Object.entries(updates).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(updates)) {
       const dbKey = key.replace(/([A-Z])/g, '_$1').toLowerCase();
       dbUpdates[dbKey] = value;
-    });
+    }
     
     // Prepare SET clause
     const keys = Object.keys(dbUpdates);
@@ -191,7 +220,7 @@ export async function getSubmissionsByEmail(email: string): Promise<Submission[]
 // Helper function to convert database row to Submission object
 function formatSubmissionFromDb(row: any): Submission {
   // Base submission properties
-  const submission: any = {
+  const submission: Record<string, any> = {
     id: row.id,
     type: row.type,
     email: row.email,
