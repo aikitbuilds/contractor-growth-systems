@@ -254,11 +254,11 @@ const Index = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-6xl mx-auto bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl shadow-xl overflow-hidden">
             <div className="flex flex-col md:flex-row">
-              {/* Image Column */}
-              <div className="md:w-2/5 bg-secondary relative overflow-hidden">
-                <div className="aspect-video w-full h-full">
+              {/* Video Column */}
+              <div className="md:w-2/5 bg-gradient-to-br from-primary-100/50 to-primary-200/50 p-6 rounded-xl">
+                <div className="aspect-video rounded-lg overflow-hidden shadow-xl w-full md:w-[120%]">
                   <iframe 
-                    src="https://www.youtube.com/embed/iNzZCZz-cgw" 
+                    src="https://www.youtube.com/embed/fwE_xRmpsps" 
                     title="Bootcamp Overview Video"
                     className="w-full h-full object-cover"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -289,7 +289,7 @@ const Index = () => {
                     </div>
                     <div className="flex items-start">
                       <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" />
-                      <p className="text-gray-700">Small group with personalized attention (limited to 15 participants)</p>
+                      <p className="text-gray-700">Small group with personalized attention (limited to 10 participants)</p>
                     </div>
                   </div>
                   
@@ -297,9 +297,9 @@ const Index = () => {
                     <Link to="/roof-sales-bootcamp">
                       <Button 
                         size="lg" 
-                        className="w-full sm:w-auto bg-orange-600 hover:bg-orange-700 text-white font-medium text-lg px-8 py-4 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 animate-pulse-slow"
+                        className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-bold text-xl px-10 py-6 shadow-lg shadow-red-600/50 hover:shadow-red-600/70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 animate-pulse transform hover:scale-105 transition-all duration-300"
                       >
-                        Sign Up Now. Limited Seats <ArrowRight className="ml-2 h-5 w-5" />
+                        Sign Up Now. Limited Seats <ArrowRight className="ml-2 h-6 w-6" />
                       </Button>
                     </Link>
                   </div>

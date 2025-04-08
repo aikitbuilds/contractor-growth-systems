@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contractor Growth Systems Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #111827;
+            --light: #f3f4f6;
+            --card-bg: #ffffff;
+            --border: #e5e7eb;
+            --text-muted: #9ca3af;
+        }
+        
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9fafb;
+        }
+        
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 2rem;
+        }
+
+        .last-updated {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .diagram-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .diagram-container h2 {
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+        
+        .diagram-container h2::before {
+            content: '📊';
+            margin-right: 8px;
+        }
+        
+        .diagram-container .mermaid {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            padding: 8px;
+            border-radius: 4px;
+            background-color: var(--light);
+        }
+
+        .task-checkbox {
+            margin-right: 12px;
+            margin-top: 4px;
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .task-description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 8px;
+        }
+
+        .status-todo {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+
+        .status-in-progress {
+            background-color: var(--warning);
+            color: white;
+        }
+
+        .status-done {
+            background-color: var(--success);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <h1>Contractor Growth Systems Dashboard</h1>
+            <span class="last-updated">Last updated: <span id="lastUpdated"></span></span>
+        </div>
+
+        <div class="diagram-container">
+            <h2>Lead Flow Overview</h2>
+            <div class="mermaid">
+graph TD
+    %% Node styles
+    classDef default stroke:#2563eb,stroke-width:2px;
+    classDef diamond fill:white,stroke:#2563eb,stroke-width:2px;
+    classDef alert fill:#f3f4f6,stroke:#ef4444,stroke-width:2px;
+    classDef action fill:white,stroke:#2563eb,stroke-width:2px;
+    classDef crm fill:#f3f4f6,stroke:#10b981,stroke-width:2px;
+
+    %% Traffic Sources
+    subgraph TS[" "]
+        A["Apollo.io Cold Email Campaign"]:::action
+        SM["LinkedIn / Social Media Post"]:::action
+    end
+
+    %% Decision Diamond
+    B{"User Receives Email / Sees<br/>Post"}:::diamond
+
+    %% Connections from sources
+    A --> B
+    SM --> B
+
+    %% User Actions
+    subgraph UA[" "]
+        C["Clicks Main Website Link /<br/>Profile Link"]:::action
+        D["Clicks Lead Magnet Link / Ad"]:::action
+        E["Clicks Bootcamp Link / Ad"]:::action
+    end
+
+    %% Connect decision to actions
+    B --> C
+    B --> D
+    B --> E
+
+    %% Path 1: Main Website
+    subgraph P1[" "]
+        F["Visits www.bdcteam.pro"]:::action
+        G["Explores Site / General CTAs"]:::action
+        H["User Contacts BDC /<br/>Schedules Audit"]:::action
+        I["Lead Info Sent to BDC Email"]:::alert
+    end
+
+    %% Path 2: Lead Magnet
+    subgraph P2[" "]
+        J["Visits Lead Magnet Page"]:::action
+        K["Submits Form"]:::action
+        L["Lead Alert Sent to BDC Email"]:::alert
+        M["Lead Added to CRM/List"]:::crm
+        N["User Receives Lead Magnet<br/>PDF"]:::action
+    end
+
+    %% Path 3: Bootcamp
+    subgraph P3[" "]
+        O["Visits Bootcamp Page"]:::action
+        P["Submits Form"]:::action
+        Q["Lead Alert Sent to BDC Email"]:::alert
+        R["Lead Added to CRM/List"]:::crm
+        S["User Sees Confirmation"]:::action
+    end
+
+    %% Connections
+    C --> F
+    F --> G
+    G -- Optional --> H
+    H --> I
+
+    D --> J
+    J --> K
+    K --> L
+    K --> M
+    K --> N
+    N -- Optional --> P
+
+    E --> O
+    O --> P
+    P --> Q
+    P --> R
+    P --> S
+
+    %% Subgraph styles
+    style TS fill:none,stroke:#2563eb,stroke-width:2px
+    style UA fill:none,stroke:#2563eb,stroke-width:2px
+    style P1 fill:none,stroke:#2563eb,stroke-width:2px
+    style P2 fill:none,stroke:#2563eb,stroke-width:2px
+    style P3 fill:none,stroke:#2563eb,stroke-width:2px
+            </div>
+        </div>
+
+        <div class="diagram-container">
+            <h2>Implementation Progress</h2>
+            <div class="task-list">
+                <div class="task-item">
+                    <input type="checkbox" class="task-checkbox" checked disabled>
+                    <div class="task-content">
+                        <div class="task-title">Lead Flow Diagram<span class="status-badge status-done">Done</span></div>
+                        <div class="task-description">Created and styled the lead flow visualization diagram</div>
+                    </div>
+                </div>
+                
+                <div class="task-item">
+                    <input type="checkbox" class="task-checkbox" checked disabled>
+                    <div class="task-content">
+                        <div class="task-title">Apollo.io Campaign Setup<span class="status-badge status-in-progress">In Progress</span></div>
+                        <div class="task-description">Setting up cold email campaign infrastructure</div>
+                    </div>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-checkbox">
+                    <div class="task-content">
+                        <div class="task-title">Lead Magnet Page<span class="status-badge status-todo">Todo</span></div>
+                        <div class="task-description">Create landing page for lead magnet with form integration</div>
+                    </div>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-checkbox">
+                    <div class="task-content">
+                        <div class="task-title">Bootcamp Registration<span class="status-badge status-todo">Todo</span></div>
+                        <div class="task-description">Implement bootcamp registration flow and payment integration</div>
+                    </div>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-checkbox">
+                    <div class="task-content">
+                        <div class="task-title">CRM Integration<span class="status-badge status-todo">Todo</span></div>
+                        <div class="task-description">Set up automated lead routing and CRM list management</div>
+                    </div>
+                </div>
+
+                <div class="task-item">
+                    <input type="checkbox" class="task-checkbox" checked disabled>
+                    <div class="task-content">
+                        <div class="task-title">Email Notification System<span class="status-badge status-done">Done</span></div>
+                        <div class="task-description">Implemented automated email alerts using info@bdcteam.pro for leads and form submissions</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            theme: 'default',
+            flowchart: {
+                curve: 'basis',
+                nodeSpacing: 50,
+                rankSpacing: 70,
+                useMaxWidth: true,
+                htmlLabels: true
+            },
+            securityLevel: 'loose'
+        });
+
+        // Update last updated time
+        document.getElementById('lastUpdated').textContent = new Date().toLocaleString();
+    </script>
+</body>
+</html> 

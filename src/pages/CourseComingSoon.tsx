@@ -13,12 +13,37 @@ function CourseComingSoon() {
     setEmail(e.target.value);
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
-      setIsSubmitted(true);
-      setEmail('');
-      // In a real implementation, you would send this to your backend
+      try {
+        // Submit to our API endpoint
+        const response = await fetch('/api/form-submission', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            type: 'course_interest',
+            email,
+            courseId: 'advanced-roofing-techniques',
+            courseName: 'Advanced Roofing Techniques',
+          }),
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          setIsSubmitted(true);
+          setEmail('');
+        } else {
+          console.error('Form submission failed:', result.error);
+          alert('An error occurred while submitting the form. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('An error occurred while submitting the form. Please try again.');
+      }
     }
   };
   

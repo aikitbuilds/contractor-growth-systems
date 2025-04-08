@@ -5,6 +5,11 @@ import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
 
 function RoofSalesBootcamp() {
+  // Smooth scroll function
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -26,23 +31,15 @@ function RoofSalesBootcamp() {
             <div className="md:w-1/2 md:pr-8">
               <div className="bg-gray-800/80 p-6 rounded-lg backdrop-blur-sm">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-                  BDC Solar-to-Roof Bootcamp
+                  Solar to Roof Bootcamp
                 </h1>
                 <h2 className="text-xl md:text-2xl text-white/90 mb-8">
-                  Go from zero to closing your first profitable roofing deal in 30 days, leveraging proven systems and AI tools. We guarantee it!
+                  Go from zero to closing your first profitable deal in 30 days, leveraging proven system and expert mentorship
                 </h2>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium">
-                    Enroll Now - Special Launch Price <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                  <a href="#guarantee" className="inline-block">
-                    <Button size="lg" className="bg-primary hover:bg-primary-800 text-white font-medium">
-                      View Guarantee
-                    </Button>
-                  </a>
-                  <Link to="/bootcamp-details" className="inline-block">
-                    <Button size="lg" className="bg-primary hover:bg-primary-800 text-white font-medium">
-                      View Detailed Curriculum
+                  <Link to="/checkout?plan=early" onClick={handleScrollToTop}>
+                    <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium">
+                      Enroll Now - Special Launch Price <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </Link>
                 </div>
@@ -50,13 +47,13 @@ function RoofSalesBootcamp() {
             </div>
             
             {/* Video Component */}
-            <div className="md:w-1/2 mt-10 md:mt-0 md:pl-8">
-              <div className="relative rounded-xl overflow-hidden shadow-2xl border-4 border-white/20">
+            <div className="md:w-1/2">
+              <div className="aspect-video rounded-lg overflow-hidden shadow-xl">
                 <iframe 
                   width="100%" 
-                  height="315" 
-                  src="https://www.youtube.com/embed/snn78OpcP14?si=6ozUHrbtyQCvVWMa" 
-                  title="Roofing and Solar Sales Bootcamp" 
+                  height="100%" 
+                  src="https://www.youtube.com/embed/fwE_xRmpsps" 
+                  title="Solar to Roof Bootcamp" 
                   frameBorder="0" 
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                   allowFullScreen
@@ -76,6 +73,19 @@ function RoofSalesBootcamp() {
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Whether you're in solar looking to add roofing or a roofer wanting to expand into solar, our bootcamp delivers a practical system for cross-selling success.
             </p>
+            
+            <div className="flex flex-col sm:flex-row justify-center gap-6 mt-8">
+              <a href="#guarantee" className="inline-block">
+                <Button size="lg" className="bg-primary hover:bg-primary-800 text-white font-medium px-8 py-6 text-xl">
+                  View Our Guarantee
+                </Button>
+              </a>
+              <Link to="/bootcamp-details" className="inline-block">
+                <Button size="lg" className="bg-primary hover:bg-primary-800 text-white font-medium px-8 py-6 text-xl">
+                  View Detailed Curriculum
+                </Button>
+              </Link>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -139,7 +149,7 @@ function RoofSalesBootcamp() {
                 </div>
                 <div className="flex items-start">
                   <CheckCircle className="h-6 w-6 text-secondary mr-3 mt-1 flex-shrink-0" />
-                  <p className="text-gray-300">Small group format ensures personalized attention (limited to 15 participants)</p>
+                  <p className="text-gray-300">Small group format ensures personalized attention (limited to 10 participants)</p>
                 </div>
               </div>
             </div>
@@ -150,104 +160,110 @@ function RoofSalesBootcamp() {
       {/* The Guarantee Section */}
       <section id="guarantee" className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-secondary/10 border-4 border-secondary p-8 rounded-xl">
-              <div className="text-center mb-6">
-                <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Our Unbeatable "First Deal Closed" Guarantee</h2>
-                <div className="w-20 h-1 bg-secondary mx-auto mb-8" />
-              </div>
-              
-              <p className="text-xl text-center mb-8">
-                <span className="font-bold">Attend all 8 live sessions, implement the system we teach, and if you haven't closed your first profitable roofing or solar deal within 30 days, we'll provide personalized 1-on-1 coaching until you achieve that milestone.</span> We are committed to your success.
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">We're so confident in the results, we have a no-lose guarantee</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Your success is our priority, and we're committed to getting you real results.
+            </p>
+          </div>
+        
+          <div className="flex flex-col md:flex-row items-center max-w-4xl mx-auto bg-gray-50 rounded-xl overflow-hidden">
+            <div className="md:w-1/3">
+              <img 
+                src="/Images/steve-photo.jpg" 
+                alt="Steve - Program Leader" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="md:w-2/3 p-8">
+              <h3 className="text-2xl font-bold mb-4">I'm so confident in what we do, I guarantee...</h3>
+              <p className="text-lg mb-6">
+                If you follow our system and don't close your first deal within 60 days of completing the bootcamp, 
+                we'll continue working with you at no additional cost until you do.
               </p>
-              
-              <div className="flex justify-center mt-8">
-                <Link to="/checkout">
-                  <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium">
-                    Secure Your Spot Now <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-              </div>
+              <p className="font-medium">
+                No other program offers this level of commitment to your success.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* What You Get Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-900 text-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Here's What's Included:</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Here's What's Included:</h2>
+            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
               Everything you need to launch and scale your cross-selling operation in just 30 days.
               <Link to="/bootcamp-details" className="ml-2 text-secondary hover:underline">View detailed curriculum →</Link>
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="flex items-start bg-white p-6 rounded-lg shadow-sm">
+            <div className="flex items-start bg-gray-800/80 p-6 rounded-lg shadow-md border border-gray-700">
               <div className="mr-4 mt-1">
-                <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-secondary/30 rounded-full flex items-center justify-center">
                   <Calendar className="h-6 w-6 text-secondary" />
                 </div>
               </div>
               <div>
-                <h3 className="text-xl font-bold mb-2">8 Live Training Sessions</h3>
-                <p className="text-gray-600">Tuesdays & Thursdays for 1 Month, designed to build your skills progressively.</p>
+                <h3 className="text-xl font-bold mb-2 text-white">8 Live Training Sessions</h3>
+                <p className="text-gray-300">Tuesdays & Thursdays for 1 Month, designed to build your skills progressively.</p>
               </div>
             </div>
 
-            <div className="flex items-start bg-white p-6 rounded-lg shadow-sm">
+            <div className="flex items-start bg-gray-800/80 p-6 rounded-lg shadow-md border border-gray-700">
               <div className="mr-4 mt-1">
-                <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-secondary/30 rounded-full flex items-center justify-center">
                   <Code className="h-6 w-6 text-secondary" />
                 </div>
               </div>
               <div>
-                <h3 className="text-xl font-bold mb-2">Business Operating System</h3>
-                <p className="text-gray-600">Complete software toolkit with CRM integrations, proposal templates, and sales tracking.</p>
+                <h3 className="text-xl font-bold mb-2 text-white">Business Operating System</h3>
+                <p className="text-gray-300">Complete software toolkit with CRM integrations, proposal templates and sales tracks customized for your existing systems.</p>
               </div>
             </div>
 
-            <div className="flex items-start bg-white p-6 rounded-lg shadow-sm">
+            <div className="flex items-start bg-gray-800/80 p-6 rounded-lg shadow-md border border-gray-700">
               <div className="mr-4 mt-1">
-                <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-secondary/30 rounded-full flex items-center justify-center">
+                  <Clock className="h-6 w-6 text-secondary" />
+                </div>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold mb-2 text-white">Access to All Recordings</h3>
+                <p className="text-gray-300">Lifetime access to all session recordings for future reference and review.</p>
+              </div>
+            </div>
+
+            <div className="flex items-start bg-gray-800/80 p-6 rounded-lg shadow-md border border-gray-700">
+              <div className="mr-4 mt-1">
+                <div className="w-12 h-12 bg-secondary/30 rounded-full flex items-center justify-center">
                   <Bot className="h-6 w-6 text-secondary" />
                 </div>
               </div>
               <div>
-                <h3 className="text-xl font-bold mb-2">AI Sales Assistant</h3>
-                <p className="text-gray-600">Custom-trained AI tools for lead qualification, proposal generation, and objection handling.</p>
+                <h3 className="text-xl font-bold mb-2 text-white">AI Sales Assistant</h3>
+                <p className="text-gray-300">Custom-trained AI tools for lead qualification, proposal generation, and objection handling.</p>
               </div>
             </div>
 
-            <div className="flex items-start bg-white p-6 rounded-lg shadow-sm">
+            <div className="flex items-start bg-gray-800/80 p-6 rounded-lg shadow-md border border-gray-700">
               <div className="mr-4 mt-1">
-                <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center">
-                  <Zap className="h-6 w-6 text-secondary" />
-                </div>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold mb-2">Done-For-You Marketing</h3>
-                <p className="text-gray-600">Customized marketing assets including digital ads, email sequences, and presentation decks.</p>
-              </div>
-            </div>
-
-            <div className="flex items-start bg-white p-6 rounded-lg shadow-sm">
-              <div className="mr-4 mt-1">
-                <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-secondary/30 rounded-full flex items-center justify-center">
                   <User className="h-6 w-6 text-secondary" />
                 </div>
               </div>
               <div>
-                <h3 className="text-xl font-bold mb-2">Small Group Setting</h3>
-                <p className="text-gray-600">Limited to 15 participants to ensure personalized attention and feedback.</p>
+                <h3 className="text-xl font-bold mb-2 text-white">Small Group Setting</h3>
+                <p className="text-gray-300">Limited to 10 participants to ensure personalized attention and feedback.</p>
               </div>
             </div>
 
-            <div className="flex items-start bg-white p-6 rounded-lg shadow-sm">
+            <div className="flex items-start bg-gray-800/80 p-6 rounded-lg shadow-md border border-gray-700">
               <div className="mr-4 mt-1">
-                <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-secondary/30 rounded-full flex items-center justify-center">
                   <Shield className="h-6 w-6 text-secondary" />
                 </div>
               </div>
@@ -321,7 +337,7 @@ function RoofSalesBootcamp() {
                 <Star className="h-5 w-5 text-yellow-500" />
               </div>
               <p className="text-gray-700">
-                "Adding solar to our roofing business has increased our average ticket by 300%. The operating system they provide let us hit the ground running without hiring additional staff."
+                "Adding solar to our roofing business has increased our average ticket by 25%. The operating system they provide let us hit the ground running without hiring additional staff."
               </p>
             </div>
 
@@ -454,7 +470,7 @@ function RoofSalesBootcamp() {
                 <div className="w-2 h-2 bg-secondary rounded-full mt-2 mr-3" />
                 <div>
                   <h4 className="font-bold text-gray-900">Spots Available</h4>
-                  <p className="text-gray-600 font-bold">Strictly Limited to 15 Participants</p>
+                  <p className="text-gray-600 font-bold">Strictly Limited to 10 Participants</p>
                 </div>
               </div>
               
@@ -633,7 +649,7 @@ function RoofSalesBootcamp() {
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Your Investment in Business Transformation</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Our tiered pricing model rewards early action. Just one completed deal will recover your entire investment.
+              A one-time investment that will pay for itself with your first successful deal.
             </p>
           </div>
 
@@ -667,7 +683,7 @@ function RoofSalesBootcamp() {
                   </div>
                   <div className="flex items-center justify-center">
                     <CheckCircle className="h-5 w-5 text-secondary mr-2" />
-                    <span className="text-gray-700">Done-For-You Marketing Package</span>
+                    <span className="text-gray-700">Access to All Recordings</span>
                   </div>
                   <div className="flex items-center justify-center">
                     <CheckCircle className="h-5 w-5 text-secondary mr-2" />
@@ -675,9 +691,9 @@ function RoofSalesBootcamp() {
                   </div>
                 </div>
                 
-                <Link to="/checkout">
+                <Link to="/checkout?plan=early" onClick={handleScrollToTop}>
                   <Button size="lg" className="w-full bg-secondary hover:bg-secondary-600 text-white font-medium text-lg">
-                    Enroll Now - Early Bird Price
+                    Enroll Now
                   </Button>
                 </Link>
                 <p className="text-xs text-gray-500 mt-3">Only 4 spots remaining at this price!</p>
@@ -685,10 +701,10 @@ function RoofSalesBootcamp() {
             </div>
 
             {/* Standard Pricing */}
-            <div className="bg-white border border-gray-200 rounded-xl shadow overflow-hidden">
+            <div className="bg-white border-2 border-gray-700 rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform">
               <div className="bg-gray-700 p-6 text-white text-center">
                 <h3 className="text-2xl font-bold">Standard Pricing</h3>
-                <p className="text-sm mt-1">Last 5 Spots</p>
+                <p className="text-sm mt-1">Limited Seats Available</p>
               </div>
               <div className="p-8 text-center">
                 <div className="mb-4">
@@ -700,30 +716,30 @@ function RoofSalesBootcamp() {
                 </p>
                 <div className="space-y-3 mb-8">
                   <div className="flex items-center justify-center">
-                    <CheckCircle className="h-5 w-5 text-gray-600 mr-2" />
+                    <CheckCircle className="h-5 w-5 text-gray-700 mr-2" />
                     <span className="text-gray-700">All 8 Live Training Sessions</span>
                   </div>
                   <div className="flex items-center justify-center">
-                    <CheckCircle className="h-5 w-5 text-gray-600 mr-2" />
+                    <CheckCircle className="h-5 w-5 text-gray-700 mr-2" />
                     <span className="text-gray-700">Complete Business Operating System</span>
                   </div>
                   <div className="flex items-center justify-center">
-                    <CheckCircle className="h-5 w-5 text-gray-600 mr-2" />
+                    <CheckCircle className="h-5 w-5 text-gray-700 mr-2" />
                     <span className="text-gray-700">AI Sales Assistant & Tools</span>
                   </div>
                   <div className="flex items-center justify-center">
-                    <CheckCircle className="h-5 w-5 text-gray-600 mr-2" />
-                    <span className="text-gray-700">Done-For-You Marketing Package</span>
+                    <CheckCircle className="h-5 w-5 text-gray-700 mr-2" />
+                    <span className="text-gray-700">Access to All Recordings</span>
                   </div>
                   <div className="flex items-center justify-center">
-                    <CheckCircle className="h-5 w-5 text-gray-600 mr-2" />
+                    <CheckCircle className="h-5 w-5 text-gray-700 mr-2" />
                     <span className="text-gray-700">The "First Deal Closed" Guarantee</span>
                   </div>
                 </div>
                 
-                <Link to="/checkout">
-                  <Button size="lg" className="w-full bg-gray-700 hover:bg-gray-600 text-white font-medium">
-                    Enroll at Standard Price
+                <Link to="/checkout?plan=standard" onClick={handleScrollToTop}>
+                  <Button size="lg" className="w-full bg-gray-700 hover:bg-gray-600 text-white font-medium text-lg py-3">
+                    Enroll Now
                   </Button>
                 </Link>
               </div>
@@ -744,7 +760,7 @@ function RoofSalesBootcamp() {
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6">Ready to Transform Your Business?</h2>
             <p className="text-xl text-gray-600 mb-8">
-              Only <span className="font-bold text-secondary">4 early bird spots</span> remaining!
+              Only <span className="font-bold text-secondary">4 early bird spots</span> remaining at $1,895!
             </p>
             
             <div className="bg-white p-8 rounded-xl shadow-md">
@@ -752,7 +768,7 @@ function RoofSalesBootcamp() {
                 Don't miss this opportunity to add a powerful new revenue stream to your business with a proven system and expert guidance.
               </p>
               
-              <Link to="/checkout">
+              <Link to="/checkout?plan=early" onClick={handleScrollToTop}>
                 <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium px-8 py-6 text-xl">
                   Enroll Now - Secure Your Spot <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -765,6 +781,17 @@ function RoofSalesBootcamp() {
           </div>
         </div>
       </section>
+
+      {/* Add credentials logos to program details section */}
+      <div className="max-w-3xl mx-auto mt-8">
+        <h4 className="text-center font-bold text-gray-700 mb-4">Industry Credentials</h4>
+        <div className="flex flex-wrap justify-center items-center gap-8">
+          <img src="/Images/gaff-logo.png" alt="Gaff" className="h-16 object-contain" />
+          <img src="/Images/owens-corning-logo.png" alt="Owens Corning" className="h-16 object-contain" />
+          <img src="/Images/certainteed-logo.png" alt="CertainTeed" className="h-16 object-contain" />
+          <img src="/Images/additional-accolade.png" alt="Additional Accolade" className="h-16 object-contain" />
+        </div>
+      </div>
     </div>
   );
 }

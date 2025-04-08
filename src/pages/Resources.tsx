@@ -108,15 +108,43 @@ const Resources = () => {
     setShowThankYou(false);
   };
   
-  const handleFormSubmit = (email: string, name: string) => {
+  const handleFormSubmit = async (email: string, name: string) => {
     console.log(`Resource: ${selectedResource}, Email: ${email}, Name: ${name}`);
-    setShowThankYou(true);
     
-    // Clear form data after submission
-    setTimeout(() => {
-      setOpenDialog(false);
-      setShowThankYou(false);
-    }, 3000);
+    try {
+      // Submit to our API endpoint
+      const response = await fetch('/api/form-submission', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'resource_download',
+          email,
+          name,
+          resourceId: selectedResource.toLowerCase().replace(/\s+/g, '-'),
+          resourceName: selectedResource,
+        }),
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        setShowThankYou(true);
+        
+        // Clear form data after submission
+        setTimeout(() => {
+          setOpenDialog(false);
+          setShowThankYou(false);
+        }, 3000);
+      } else {
+        console.error('Form submission failed:', result.error);
+        alert('An error occurred while submitting the form. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('An error occurred while submitting the form. Please try again.');
+    }
   };
 
   return (

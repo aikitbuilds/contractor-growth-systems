@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -40,9 +40,17 @@ function TestimonialCard({ quote, author, title, imageSrc }: TestimonialProps) {
 
 function Checkout() {
   const [includeUpsell, setIncludeUpsell] = useState(false);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const plan = queryParams.get('plan') || 'early';
+  
   const earlyBirdPrice = 1895;
+  const standardPrice = 2495;
   const upsellPrice = 495; // 2x 1-on-1 Coaching Sessions
-  const totalPrice = earlyBirdPrice + (includeUpsell ? upsellPrice : 0);
+  
+  const basePrice = plan === 'standard' ? standardPrice : earlyBirdPrice;
+  const totalPrice = basePrice + (includeUpsell ? upsellPrice : 0);
+  const isEarlyBird = plan !== 'standard';
 
   // Function to format currency (remains the same)
   const formatCurrency = (value: number) => {
@@ -100,7 +108,9 @@ function Checkout() {
                 <span>Back to Bootcamp Details</span>
               </Link>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-primary mb-8 text-center">Secure Your Bootcamp Spot</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-primary mb-8 text-center">
+              {isEarlyBird ? 'Secure Your Early Bird Spot' : 'Secure Your Bootcamp Spot'}
+            </h1>
 
             <div className="grid md:grid-cols-3 gap-8">
               {/* Order Summary & Payment */}
@@ -114,9 +124,15 @@ function Checkout() {
                     <div className="flex justify-between items-center border-b pb-4 mb-4">
                       <div>
                         <p className="font-semibold">BDC Solar-to-Roof Bootcamp</p>
-                        <p className="text-sm text-secondary font-medium">Early Bird Special</p>
+                        <p className="text-sm text-gray-700 font-medium">
+                          {isEarlyBird ? (
+                            <span className="text-secondary">Early Bird Special</span>
+                          ) : (
+                            <span>Standard Pricing</span>
+                          )}
+                        </p>
                       </div>
-                      <p className="font-semibold">{formatCurrency(earlyBirdPrice)}</p>
+                      <p className="font-semibold">{formatCurrency(basePrice)}</p>
                     </div>
                     
                     {/* Optional Upsell Display */}
@@ -196,19 +212,21 @@ function Checkout() {
               {/* Bonus & Upsell Column */}
               <div className="md:col-span-1 space-y-6">
                 {/* Early Bird Bonus */}
-                <Card className="bg-gradient-to-br from-green-50 to-emerald-100 border border-green-200">
-                  <CardHeader className="flex flex-row items-center space-x-3 pb-2">
-                    <Gift className="h-6 w-6 text-green-600" />
-                    <CardTitle className="text-green-800">Early Bird Bonus!</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-700">
-                      As an early bird, you get instant access to our 
-                      <strong>AI Prompt Library for Contractors</strong> 
-                      (valued at $199) absolutely free!
-                    </p>
-                  </CardContent>
-                </Card>
+                {isEarlyBird && (
+                  <Card className="bg-gradient-to-br from-green-50 to-emerald-100 border border-green-200">
+                    <CardHeader className="flex flex-row items-center space-x-3 pb-2">
+                      <Gift className="h-6 w-6 text-green-600" />
+                      <CardTitle className="text-green-800">Early Bird Bonus!</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-gray-700">
+                        As an early bird, you get instant access to our 
+                        <strong>AI Prompt Library for Contractors</strong> 
+                        (valued at $199) absolutely free!
+                      </p>
+                    </CardContent>
+                  </Card>
+                )}
 
                 {/* Optional Upsell */}
                 <Card className="bg-gradient-to-br from-blue-50 to-indigo-100 border border-blue-200">

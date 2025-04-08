@@ -6,6 +6,10 @@ import cron from 'node-cron';
 import puppeteer from 'puppeteer';
 import { marked } from 'marked';
 import { CronJob } from 'cron';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
 
 // Get current directory
 const __filename = fileURLToPath(import.meta.url);
@@ -16,34 +20,43 @@ const __dirname = process.platform === 'win32'
 
 // Constants
 const SCHEDULE = '0 7 * * 1,3,5'; // Monday, Wednesday, Friday at 7:00 AM
-const TEST_MODE = true; // Set to false for production
+const TEST_MODE = true; // Set to true for testing
 const OUTPUT_DIR = path.join(process.cwd());
 const DASHBOARD_FILE = path.join(OUTPUT_DIR, 'board.md');
 const PDF_FILE = path.join(OUTPUT_DIR, 'BDC-Dashboard.pdf');
-const WEBSITE_URL = 'https://www.solarsales.pro';
-const EMAIL_CONFIG = {
-  host: 'solarsales.pro',
-  port: 465,
-  secure: true,
-  auth: {
-    user: 'mail@solarsales.pro', 
-    pass: 's~p)]!8&Dcjo'
-  },
-  tls: {
-    // Do not fail on invalid certs
-    rejectUnauthorized: false
-  }
-};
-const REQUESTS_LOG_FILE = path.join(OUTPUT_DIR, 'email-requests.md');
+const WEBSITE_URL = 'https://www.bdcteam.pro';
 
 // Email recipients
 const RECIPIENTS = [
-  'steve@billiondollarcontractor.com', // Client email
-  'michaelcongtran@gmail.com' // Test recipient & CC
+  'info@aininjas.pro', // Primary recipient
+  'michaelcongtran@gmail.com', // Test recipient & CC
 ];
 
-// For initial testing, only send to test email
+// For testing, only send to Michael's email
 const TEST_RECIPIENTS = ['michaelcongtran@gmail.com'];
+
+// Email configuration from environment variables
+const EMAIL_CONFIG = {
+  host: process.env.EMAIL_HOST,
+  port: Number.parseInt(process.env.EMAIL_SMTP_PORT, 10),
+  secure: true,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD
+  },
+  tls: {
+    rejectUnauthorized: true
+  }
+};
+
+// IMAP configuration from environment variables
+const IMAP_CONFIG = {
+  user: process.env.EMAIL_USER,
+  password: process.env.EMAIL_PASSWORD,
+  host: process.env.EMAIL_HOST,
+  port: Number.parseInt(process.env.EMAIL_IMAP_PORT, 10),
+  tls: true
+};
 
 // Create email transporter
 const transporter = nodemailer.createTransport(EMAIL_CONFIG);
@@ -292,7 +305,7 @@ async function sendDashboardEmail() {
     
     // Create email message
     const mailOptions = {
-      from: 'BDC Project <mail@solarsales.pro>',
+      from: 'BDC Project <info@bdcteam.pro>',
       to: TEST_MODE ? TEST_RECIPIENTS.join(', ') : RECIPIENTS.join(', '),
       subject: `BDC Project Dashboard Update - ${today}`,
       text: `Here is the latest BDC Project Dashboard as of ${today}.\n\nThis is an automated email sent on Mondays, Wednesdays, and Fridays.`,

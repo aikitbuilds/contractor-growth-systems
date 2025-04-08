@@ -27,6 +27,9 @@ import ContractorAI from "./pages/ContractorAI";
 import Events from "./pages/Events";
 import Checkout from "./pages/Checkout";
 import Pricing from "./pages/Pricing";
+import EmailTestPage from "./pages/EmailTestPage";
+import Contact from './pages/Contact'
+import SubmissionAdmin from './pages/SubmissionAdmin'
 
 const queryClient = new QueryClient();
 
@@ -60,6 +63,9 @@ const App = () => (
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/email-test" element={<EmailTestPage />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/admin/submissions" element={<SubmissionAdmin />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

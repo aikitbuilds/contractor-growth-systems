@@ -9,8 +9,12 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   
+  // Extract pathname from location
+  const { pathname } = location;
+  
   // Set initial styling based on current page
-  const isHomePage = location.pathname === '/';
+  const isHomePage = pathname === '/';
+  const isBootcampPage = pathname === '/roof-sales-bootcamp';
   
   // Initialize isScrolled to true on non-home pages to maintain consistent appearance
   const [initialRender, setInitialRender] = useState(true);
@@ -44,7 +48,7 @@ const Navbar = () => {
   // Close mobile menu when route changes
   useEffect(() => {
     setIsMenuOpen(false);
-  }, [location.pathname]);
+  }, [pathname]);
   
   const navbarClass = isScrolled 
     ? 'bg-primary shadow-lg py-3' 
@@ -57,7 +61,7 @@ const Navbar = () => {
   `;
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navbarClass}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isBootcampPage ? 'hidden' : navbarClass}`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -156,7 +160,7 @@ const Navbar = () => {
                   to="/course-coming-soon" 
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
-                  Solar Course
+                  Solar to Roof - New
                   <span className="ml-2 bg-secondary text-white text-xs py-0.5 px-1.5 rounded-full">
                     New
                   </span>
@@ -320,7 +324,7 @@ const Navbar = () => {
                     }
                   >
                     <div className="flex items-center">
-                      Solar Course
+                      Solar to Roof - New
                       <span className="ml-2 bg-secondary text-white text-xs py-0.5 px-1.5 rounded-full">
                         New
                       </span>

@@ -6,7 +6,7 @@ This system automatically emails the BDC Project Dashboard to clients and team m
 
 1. A PDF version of the dashboard for easy viewing and printing
 2. A summary of recent project activities and critical tasks
-3. Links to the SolarSales.pro website
+3. Links to the BDC Team website
 4. A section letting recipients know they can reply with questions or requests
 
 ## Environment Setup
@@ -15,6 +15,7 @@ This system automatically emails the BDC Project Dashboard to clients and team m
 
 The system requires these key files:
 
+- **Environment File (.env)**: Contains all sensitive configuration including email credentials
 - **Dashboard Content File (BDC-dashboard.md)**: Located at `public/BDC-dashboard.md` - This is the critical file that contains all dashboard content including:
   - Project tasks and their completion status
   - Website flow diagrams
@@ -41,16 +42,26 @@ The `BDC-dashboard.md` file is the central component of the entire system:
 - All project logs and history are maintained in this file
 - Task tracking and status updates are stored here
 
-## Configuration
+### Email Configuration
 
-### Email Settings
+The email settings are stored in the `.env` file with the following variables:
 
-The system is configured to use the following email account:
+```env
+# Email Configuration
+EMAIL_HOST=bdcteam.pro
+EMAIL_USER=info@bdcteam.pro
+EMAIL_PASSWORD=your_password_here
+EMAIL_SMTP_PORT=465
+EMAIL_IMAP_PORT=993
+EMAIL_POP3_PORT=995
+```
 
-- **Server**: solarsales.pro
-- **Username**: mail@solarsales.pro
-- **Password**: s~p)]!8&Dcjo
-- **Port**: 465 (SSL/TLS)
+Current email server settings:
+- **Server**: bdcteam.pro
+- **Username**: info@bdcteam.pro
+- **SMTP Port**: 465 (SSL/TLS)
+- **IMAP Port**: 993 (SSL/TLS)
+- **POP3 Port**: 995 (SSL/TLS)
 
 ### Recipients
 
