@@ -37,7 +37,7 @@ function RoofSalesBootcamp() {
                   Go from zero to closing your first profitable deal in 30 days, leveraging proven system and expert mentorship
                 </h2>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Link to="/checkout?plan=early" onClick={handleScrollToTop}>
+                  <Link to="/roof-sales-checkout?plan=early" onClick={handleScrollToTop}>
                     <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium">
                       Enroll Now - Special Launch Price <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
@@ -692,7 +692,7 @@ function RoofSalesBootcamp() {
                   </div>
                 </div>
                 
-                <Link to="/checkout?plan=early" onClick={handleScrollToTop}>
+                <Link to="/roof-sales-checkout?plan=early" onClick={handleScrollToTop}>
                   <Button size="lg" className="w-full bg-secondary hover:bg-secondary-600 text-white font-medium text-lg">
                     Enroll Now
                   </Button>
@@ -738,7 +738,7 @@ function RoofSalesBootcamp() {
                   </div>
                 </div>
                 
-                <Link to="/checkout?plan=standard" onClick={handleScrollToTop}>
+                <Link to="/roof-sales-checkout?plan=standard" onClick={handleScrollToTop}>
                   <Button size="lg" className="w-full bg-gray-700 hover:bg-gray-600 text-white font-medium text-lg py-3">
                     Enroll Now
                   </Button>
@@ -770,8 +770,8 @@ function RoofSalesBootcamp() {
               </p>
 
               <div className="relative">
-                <div className="absolute -inset-1 bg-red-600 rounded-xl animate-pulse opacity-75"></div>
-                <Link to="/checkout?plan=early" onClick={handleScrollToTop} className="relative block">
+                <div className="absolute -inset-1 bg-red-600 rounded-xl animate-pulse opacity-75" />
+                <Link to="/roof-sales-checkout?plan=early" onClick={handleScrollToTop} className="relative block">
                   <Button size="lg" className="w-full bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-8 text-2xl shadow-lg">
                     Sign Up Now. Limited Seats <ArrowRight className="ml-2 h-6 w-6" />
                   </Button>

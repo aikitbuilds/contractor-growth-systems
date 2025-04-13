@@ -18,6 +18,7 @@ import Resources from "./pages/Resources";
 import Footer from "./components/Footer";
 import AIChatbot from "./components/AIChatbot";
 import RoofSalesBootcamp from './pages/RoofSalesBootcamp';
+import RoofSalesCheckout from './pages/RoofSalesCheckout';
 import BootcampDetails from './pages/BootcampDetails';
 import TexasContractorCaseStudy from './pages/TexasContractorCaseStudy';
 import PetersonDeanCaseStudy from './pages/PetersonDeanCaseStudy';
@@ -64,6 +65,7 @@ const App = () => (
               <Route path="/project-dashboard" element={<ProjectDashboard />} />
               <Route path="/roof-sales-bootcamp" element={<RoofSalesBootcamp />} />
               <Route path="/bootcamp-details" element={<BootcampDetails />} />
+              <Route path="/roof-sales-checkout" element={<RoofSalesCheckout />} />
               <Route path="/texas-contractor-case" element={<TexasContractorCaseStudy />} />
               <Route path="/peterson-dean-case" element={<PetersonDeanCaseStudy />} />
               <Route path="/blog" element={<Blog />} />

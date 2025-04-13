@@ -5,10 +5,11 @@ const AIChatbot = () => {
     // Create and inject GHL chat widget script
     const script = document.createElement('script');
     script.id = 'ghl-chat-widget';
-    script.src = 'https://chat-widget.gohighlevel.com/widget.js';
+    script.src = 'https://widgets.leadconnectorhq.com/loader.js';
     script.async = true;
     script.defer = true;
-    script.dataset.chatbotId = '35c7743a-b8cf-4e12-8bb3-f91236e337fa'; // Replace with your actual GHL chat widget ID
+    script.dataset.resourcesUrl = 'https://widgets.leadconnectorhq.com/chat-widget/loader.js';
+    script.dataset.widgetId = '6750f17685eed571176e6e22'; // Steve's chat widget ID
     
     // Append the script to the body
     document.body.appendChild(script);
