@@ -3,6 +3,14 @@ import { Link } from 'react-router-dom';
 import Logo from './Logo';
 import { Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 
+// Enhanced pulsating effect component
+const PulsatingText = ({ children }: { children: React.ReactNode }) => (
+  <span className="relative inline-block">
+    <span className="text-orange-500 font-bold text-base animate-[pulse_1.5s_ease-in-out_infinite]">{children}</span>
+    <span className="absolute inset-0 bg-orange-400/40 blur-md rounded-md animate-[pulse_1.5s_ease-in-out_infinite]" />
+  </span>
+);
+
 const Footer = () => {
   return (
     <footer className="bg-primary text-white pt-16 pb-8">
@@ -96,13 +104,19 @@ const Footer = () => {
           
           {/* Column 4 - Contact */}
           <div>
-            <h3 className="text-lg font-bold mb-6">Contact Us</h3>
+            <h3 className="text-lg font-bold mb-3">Contact Us</h3>
+            <div className="mb-4">
+              <span className="text-gray-300 mr-2">Powered by</span>
+              <a href="https://aininjas.pro" target="_blank" rel="noopener noreferrer" className="hover:text-white">
+                <PulsatingText>AI Ninjas</PulsatingText>
+              </a>
+            </div>
             <ul className="space-y-3">
               <li className="text-gray-300">
                 <strong className="text-white">Email:</strong> info@billiondollarcontractor.com
               </li>
               <li className="text-gray-300">
-                <strong className="text-white">Phone:</strong> (555) 123-4567
+                <strong className="text-white">Phone:</strong> 1-888-850-2095
               </li>
               <li className="text-gray-300">
                 <strong className="text-white">Hours:</strong> Mon-Fri: 9AM - 5PM EST
@@ -116,7 +130,7 @@ const Footer = () => {
           </div>
         </div>
         
-        {/* Bottom Bar */}
+        {/* Bottom Bar with copyright and links */}
         <div className="border-t border-gray-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm mb-4 md:mb-0">

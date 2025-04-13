@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Calendar, User, Tag, ExternalLink, Search } from 'lucide-react';
+import { ArrowRight, Calendar, User, Tag, ExternalLink, Search, Clock, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Navbar from '@/components/Navbar';
-import { Container, Typography, Grid, CardContent, CardMedia, Box, TextField, InputAdornment, Chip } from '@mui/material';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { Play } from 'lucide-react';
 
 // Sample blog post data
 const blogPosts = [
@@ -110,8 +107,8 @@ function Blog() {
       setIsLoading(true);
       
       try {
-        // NewsAPI key
-        const apiKey = '1e8c801cea7542bc9e46b5a0b33760c8';
+        // Get NewsAPI key from environment variables
+        const apiKey = import.meta.env.VITE_NEWS_API_KEY;
         
         // Fetch solar news
         const solarResponse = await fetch(
@@ -249,9 +246,9 @@ function Blog() {
             <div className="relative max-w-2xl mx-auto">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
               <Input
-                type="text"
-                placeholder="Search articles..."
-                className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-white/60 w-full"
+                type="search"
+                placeholder="Search articles, news, and topics..."
+                className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-white/60 focus:bg-white/20"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -260,234 +257,338 @@ function Blog() {
         </div>
       </section>
       
-      {/* Tuesday Tuneup Banner */}
-      <section className="py-8 bg-secondary/10">
+      {/* Enhanced Navigation Menu */}
+      <div className="sticky top-16 z-10 bg-white shadow-md border-b border-gray-200">
         <div className="container mx-auto px-4">
-          <a 
-            href="https://www.thetuesdaytuneup.com/" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="block"
+          <Tabs 
+            defaultValue={activeTab} 
+            onValueChange={setActiveTab}
+            className="w-full py-1"
           >
-            <div className="bg-gradient-to-r from-secondary-700 to-secondary rounded-xl shadow-xl overflow-hidden">
-              <div className="flex flex-col md:flex-row items-center">
-                <div className="md:w-1/4 p-6 flex justify-center">
-                  <div className="w-32 h-32 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center border-4 border-white/20">
-                    <div className="text-center">
-                      <div className="text-white text-4xl font-bold leading-none mb-1">TT</div>
-                      <div className="text-white/80 text-xs uppercase tracking-wider">Newsletter</div>
+            <TabsList className="grid grid-cols-4 w-full h-16 bg-white rounded-none">
+              <TabsTrigger 
+                value="blog" 
+                className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg text-lg font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 flex flex-col items-center justify-center py-2 px-4 h-full"
+                onClick={() => setActiveTab('blog')}
+              >
+                <span className="text-base md:text-lg">Blog Posts</span>
+                <span className="hidden md:block text-xs opacity-80">Articles & Guides</span>
+              </TabsTrigger>
+              
+              <TabsTrigger 
+                value="solar" 
+                className="data-[state=active]:bg-amber-500 data-[state=active]:text-white data-[state=active]:shadow-lg text-lg font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 flex flex-col items-center justify-center py-2 px-4 h-full"
+                onClick={() => setActiveTab('solar')}
+              >
+                <span className="text-base md:text-lg">Solar News</span>
+                <span className="hidden md:block text-xs opacity-80">Industry Updates</span>
+              </TabsTrigger>
+              
+              <TabsTrigger 
+                value="roofing" 
+                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg text-lg font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 flex flex-col items-center justify-center py-2 px-4 h-full"
+                onClick={() => setActiveTab('roofing')}
+              >
+                <span className="text-base md:text-lg">Roofing News</span>
+                <span className="hidden md:block text-xs opacity-80">Market Trends</span>
+              </TabsTrigger>
+              
+              <TabsTrigger 
+                value="sustainability" 
+                className="data-[state=active]:bg-green-600 data-[state=active]:text-white data-[state=active]:shadow-lg text-lg font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 flex flex-col items-center justify-center py-2 px-4 h-full"
+                onClick={() => setActiveTab('sustainability')}
+              >
+                <span className="text-base md:text-lg">Sustainability</span>
+                <span className="hidden md:block text-xs opacity-80">Green Innovation</span>
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+      </div>
+      
+      <div className="container mx-auto px-4 py-12">
+        <TabsContent value="blog" className="mt-0">
+          {/* Blog Posts Section */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {isLoading ? (
+              Array(3).fill(0).map((_, i) => (
+                <Card key={`loading-card-${i}`} className="animate-pulse">
+                  <div className="aspect-video bg-gray-200 rounded-t-lg" />
+                  <div className="p-6 space-y-4">
+                    <div className="h-6 bg-gray-200 rounded-md w-3/4" />
+                    <div className="h-4 bg-gray-200 rounded-md" />
+                    <div className="h-4 bg-gray-200 rounded-md w-5/6" />
+                    <div className="flex items-center gap-2">
+                      <div className="h-4 w-4 bg-gray-200 rounded-full" />
+                      <div className="h-4 bg-gray-200 rounded-md w-1/4" />
                     </div>
                   </div>
-                </div>
-                <div className="md:w-3/4 p-6 md:p-8 text-white">
-                  <h2 className="text-2xl md:text-3xl font-bold mb-2">The Tuesday Tuneup</h2>
-                  <p className="text-white/80 text-lg mb-4">
-                    Build a better sales team! Weekly insights for sales managers from Steve Huber, an award-winning sales leader with over $2 Billion in home improvement sales.
-                  </p>
-                  <div className="inline-block bg-white text-secondary font-medium rounded-full px-6 py-2 hover:bg-white/90 transition-colors">
-                    Subscribe Now
-                  </div>
-                </div>
+                </Card>
+              ))
+            ) : searchTerm && filteredBlogPosts.length === 0 ? (
+              <div className="md:col-span-2 lg:col-span-3 text-center py-12">
+                <p className="text-xl text-gray-500">No blog posts match your search criteria.</p>
               </div>
-            </div>
-          </a>
-        </div>
-      </section>
-      
-      {/* Content Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <Tabs defaultValue="blog" className="max-w-6xl mx-auto" onValueChange={setActiveTab}>
-            <div className="flex justify-center mb-8">
-              <TabsList className="bg-white">
-                <TabsTrigger value="blog">Blog Posts</TabsTrigger>
-                <TabsTrigger value="solar">Solar News</TabsTrigger>
-                <TabsTrigger value="roofing">Roofing News</TabsTrigger>
-                <TabsTrigger value="sustainability">Sustainability</TabsTrigger>
-              </TabsList>
-            </div>
-            
-            {/* Blog Posts Tab */}
-            <TabsContent value="blog">
-              {searchTerm && (
-                <div className="mb-8 text-center">
-                  <p className="text-gray-600">
-                    Showing results for: <span className="font-medium">{searchTerm}</span>
-                  </p>
-                </div>
-              )}
-              
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredBlogPosts.length > 0 ? (
-                  filteredBlogPosts.map(post => (
-                    <Card key={post.id} className="overflow-hidden group hover:shadow-lg transition-shadow">
-                      <div className="h-48 overflow-hidden">
-                        <img
-                          src={post.image}
-                          alt={post.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                      </div>
-                      <div className="p-6">
-                        <div className="flex items-center gap-3 text-sm text-gray-500 mb-3">
-                          <span className="flex items-center">
-                            <Calendar className="h-4 w-4 mr-1" />
-                            {post.date}
-                          </span>
-                          <span className="px-2 py-1 bg-secondary/10 text-secondary rounded-full text-xs">
-                            {post.category}
-                          </span>
-                        </div>
-                        <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-                          {post.title}
-                        </h3>
-                        <p className="text-gray-600 mb-4 line-clamp-3">
-                          {post.excerpt}
-                        </p>
-                        {post.audioUrl && (
-                          <div className="mb-4">
-                            <p className="text-xs text-gray-500 mb-1">Preview:</p>
-                            <audio controls className="w-full h-10">
-                              <source src={post.audioUrl} type="audio/mpeg" />
-                              Your browser does not support the audio element.
-                            </audio>
-                          </div>
-                        )}
-                        {post.videoUrl && (
-                          <div className="mb-4 aspect-video">
-                            <p className="text-xs text-gray-500 mb-1">Preview:</p>
-                            <iframe 
-                              src={post.videoUrl} 
-                              title={post.title}
-                              className="w-full h-32 rounded-md"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                            ></iframe>
-                          </div>
-                        )}
-                        <Link to={`/blog/${post.slug}`}>
-                          <Button variant="link" className="p-0 text-primary hover:text-primary-700">
-                            Read More <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                          </Button>
-                        </Link>
-                      </div>
-                    </Card>
-                  ))
-                ) : (
-                  <div className="col-span-3 text-center py-12">
-                    <p className="text-gray-500 text-lg">No blog posts found matching your search.</p>
-                  </div>
-                )}
-              </div>
-            </TabsContent>
-            
-            {/* News Tabs */}
-            {['solar', 'roofing', 'sustainability'].map((category) => (
-              <TabsContent key={category} value={category}>
-                {isLoading ? (
-                  <div className="text-center py-12">
-                    <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" />
-                    <p className="mt-4 text-gray-600">Loading articles...</p>
-                  </div>
-                ) : (
-                  <>
-                    <h2 className="text-2xl font-bold text-primary mb-8 text-center capitalize">
-                      Latest {category} Industry News
-                    </h2>
-                    
-                    <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                      {(activeTab === 'solar' ? newsArticles.solar :
-                        activeTab === 'roofing' ? newsArticles.roofing :
-                        newsArticles.sustainability)
-                        .filter(article => 
-                          searchTerm === '' || 
-                          article.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          article.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          article.source?.name?.toLowerCase().includes(searchTerm.toLowerCase())
-                        )
-                        .map((article, index) => (
-                          <Card key={`${activeTab}-${article.title?.substring(0, 20) || index}`} className="overflow-hidden flex flex-col h-full hover:shadow-lg transition-shadow">
-                            {article.urlToImage && (
-                              <div className="h-48 overflow-hidden">
-                                <img
-                                  src={article.urlToImage}
-                                  alt={article.title}
-                                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                                />
-                              </div>
-                            )}
-                            <div className="p-6 flex flex-col flex-grow">
-                              <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
-                                <span className="flex items-center">
-                                  <Calendar className="h-4 w-4 mr-1" />
-                                  {formatDate(article.publishedAt)}
-                                </span>
-                                <span className="px-2 py-1 bg-primary/10 text-primary rounded-full text-xs">
-                                  {article.source.name}
-                                </span>
-                              </div>
-                              <h3 className="text-xl font-bold mb-2 hover:text-primary transition-colors">
-                                {article.title}
-                              </h3>
-                              <p className="text-gray-600 mb-4 flex-grow line-clamp-3">
-                                {article.description}
-                              </p>
-                              <a 
-                                href={article.url} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center text-primary hover:text-primary-700 mt-auto"
-                              >
-                                Read Full Article <ExternalLink className="ml-1 h-4 w-4" />
-                              </a>
+            ) : (
+              (searchTerm ? filteredBlogPosts : blogPosts).map((post) => (
+                <Card key={post.id} className="overflow-hidden transition-all duration-300 hover:shadow-lg group">
+                  <Link to={`/blog/${post.slug}`} className="block">
+                    <div className="aspect-video overflow-hidden">
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      {(post.hasVideo || post.hasAudio) && (
+                        <div className="absolute top-4 right-4">
+                          {post.hasVideo && (
+                            <div className="bg-primary text-white rounded-full p-2 shadow-lg">
+                              <Play className="h-5 w-5" />
                             </div>
-                          </Card>
-                        ))
-                      }
-                      
-                      {(activeTab === 'solar' ? newsArticles.solar :
-                        activeTab === 'roofing' ? newsArticles.roofing :
-                        newsArticles.sustainability).filter(article => 
-                          searchTerm === '' || 
-                          article.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          article.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          article.source?.name?.toLowerCase().includes(searchTerm.toLowerCase())
-                        ).length === 0 && (
-                        <div className="col-span-2 text-center py-12">
-                          <p className="text-gray-500 text-lg">No news articles found matching your search.</p>
+                          )}
+                          {post.hasAudio && (
+                            <div className="bg-secondary text-white rounded-full p-2 mt-2 shadow-lg">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-volume-2" aria-label="Audio content available">
+                                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                                <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                                <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                              </svg>
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>
-                  </>
-                )}
-              </TabsContent>
-            ))}
-          </Tabs>
-        </div>
-      </section>
-      
-      {/* Subscribe Section */}
-      <section className="py-16 bg-gradient-to-br from-secondary-600 to-secondary-800 text-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
-            <p className="text-white/80 mb-8">
-              Subscribe to our newsletter for the latest insights, trends, and strategies in the contracting industry.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <Input
-                type="email"
-                placeholder="Your email address"
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/60"
-              />
-              <Button className="bg-white text-secondary hover:bg-white/90">
-                Subscribe
-              </Button>
-            </div>
+                    <div className="p-6">
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                          {post.category}
+                        </span>
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                          <Clock className="mr-1 h-3 w-3" />
+                          {post.readTime}
+                        </span>
+                      </div>
+                      <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">{post.title}</h3>
+                      <p className="text-gray-600 mb-4 line-clamp-3">{post.excerpt}</p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center text-sm text-gray-500">
+                          <User className="h-4 w-4 mr-1" />
+                          {post.author}
+                        </div>
+                        <div className="flex items-center text-sm text-gray-500">
+                          <Calendar className="h-4 w-4 mr-1" />
+                          {post.date}
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </Card>
+              ))
+            )}
           </div>
-        </div>
-      </section>
+        </TabsContent>
+
+        <TabsContent value="solar" className="mt-0">
+          {/* Solar News Section */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {isLoading ? (
+              Array(3).fill(0).map((_, i) => (
+                <Card key={`solar-loading-card-${i}`} className="animate-pulse">
+                  <div className="aspect-video bg-gray-200 rounded-t-lg" />
+                  <div className="p-6 space-y-4">
+                    <div className="h-6 bg-gray-200 rounded-md w-3/4" />
+                    <div className="h-4 bg-gray-200 rounded-md" />
+                    <div className="h-4 bg-gray-200 rounded-md w-5/6" />
+                  </div>
+                </Card>
+              ))
+            ) : newsArticles.solar.length === 0 ? (
+              <div className="md:col-span-2 lg:col-span-3 text-center py-12">
+                <p className="text-xl text-gray-500">No solar news available at the moment.</p>
+              </div>
+            ) : (
+              newsArticles.solar.map((article, index) => (
+                <Card key={`solar-${article.title?.substring(0, 20) || index}`} className="overflow-hidden transition-all duration-300 hover:shadow-lg group h-full flex flex-col">
+                  <a href={article.url} target="_blank" rel="noopener noreferrer" className="block flex-grow">
+                    <div className="aspect-video overflow-hidden bg-gray-100">
+                      {article.urlToImage ? (
+                        <img
+                          src={article.urlToImage}
+                          alt={article.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = "https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80";
+                          }}
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-amber-100">
+                          <span className="text-amber-700">No image available</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-6 flex-grow">
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+                          Solar
+                        </span>
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                          {article.source?.name || 'News Source'}
+                        </span>
+                      </div>
+                      <h3 className="text-xl font-bold mb-2 group-hover:text-amber-600 transition-colors duration-300">{article.title}</h3>
+                      <p className="text-gray-600 mb-4 line-clamp-3">{article.description}</p>
+                      <div className="flex items-center text-sm text-gray-500 mt-auto">
+                        <Calendar className="h-4 w-4 mr-1" />
+                        {formatDate(article.publishedAt)}
+                      </div>
+                    </div>
+                  </a>
+                  <div className="p-4 border-t flex justify-end">
+                    <a href={article.url} target="_blank" rel="noopener noreferrer" className="text-amber-600 hover:text-amber-800 font-medium inline-flex items-center">
+                      Read Full Article <ExternalLink className="ml-1 h-4 w-4" />
+                    </a>
+                  </div>
+                </Card>
+              ))
+            )}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="roofing" className="mt-0">
+          {/* Roofing News Section */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {isLoading ? (
+              Array(3).fill(0).map((_, i) => (
+                <Card key={`roofing-loading-card-${i}`} className="animate-pulse">
+                  <div className="aspect-video bg-gray-200 rounded-t-lg" />
+                  <div className="p-6 space-y-4">
+                    <div className="h-6 bg-gray-200 rounded-md w-3/4" />
+                    <div className="h-4 bg-gray-200 rounded-md" />
+                    <div className="h-4 bg-gray-200 rounded-md w-5/6" />
+                  </div>
+                </Card>
+              ))
+            ) : newsArticles.roofing.length === 0 ? (
+              <div className="md:col-span-2 lg:col-span-3 text-center py-12">
+                <p className="text-xl text-gray-500">No roofing news available at the moment.</p>
+              </div>
+            ) : (
+              newsArticles.roofing.map((article, index) => (
+                <Card key={`roofing-${article.title?.substring(0, 20) || index}`} className="overflow-hidden transition-all duration-300 hover:shadow-lg group h-full flex flex-col">
+                  <a href={article.url} target="_blank" rel="noopener noreferrer" className="block flex-grow">
+                    <div className="aspect-video overflow-hidden bg-gray-100">
+                      {article.urlToImage ? (
+                        <img
+                          src={article.urlToImage}
+                          alt={article.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = "https://images.unsplash.com/photo-1632759145357-b9426de0bac1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80";
+                          }}
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-blue-100">
+                          <span className="text-blue-700">No image available</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-6 flex-grow">
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                          Roofing
+                        </span>
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                          {article.source?.name || 'News Source'}
+                        </span>
+                      </div>
+                      <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 transition-colors duration-300">{article.title}</h3>
+                      <p className="text-gray-600 mb-4 line-clamp-3">{article.description}</p>
+                      <div className="flex items-center text-sm text-gray-500 mt-auto">
+                        <Calendar className="h-4 w-4 mr-1" />
+                        {formatDate(article.publishedAt)}
+                      </div>
+                    </div>
+                  </a>
+                  <div className="p-4 border-t flex justify-end">
+                    <a href={article.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center">
+                      Read Full Article <ExternalLink className="ml-1 h-4 w-4" />
+                    </a>
+                  </div>
+                </Card>
+              ))
+            )}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="sustainability" className="mt-0">
+          {/* Sustainability News Section */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {isLoading ? (
+              Array(3).fill(0).map((_, i) => (
+                <Card key={`sustainability-loading-card-${i}`} className="animate-pulse">
+                  <div className="aspect-video bg-gray-200 rounded-t-lg" />
+                  <div className="p-6 space-y-4">
+                    <div className="h-6 bg-gray-200 rounded-md w-3/4" />
+                    <div className="h-4 bg-gray-200 rounded-md" />
+                    <div className="h-4 bg-gray-200 rounded-md w-5/6" />
+                  </div>
+                </Card>
+              ))
+            ) : newsArticles.sustainability.length === 0 ? (
+              <div className="md:col-span-2 lg:col-span-3 text-center py-12">
+                <p className="text-xl text-gray-500">No sustainability news available at the moment.</p>
+              </div>
+            ) : (
+              newsArticles.sustainability.map((article, index) => (
+                <Card key={`sustainability-${article.title?.substring(0, 20) || index}`} className="overflow-hidden transition-all duration-300 hover:shadow-lg group h-full flex flex-col">
+                  <a href={article.url} target="_blank" rel="noopener noreferrer" className="block flex-grow">
+                    <div className="aspect-video overflow-hidden bg-gray-100">
+                      {article.urlToImage ? (
+                        <img
+                          src={article.urlToImage}
+                          alt={article.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = "https://images.unsplash.com/photo-1623227713556-613cb11a5daf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80";
+                          }}
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-green-100">
+                          <span className="text-green-700">No image available</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-6 flex-grow">
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                          Sustainability
+                        </span>
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                          {article.source?.name || 'News Source'}
+                        </span>
+                      </div>
+                      <h3 className="text-xl font-bold mb-2 group-hover:text-green-600 transition-colors duration-300">{article.title}</h3>
+                      <p className="text-gray-600 mb-4 line-clamp-3">{article.description}</p>
+                      <div className="flex items-center text-sm text-gray-500 mt-auto">
+                        <Calendar className="h-4 w-4 mr-1" />
+                        {formatDate(article.publishedAt)}
+                      </div>
+                    </div>
+                  </a>
+                  <div className="p-4 border-t flex justify-end">
+                    <a href={article.url} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:text-green-800 font-medium inline-flex items-center">
+                      Read Full Article <ExternalLink className="ml-1 h-4 w-4" />
+                    </a>
+                  </div>
+                </Card>
+              ))
+            )}
+          </div>
+        </TabsContent>
+      </div>
     </>
   );
 }

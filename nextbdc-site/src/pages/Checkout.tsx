@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 // import Navbar from '@/components/Navbar'; // Will copy later
 import { Button } from '@/components/ui/button';

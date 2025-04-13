@@ -81,7 +81,7 @@ const About = () => {
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
-                  ></iframe>
+                  />
                 </div>
               </div>
             </div>
@@ -97,7 +97,7 @@ const About = () => {
               alt="Systems background" 
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-primary/85"></div>
+            <div className="absolute inset-0 bg-blue-900" />
           </div>
           
           <div className="container mx-auto px-4 relative z-10">

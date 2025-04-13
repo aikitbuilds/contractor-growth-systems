@@ -248,23 +248,21 @@ const Pricing = () => {
                         </p>
                       </div>
                       <ul className="space-y-3">
-                        {tier.highlights.map((feature, index) => (
-                          <li key={`${tier.id}-highlight-${index}`} className="flex items-start">
-                            <Check className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm">{feature}</span>
+                        {tier.highlights.map((highlight) => (
+                          <li key={highlight} className="flex items-start">
+                            <Check className="h-5 w-5 text-primary mr-2 flex-shrink-0 mt-0.5" />
+                            <span>{highlight}</span>
                           </li>
                         ))}
                       </ul>
                     </CardContent>
                     <CardFooter>
-                      <Link 
-                        to={`/checkout?tier=${tier.id}`} 
-                        className="w-full"
-                      >
+                      <Link to={`/waitlist?tier=${tier.id}`} className="w-full">
                         <Button 
-                          className={`w-full ${tier.popular ? 'bg-secondary hover:bg-secondary/90' : ''}`}
+                          variant={tier.popular ? 'default' : 'secondary'}
+                          className="w-full"
                         >
-                          {tier.cta}
+                          Join Waitlist
                         </Button>
                       </Link>
                     </CardFooter>
@@ -439,9 +437,9 @@ const Pricing = () => {
                 <Button size="lg" className="bg-white text-secondary hover:bg-white/90 w-full sm:w-auto">
                   Schedule a Demo
                 </Button>
-                <Link to="/checkout?tier=accelerator" className="w-full sm:w-auto">
+                <Link to="/waitlist?tier=accelerator" className="w-full sm:w-auto">
                   <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 w-full">
-                    Start 14-Day Trial
+                    Join Waitlist
                   </Button>
                 </Link>
               </div>

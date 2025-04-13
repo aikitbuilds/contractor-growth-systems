@@ -151,7 +151,7 @@ export default function Contact() {
                             name="phone"
                             value={formData.phone}
                             onChange={handleChange}
-                            placeholder="(555) 123-4567"
+                            placeholder="1-888-850-2095"
                           />
                         </div>
                         
@@ -250,7 +250,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg">Phone</h3>
-                      <p className="text-gray-600">(555) 123-4567</p>
+                      <p className="text-gray-600">1-888-850-2095</p>
                       <p className="text-gray-600">Monday - Friday, 9AM - 5PM EST</p>
                     </div>
                   </div>
@@ -264,9 +264,8 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg">Office</h3>
-                      <p className="text-gray-600">123 Business Avenue</p>
-                      <p className="text-gray-600">Suite 500</p>
-                      <p className="text-gray-600">Houston, TX 77001</p>
+                      <p className="text-gray-600">PO Box 322</p>
+                      <p className="text-gray-600">Seaside, OR 97138</p>
                     </div>
                   </div>
                 </div>

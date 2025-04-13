@@ -105,6 +105,15 @@ graph TD
     - [ ] Verify customer information capture.
     - [ ] Test the upsell checkbox functionality and price calculation.
 
+- [ ] 6. Marketing & Brand Assets
+  - [ ] 6a. **Create Social Media Assets:**
+    - [ ] Design LinkedIn banner (recommended size: 1584 x 396px)
+    - [ ] Create YouTube channel banner (recommended size: 2560 x 1440px)
+    - [ ] Develop consistent profile images across platforms
+  - [ ] 6b. **Promotional Materials:**
+    - [ ] Create downloadable PDF resources for lead generation
+    - [ ] Design email newsletter templates
+
 ### Checkout Workflow Overview
 
 ```mermaid
@@ -274,7 +283,14 @@ src/
    - [ ] Create PDF generation functionality
    - [ ] Set up email delivery system
 
-## �� Notes
+5. **Marketing Assets**
+   - [ ] Create LinkedIn banner
+   - [ ] Create YouTube banner
+
+6. **Email Notification System**
+   - [ ] Configure email notification system
+
+## Notes
 
 - Targeting small to medium-sized contractors looking to enhance their online presence
 - Focus on mobile-first design as many clients will browse on phones at job sites

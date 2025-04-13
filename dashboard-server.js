@@ -5,6 +5,10 @@ import { fileURLToPath } from 'node:url';
 // PDF generation is disabled for deployment simplicity
 // import puppeteer from 'puppeteer';
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
 
 const app = express();
 const port = 3001;
@@ -250,4 +254,98 @@ app.get('/project-dashboard', (req, res) => {
 // Start the server
 app.listen(port, () => {
   console.log(`Contractor Growth Systems Dashboard server running at http://localhost:${port}/bdc-dashboard`);
+});
+
+// API endpoint for waitlist submissions 
+app.post('/api/waitlist-submit', async (req, res) => {
+  try {
+    const { name, email, company, phone, tier, message, urgency } = req.body;
+    
+    if (!name || !email || !tier) {
+      return res.status(400).json({
+        success: false,
+        message: 'Name, email, and tier are required'
+      });
+    }
+    
+    // Create email transport with environment variables
+    const transporter = nodemailer.createTransport({
+      host: process.env.VITE_EMAIL_SERVER_HOST || 'smtp.gmail.com',
+      port: Number.parseInt(process.env.VITE_EMAIL_SERVER_PORT || '587', 10),
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: process.env.VITE_EMAIL_SERVER_USER || 'growth@bdcteam.pro',
+        pass: process.env.VITE_EMAIL_SERVER_PASSWORD // Make sure this is set in your .env file
+      }
+    });
+    
+    // Format date and time
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString();
+    const formattedTime = now.toLocaleTimeString();
+    
+    // Set up email content
+    const mailOptions = {
+      from: process.env.VITE_EMAIL_FROM || 'growth@bdcteam.pro',
+      to: process.env.VITE_EMAIL_TO || 'growth@bdcteam.pro', // Send to yourself by default
+      subject: `SaaS Waitlist Request - ${tier}`,
+      html: `
+        <h2>New Waitlist Submission - ${tier}</h2>
+        <p><strong>Date:</strong> ${formattedDate} ${formattedTime}</p>
+        <p><strong>Urgency:</strong> ${urgency || 'waiting list for saas'}</p>
+        <hr>
+        <h3>Contact Information:</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Company:</strong> ${company || 'Not provided'}</p>
+        <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
+        <hr>
+        <h3>Desired Tier:</h3>
+        <p>${tier}</p>
+        <hr>
+        <h3>Additional Message:</h3>
+        <p>${message || 'No additional message provided.'}</p>
+      `
+    };
+    
+    // Send email
+    await transporter.sendMail(mailOptions);
+    
+    // Also save to a file for backup (optional)
+    const submissionPath = join(__dirname, 'waitlist-submissions.json');
+    let submissions = [];
+    
+    try {
+      const existingData = readFileSync(submissionPath, 'utf8');
+      submissions = JSON.parse(existingData);
+    } catch (error) {
+      // File doesn't exist or is invalid JSON, starting with empty array
+    }
+    
+    submissions.push({
+      id: Date.now(),
+      date: now.toISOString(),
+      name,
+      email,
+      company,
+      phone,
+      tier,
+      message,
+      urgency: urgency || 'waiting list for saas'
+    });
+    
+    writeFileSync(submissionPath, JSON.stringify(submissions, null, 2));
+    
+    // Return success
+    res.json({
+      success: true,
+      message: 'Your information has been submitted successfully. We will notify you when a spot becomes available.'
+    });
+  } catch (error) {
+    console.error('Error processing waitlist submission:', error);
+    res.status(500).json({
+      success: false,
+      message: `Failed to process waitlist submission: ${error.message}`
+    });
+  }
 }); 

@@ -2,22 +2,22 @@ import Stripe from 'stripe';
 import type { Request, Response } from 'express'; // Import Express types
 
 // Define Product IDs (replace with your actual Stripe Product IDs)
-const PRODUCT_IDS = {
-  early_bird: 'prod_YOUR_EARLY_BIRD_PRODUCT_ID', 
-  standard: 'prod_YOUR_STANDARD_PRODUCT_ID',
-  upsell: 'prod_YOUR_UPSELL_PRODUCT_ID',
-};
+// const PRODUCT_IDS = { // Commented out as unused for now
+//   early_bird: 'prod_YOUR_EARLY_BIRD_PRODUCT_ID', 
+//   standard: 'prod_YOUR_STANDARD_PRODUCT_ID',
+//   upsell: 'prod_YOUR_UPSELL_PRODUCT_ID',
+// };
 
 // Define Price IDs (replace with your actual Stripe Price IDs)
 const PRICE_IDS = {
-  early_bird: 'price_YOUR_EARLY_BIRD_PRICE_ID', 
-  standard: 'price_YOUR_STANDARD_PRICE_ID',
-  upsell: 'price_YOUR_UPSELL_PRICE_ID',
+  early_bird: process.env.STRIPE_PRICE_ID_EARLY_BIRD || 'price_DEFAULT_EARLY_BIRD', 
+  standard: process.env.STRIPE_PRICE_ID_STANDARD || 'price_DEFAULT_STANDARD', 
+  upsell: process.env.STRIPE_PRICE_ID_UPSELL || 'price_DEFAULT_UPSELL',
 };
 
 // Initialize Stripe with your secret key from environment variables
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2023-10-16', // Use a fixed API version string
+  apiVersion: '2023-10-16' as Stripe.LatestApiVersion, // Cast to LatestApiVersion type
   typescript: true, // Required for proper type checking
 });
 

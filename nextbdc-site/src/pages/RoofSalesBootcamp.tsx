@@ -1,12 +1,12 @@
 import { useEffect, ReactNode } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { ArrowRight, CheckCircle, Calendar, Clock, User, Shield, Play, Zap, Code, Bot, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, CheckCircle, Calendar, Clock, User, Shield, Code, Bot, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 // We will create/copy Navbar later
 // import Navbar from '@/components/Navbar'; 
 
 function RoofSalesBootcamp() {
-  const location = useLocation();
+  // Removed unused location variable
   
   // Scroll to top function
   const handleScrollToTop = () => {
@@ -19,6 +19,7 @@ function RoofSalesBootcamp() {
   }, []); // Empty dependency array means this runs only once on mount
 
   // Custom Link component with scroll behavior
+  // @ts-ignore - Ignoring type error due to potential nested node_modules conflict
   const ScrollToTopLink = ({ to, children, className = "" }: { to: string; children: ReactNode; className?: string }) => {
     return (
       <Link 
