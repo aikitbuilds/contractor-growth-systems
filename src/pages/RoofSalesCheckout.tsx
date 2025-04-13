@@ -9,7 +9,7 @@ import GHLFormEmbed from '@/components/GHLFormEmbed';
  * 
  * NOTE: Currently using GHL form IDs from the forms created in GHL:
  * 1. Early Bird form: GHL form with ID bWJeCTvmhZPem9goQjRf
- * 2. Standard form: Need to create a form for this product
+ * 2. Standard form: GHL form with ID U76ZUQnsAcARA2A5JmA5
  */
 function RoofSalesCheckout() {
   // Get plan type from URL query parameters
@@ -22,9 +22,21 @@ function RoofSalesCheckout() {
       case 'early':
         return 'bWJeCTvmhZPem9goQjRf'; // Early bird GHL form ID
       case 'standard':
-        return '67fc2a1d846c488583c59b01'; // Still using product ID - Replace with Standard form ID when created
+        return 'U76ZUQnsAcARA2A5JmA5'; // Standard GHL form ID
       default:
         return 'bWJeCTvmhZPem9goQjRf'; // Default to early bird
+    }
+  };
+
+  // Get the form height based on the plan parameter
+  const getFormHeight = () => {
+    switch(plan) {
+      case 'early':
+        return '1746px'; // Early bird form height
+      case 'standard':
+        return '1721px'; // Standard form height from iframe data
+      default:
+        return '1746px'; // Default to early bird
     }
   };
 
@@ -74,7 +86,7 @@ function RoofSalesCheckout() {
             <div className="bg-white rounded-lg shadow-md p-6 md:p-8">
               <GHLFormEmbed 
                 formId={getFormId()}
-                height="1746px"
+                height={getFormHeight()}
                 title="Solar to Roof Bootcamp Checkout"
                 showTitle={false}
                 containerClassName="w-full"
