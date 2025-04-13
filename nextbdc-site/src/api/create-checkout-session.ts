@@ -13,6 +13,9 @@ const PRICE_IDS = {
   early_bird: process.env.STRIPE_PRICE_ID_EARLY_BIRD || 'price_DEFAULT_EARLY_BIRD', 
   standard: process.env.STRIPE_PRICE_ID_STANDARD || 'price_DEFAULT_STANDARD', 
   upsell: process.env.STRIPE_PRICE_ID_UPSELL || 'price_DEFAULT_UPSELL',
+  ai_starter: process.env.STRIPE_PRICE_ID_AI_STARTER || 'price_DEFAULT_AI_STARTER',
+  ai_pro: process.env.STRIPE_PRICE_ID_AI_PRO || 'price_DEFAULT_AI_PRO',
+  ai_enterprise: process.env.STRIPE_PRICE_ID_AI_ENTERPRISE || 'price_DEFAULT_AI_ENTERPRISE',
 };
 
 // Initialize Stripe with your secret key from environment variables
@@ -26,16 +29,31 @@ export async function createCheckoutSession(req: Request, res: Response) { // Us
   const { plan = 'early_bird', includeUpsell = false } = req.body;
 
   const successUrl = `${process.env.APP_URL || 'http://localhost:5173'}/payment-success?session_id={CHECKOUT_SESSION_ID}`;
-  const cancelUrl = `${process.env.APP_URL || 'http://localhost:5173'}/checkout?plan=${plan === 'standard' ? 'standard' : 'early'}`;
+  let cancelUrl: string;
+  
+  // Determine cancel URL based on plan type
+  if (plan.startsWith('ai_')) {
+    cancelUrl = `${process.env.APP_URL || 'http://localhost:5173'}/solar-ai-assistant`;
+  } else {
+    cancelUrl = `${process.env.APP_URL || 'http://localhost:5173'}/checkout?plan=${plan === 'standard' ? 'standard' : 'early'}`;
+  }
 
   try {
     // Validate plan
-    if (plan !== 'early_bird' && plan !== 'standard') {
+    const validPlans = ['early_bird', 'standard', 'ai_starter', 'ai_pro', 'ai_enterprise'];
+    if (!validPlans.includes(plan)) {
       return res.status(400).json({ error: 'Invalid plan specified.' });
     }
 
     // Determine the main product and price
-    const mainPriceId = plan === 'standard' ? PRICE_IDS.standard : PRICE_IDS.early_bird;
+    let mainPriceId: string;
+    
+    // Select the appropriate price ID based on the plan
+    if (plan.startsWith('ai_')) {
+      mainPriceId = PRICE_IDS[plan as keyof typeof PRICE_IDS];
+    } else {
+      mainPriceId = plan === 'standard' ? PRICE_IDS.standard : PRICE_IDS.early_bird;
+    }
     
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
       {
@@ -44,8 +62,8 @@ export async function createCheckoutSession(req: Request, res: Response) { // Us
       },
     ];
 
-    // Add upsell item if included
-    if (includeUpsell) {
+    // Add upsell item if included (only for bootcamp plans)
+    if (includeUpsell && !plan.startsWith('ai_')) {
       lineItems.push({
         price: PRICE_IDS.upsell,
         quantity: 1,

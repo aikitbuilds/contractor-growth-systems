@@ -157,6 +157,12 @@ const Navbar = () => {
                   Webinars & Events
                 </NavLink>
                 <NavLink 
+                  to="/forms" 
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Forms & Questionnaires
+                </NavLink>
+                <NavLink 
                   to="/roof-sales-bootcamp" 
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
@@ -188,7 +194,7 @@ const Navbar = () => {
                 Client Login
               </Button>
             </NavLink>
-            <NavLink to="/services">
+            <NavLink to="/schedule">
               <Button className={`
                 transition-transform duration-300 hover:scale-105
                 ${isScrolled 
@@ -318,6 +324,14 @@ const Navbar = () => {
                     Webinars & Events
                   </NavLink>
                   <NavLink 
+                    to="/forms"
+                    className={({ isActive }) => 
+                      `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
+                    }
+                  >
+                    Forms & Questionnaires
+                  </NavLink>
+                  <NavLink 
                     to="/roof-sales-bootcamp"
                     className={({ isActive }) => 
                       `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
@@ -347,7 +361,7 @@ const Navbar = () => {
                     Client Login
                   </Button>
                 </NavLink>
-                <NavLink to="/services" className="block">
+                <NavLink to="/schedule" className="block">
                   <Button className="w-full bg-white text-primary hover:bg-gray-100">
                     Schedule a Strategy Call
                   </Button>

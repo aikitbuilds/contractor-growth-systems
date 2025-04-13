@@ -492,11 +492,12 @@ function RoofSalesBootcamp() {
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row items-center">
               <div className="md:w-1/3 mb-8 md:mb-0">
-                <div className="w-48 h-48 rounded-full overflow-hidden mx-auto">
+                <div className="relative w-56 h-56 rounded-full overflow-hidden mx-auto border-4 border-secondary">
                   <img 
-                    src="/Images/steve1.png" 
+                    src="/Images/steve_family.jpeg" 
                     alt="Steve Huber" 
-                    className="w-full h-full object-cover"
+                    className="absolute w-[200%] h-auto object-cover object-[-50px_center]"
+                    style={{ maxWidth: 'none', top: '0', left: '-50%' }}
                   />
                 </div>
               </div>

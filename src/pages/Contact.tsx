@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { CheckCircle2 } from 'lucide-react'
+import { processContactSubmission } from '@/services/ghl'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -45,19 +46,15 @@ export default function Contact() {
     setStatus('loading')
     
     try {
-      // Submit to our API endpoint
-      const response = await fetch('/api/form-submission', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          type: 'contact',
-          ...formData
-        }),
+      // Submit to GHL instead of our API endpoint
+      const result = await processContactSubmission({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        message: formData.message,
+        subject: formData.subject
       })
-      
-      const result = await response.json()
       
       if (result.success) {
         setStatus('success')

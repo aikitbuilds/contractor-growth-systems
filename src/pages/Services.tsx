@@ -397,6 +397,22 @@ const Services = () => {
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <Card>
                   <CardHeader>
+                    <CardTitle>Solar AI Assistant</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-700">
+                      AI-powered virtual assistant that helps solar professionals qualify leads, optimize proposals, and close more deals.
+                    </p>
+                    <Link to="/solar-ai-assistant">
+                      <Button variant="outline" className="w-full mt-4">
+                        Learn More
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+                
+                <Card>
+                  <CardHeader>
                     <CardTitle>Standalone System Implementation</CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -431,20 +447,6 @@ const Services = () => {
                     <p className="text-sm text-gray-500 mt-4">
                       Fixed Price - See Courses Page
                     </p>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardHeader>
-                    <CardTitle>'Tuesday Tune-Up' Newsletter</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-700">
-                      Free weekly insights and actionable strategies delivered to your inbox.
-                    </p>
-                    <Button variant="outline" className="w-full mt-4">
-                      Free Sign-up
-                    </Button>
                   </CardContent>
                 </Card>
               </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { CheckCircle, Loader2 } from 'lucide-react';
+import { processWaitlistSubmission } from '@/services/ghl';
 
 // Map tier IDs to display names
 const tierNames: Record<string, string> = {
@@ -54,27 +55,18 @@ function Waitlist() {
     setErrorMessage('');
 
     try {
-      // --- Backend API Call ---
-      const response = await fetch('/api/waitlist-submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            name,
-            email,
-            company,
-            phone,
-            tier: tierNames[tier] || 'Unknown', // Send friendly name
-            message,
-            urgency: 'waiting list for saas' // As requested
-         }),
+      // Send data to GHL instead of backend API
+      const result = await processWaitlistSubmission({
+        name,
+        email,
+        company,
+        phone,
+        tier: tierNames[tier] || 'Unknown',
+        message
       });
 
-      if (!response.ok) {
-        // Try to get error message from backend response
-        const errorData = await response.json().catch(() => ({ message: 'An unknown error occurred during submission.' }));
-        throw new Error(errorData.message || `Server responded with status ${response.status}`);
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to submit to waitlist.');
       }
 
       // --- Success ---

@@ -33,6 +33,10 @@ import SubmissionAdmin from './pages/SubmissionAdmin'
 import Waitlist from './pages/Waitlist'
 import OptInVerification from "./pages/OptInVerification";
 import TestIntegrations from "./pages/TestIntegrations";
+import SolarAIAssistant from "./pages/SolarAIAssistant";
+import Schedule from './pages/Schedule';
+import Forms from './pages/Forms';
+import ExampleForm from './pages/ExampleForm';
 
 const queryClient = new QueryClient();
 
@@ -69,6 +73,10 @@ const App = () => (
               <Route path="/email-test" element={<EmailTestPage />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/waitlist" element={<Waitlist />} />
+              <Route path="/schedule" element={<Schedule />} />
+              <Route path="/forms" element={<Forms />} />
+              <Route path="/forms/example" element={<ExampleForm />} />
+              <Route path="/solar-ai-assistant" element={<SolarAIAssistant />} />
               <Route path="/optin-verification" element={<OptInVerification />} />
               <Route path="/test-integrations" element={<TestIntegrations />} />
               <Route path="/admin/submissions" element={<SubmissionAdmin />} />
