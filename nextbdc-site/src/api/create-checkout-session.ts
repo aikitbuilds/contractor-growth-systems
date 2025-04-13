@@ -1,0 +1,84 @@
+import Stripe from 'stripe';
+import type { Request, Response } from 'express'; // Import Express types
+
+// Define Product IDs (replace with your actual Stripe Product IDs)
+const PRODUCT_IDS = {
+  early_bird: 'prod_YOUR_EARLY_BIRD_PRODUCT_ID', 
+  standard: 'prod_YOUR_STANDARD_PRODUCT_ID',
+  upsell: 'prod_YOUR_UPSELL_PRODUCT_ID',
+};
+
+// Define Price IDs (replace with your actual Stripe Price IDs)
+const PRICE_IDS = {
+  early_bird: 'price_YOUR_EARLY_BIRD_PRICE_ID', 
+  standard: 'price_YOUR_STANDARD_PRICE_ID',
+  upsell: 'price_YOUR_UPSELL_PRICE_ID',
+};
+
+// Initialize Stripe with your secret key from environment variables
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+  apiVersion: '2023-10-16', // Use a fixed API version string
+  typescript: true, // Required for proper type checking
+});
+
+// Express handler to create a Stripe Checkout Session
+export async function createCheckoutSession(req: Request, res: Response) { // Use Express types
+  const { plan = 'early_bird', includeUpsell = false } = req.body;
+
+  const successUrl = `${process.env.APP_URL || 'http://localhost:5173'}/payment-success?session_id={CHECKOUT_SESSION_ID}`;
+  const cancelUrl = `${process.env.APP_URL || 'http://localhost:5173'}/checkout?plan=${plan === 'standard' ? 'standard' : 'early'}`;
+
+  try {
+    // Validate plan
+    if (plan !== 'early_bird' && plan !== 'standard') {
+      return res.status(400).json({ error: 'Invalid plan specified.' });
+    }
+
+    // Determine the main product and price
+    const mainPriceId = plan === 'standard' ? PRICE_IDS.standard : PRICE_IDS.early_bird;
+    
+    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
+      {
+        price: mainPriceId,
+        quantity: 1,
+      },
+    ];
+
+    // Add upsell item if included
+    if (includeUpsell) {
+      lineItems.push({
+        price: PRICE_IDS.upsell,
+        quantity: 1,
+      });
+    }
+
+    // Create the Checkout Session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: lineItems,
+      mode: 'payment', // Use 'payment' for one-time purchases
+      success_url: successUrl,
+      cancel_url: cancelUrl,
+      // Automatically collect billing address (optional)
+      // billing_address_collection: 'required',
+      // Automatically collect phone number (optional)
+      // phone_number_collection: {
+      //   enabled: true,
+      // },
+      // Allow promo codes
+      allow_promotion_codes: true,
+    });
+
+    if (!session.url) {
+      return res.status(500).json({ error: 'Could not create Stripe Checkout session.' });
+    }
+
+    // Return the session ID and URL to the client
+    res.status(200).json({ sessionId: session.id, url: session.url });
+
+  } catch (error: unknown) { // Type error as unknown
+    console.error('Error creating Stripe Checkout Session:', error);
+    const message = error instanceof Error ? error.message : 'An unknown error occurred';
+    res.status(500).json({ error: `Internal Server Error: ${message}` });
+  }
+} 
