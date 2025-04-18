@@ -41,7 +41,7 @@ function RoofSalesBootcamp() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="/Images/home-with-beach-vibes-has-solar-panels-on-rooftop-2025-02-15-16-49-47-utc.jpg" // Path relative to public folder
+            src="\images\BDChero.png"
             alt="Modern home with new roof and solar" 
             className="w-full h-full object-cover"
           />

@@ -4,6 +4,8 @@ import { ArrowRight, Calendar, Clock, BookOpen, Award, Lightbulb, MessageCircle,
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
 
+const bootcampUrl = 'http://localhost:5176';
+
 function BootcampDetails() {
   return (
     <div className="min-h-screen flex flex-col">
@@ -30,11 +32,12 @@ function BootcampDetails() {
               Your 4-Week Journey to Solar-to-Roof Sales Mastery
             </h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/roof-sales-bootcamp" className="inline-block">
-                <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium">
-                  Back to Bootcamp Overview <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
+              <a 
+                href={bootcampUrl}
+                className="inline-block"
+              >
+                View Bootcamp Details
+              </a>
             </div>
           </div>
         </div>

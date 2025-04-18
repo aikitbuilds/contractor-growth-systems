@@ -14,7 +14,7 @@ const Navbar = () => {
   
   // Set initial styling based on current page
   const isHomePage = pathname === '/';
-  const isBootcampPage = pathname === '/roof-sales-bootcamp';
+  const isBootcampPage = false;
   
   // Initialize isScrolled to true on non-home pages to maintain consistent appearance
   const [initialRender, setInitialRender] = useState(true);
@@ -59,6 +59,9 @@ const Navbar = () => {
     ${isScrolled || isMenuOpen ? 'text-white' : 'text-white'}
     ${isActive ? 'after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-secondary' : 'hover:text-secondary'}
   `;
+
+  // Replace bootcamp links with external links to nextbdc-site
+  const bootcampUrl = 'http://localhost:5176';
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isBootcampPage ? 'hidden' : navbarClass}`}>
@@ -163,13 +166,10 @@ const Navbar = () => {
                   Forms & Questionnaires
                 </NavLink>
                 <NavLink 
-                  to="/roof-sales-bootcamp" 
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  to={bootcampUrl}
+                  className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary"
                 >
-                  Solar to Roof - New
-                  <span className="ml-2 bg-secondary text-white text-xs py-0.5 px-1.5 rounded-full">
-                    New
-                  </span>
+                  Solar to Roof Bootcamp
                 </NavLink>
                 <NavLink 
                   to="/project-dashboard" 
@@ -332,17 +332,10 @@ const Navbar = () => {
                     Forms & Questionnaires
                   </NavLink>
                   <NavLink 
-                    to="/roof-sales-bootcamp"
-                    className={({ isActive }) => 
-                      `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
-                    }
+                    to={bootcampUrl}
+                    className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary"
                   >
-                    <div className="flex items-center">
-                      Solar to Roof - New
-                      <span className="ml-2 bg-secondary text-white text-xs py-0.5 px-1.5 rounded-full">
-                        New
-                      </span>
-                    </div>
+                    Solar to Roof Bootcamp
                   </NavLink>
                   <NavLink 
                     to="/project-dashboard"

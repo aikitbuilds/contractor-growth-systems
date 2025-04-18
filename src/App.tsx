@@ -38,6 +38,8 @@ import SolarAIAssistant from "./pages/SolarAIAssistant";
 import Schedule from './pages/Schedule';
 import Forms from './pages/Forms';
 import ExampleForm from './pages/ExampleForm';
+import PaymentSuccess from './pages/PaymentSuccess';
+import AIChecklist from '@/pages/AIChecklist';
 
 const queryClient = new QueryClient();
 
@@ -51,6 +53,7 @@ const App = () => (
           <div className="flex-grow">
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/aichecklist" element={<AIChecklist />} />
               <Route path="/business-growth" element={<BusinessGrowth />} />
               <Route path="/course-coming-soon" element={<CourseComingSoon />} />
               <Route path="/case-study/semper-solaris" element={<SemperSolarisCase />} />
@@ -82,6 +85,7 @@ const App = () => (
               <Route path="/optin-verification" element={<OptInVerification />} />
               <Route path="/test-integrations" element={<TestIntegrations />} />
               <Route path="/admin/submissions" element={<SubmissionAdmin />} />
+              <Route path="/payment/success" element={<PaymentSuccess />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

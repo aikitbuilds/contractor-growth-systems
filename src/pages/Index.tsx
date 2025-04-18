@@ -6,6 +6,8 @@ import Navbar from '@/components/Navbar';
 import { Card } from '@/components/ui/card';
 import HomeAIChatComponent from '@/components/HomeAIChatComponent';
 
+const bootcampUrl = 'http://localhost:5176';
+
 const Index = () => {
   // Animation states for metrics
   const [salesGrowth, setSalesGrowth] = useState(0);
@@ -129,9 +131,14 @@ const Index = () => {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="/Images/Hero.png" 
-            alt="Contractor business growth" 
-            className="w-full h-full object-cover"
+            src="/images/hero_small.png" 
+            alt="Billion Dollar Contractor" 
+            className="w-full h-full object-cover object-center"
+            onError={(e) => {
+              const img = e.target as HTMLImageElement;
+              console.error('Image failed to load:', img.src);
+              img.src = '/Images/hero_small.png'; // Try alternate path with capital I
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40" />
         </div>
@@ -146,11 +153,19 @@ const Index = () => {
                 End the cycle of inconsistent leads and transform your contracting business with systematic approaches to sales, marketing, and operations.
               </h2>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium">
+                <Button 
+                  size="lg" 
+                  className="bg-orange-500 hover:bg-orange-600 text-white font-medium shadow-[0_0_15px_rgba(249,115,22,0.5)]"
+                  onClick={() => window.location.href = 'https://calendly.com/steve-huber/strategy-call'}
+                >
                   Schedule a Strategy Call <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-                <Link to="/business-growth">
-                  <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 font-medium">
+                <Link to="/dashboard">
+                  <Button 
+                    size="lg" 
+                    variant="outline" 
+                    className="border-orange-500 bg-black/30 text-orange-500 hover:bg-black/50 hover:text-orange-400 font-medium shadow-[0_0_15px_rgba(249,115,22,0.5)]"
+                  >
                     Interactive Dashboard
                   </Button>
                 </Link>
@@ -232,7 +247,7 @@ const Index = () => {
                 </div>
                 
                 <div className="text-center">
-                  <Link to="/business-growth">
+                  <Link to="/dashboard">
                     <Button variant="secondary" size="sm" className="text-xs bg-secondary/20 hover:bg-secondary/30 text-white border-0 transform transition-all duration-300 hover:scale-105">
                       View Detailed Analytics
                       <ArrowRight className="h-3 w-3 ml-1 group-hover:translate-x-1 transition-transform" />
@@ -253,10 +268,10 @@ const Index = () => {
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-6xl mx-auto bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl shadow-xl overflow-hidden">
-            <div className="flex flex-col md:flex-row">
+            <div className="flex flex-col md:flex-row items-center">
               {/* Video Column */}
-              <div className="md:w-2/5 bg-gradient-to-br from-primary-100/50 to-primary-200/50 p-6 rounded-xl">
-                <div className="aspect-video rounded-lg overflow-hidden shadow-xl w-full md:w-[120%]">
+              <div className="md:w-1/2 p-6 md:p-8">
+                <div className="aspect-video rounded-lg overflow-hidden shadow-xl">
                   <iframe 
                     src="https://www.youtube.com/embed/fwE_xRmpsps" 
                     title="Bootcamp Overview Video"
@@ -268,38 +283,38 @@ const Index = () => {
               </div>
               
               {/* Content Column */}
-              <div className="md:w-3/5 p-8 md:p-12">
+              <div className="md:w-1/2 p-8 md:p-12 bg-white/50">
                 <div className="max-w-xl">
                   <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
                     Master Solar + Roof Integration: The Ultimate Revenue Booster
                   </h2>
                   
-                  <p className="text-lg text-gray-600 mb-6">
+                  <p className="text-lg text-gray-600 mb-8">
                     Learn the proven systems, sales process, and operational insights to seamlessly sell and manage roofing alongside your solar projects. Increase your average ticket and eliminate lost deals.
                   </p>
                   
-                  <div className="space-y-3 mb-8">
+                  <div className="space-y-4 mb-8">
                     <div className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" />
+                      <CheckCircle className="h-6 w-6 text-secondary mr-3 mt-1 flex-shrink-0" />
                       <p className="text-gray-700">Close your first profitable deal in just 30 days</p>
                     </div>
                     <div className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" />
+                      <CheckCircle className="h-6 w-6 text-secondary mr-3 mt-1 flex-shrink-0" />
                       <p className="text-gray-700">Includes AI-powered tools and done-for-you marketing assets</p>
                     </div>
                     <div className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" />
+                      <CheckCircle className="h-6 w-6 text-secondary mr-3 mt-1 flex-shrink-0" />
                       <p className="text-gray-700">Small group with personalized attention (limited to 10 participants)</p>
                     </div>
                   </div>
                   
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <Link to="/roof-sales-bootcamp">
+                    <Link to={bootcampUrl}>
                       <Button 
                         size="lg" 
-                        className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-bold text-xl px-10 py-6 shadow-lg shadow-red-600/50 hover:shadow-red-600/70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 animate-pulse transform hover:scale-105 transition-all duration-300"
+                        className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-bold text-lg px-8 py-4 shadow-lg shadow-red-600/50 hover:shadow-red-600/70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 animate-pulse transform hover:scale-105 transition-all duration-300"
                       >
-                        Sign Up Now. Limited Seats <ArrowRight className="ml-2 h-6 w-6" />
+                        Sign Up Now. Limited Seats <ArrowRight className="ml-2 h-5 w-5" />
                       </Button>
                     </Link>
                   </div>
@@ -746,9 +761,11 @@ const Index = () => {
             <p className="text-xl text-white/90 mb-8">
               Discover if your contracting business is ready to leverage AI to automate sales, improve bidding accuracy, and increase close rates.
             </p>
-            <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-gray-100 font-medium">
-              Get the Checklist Now
-            </Button>
+            <Link to="/aichecklist">
+              <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-gray-100 font-medium">
+                Get the Checklist Now
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
