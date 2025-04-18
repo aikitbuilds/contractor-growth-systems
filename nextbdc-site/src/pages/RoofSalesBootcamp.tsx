@@ -606,9 +606,9 @@ function RoofSalesBootcamp() {
                   </div>
                 </div>
                 
-                <div className="bg-secondary p-6 text-white text-center">
-                  <h3 className="text-2xl font-bold">Solar to Roof Bootcamp</h3>
-                  <p className="text-sm mt-1 text-blue-400">Limited to Only 10 Participants</p>
+                <div className="bg-secondary p-6 text-center">
+                  <h3 className="text-2xl font-bold text-gray-900">Solar to Roof Bootcamp</h3>
+                  <p className="text-sm mt-1 text-gray-700">Limited to Only 10 Participants</p>
                 </div>
                 
                 <div className="p-8 text-center">
