@@ -141,12 +141,14 @@ const Navbar = () => {
                 >
                   Free Downloads & Tools
                 </NavLink>
-                <NavLink 
-                  to="/blog"
+                <a 
+                  href="https://www.thetuesdaytuneup.com/archive"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
                   Blog
-                </NavLink>
+                </a>
                 <NavLink
                   to="/contractorai"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -164,12 +166,6 @@ const Navbar = () => {
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
                   Forms & Questionnaires
-                </NavLink>
-                <NavLink 
-                  to={bootcampUrl}
-                  className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary"
-                >
-                  Solar to Roof Bootcamp
                 </NavLink>
                 <NavLink 
                   to="/project-dashboard" 
@@ -299,14 +295,14 @@ const Navbar = () => {
                   >
                     Free Downloads & Tools
                   </NavLink>
-                  <NavLink 
-                    to="/blog"
-                    className={({ isActive }) => 
-                      `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
-                    }
+                  <a 
+                    href="https://www.thetuesdaytuneup.com/archive"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block py-1 text-sm text-white/90"
                   >
                     Blog
-                  </NavLink>
+                  </a>
                   <NavLink 
                     to="/contractorai"
                     className={({ isActive }) => 
@@ -330,12 +326,6 @@ const Navbar = () => {
                     }
                   >
                     Forms & Questionnaires
-                  </NavLink>
-                  <NavLink 
-                    to={bootcampUrl}
-                    className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary"
-                  >
-                    Solar to Roof Bootcamp
                   </NavLink>
                   <NavLink 
                     to="/project-dashboard"

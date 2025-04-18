@@ -1,14 +1,32 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { ArrowRight, CheckCircle, Calendar, Clock, User, Shield, Play, Zap, Code, Bot, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
 
 function RoofSalesBootcamp() {
+  const location = useLocation();
+  
   // Smooth scroll function
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // Scroll to guarantee section if hash is present
+  const scrollToGuarantee = () => {
+    const guaranteeSection = document.getElementById('guarantee');
+    if (guaranteeSection) {
+      guaranteeSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // Handle hash changes and initial load
+  useEffect(() => {
+    if (location.hash === '#guarantee') {
+      // Small delay to ensure DOM is ready
+      setTimeout(scrollToGuarantee, 100);
+    }
+  }, [location]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -19,26 +37,26 @@ function RoofSalesBootcamp() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="/Images/home-with-beach-vibes-has-solar-panels-on-rooftop-2025-02-15-16-49-47-utc.jpg" 
+            src="/images/BDChero.png" 
             alt="Modern home with new roof and solar" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/60" />
         </div>
         
         <div className="container mx-auto px-4 relative z-10 py-16 md:py-24">
           <div className="flex flex-col md:flex-row items-start md:items-center">
             <div className="md:w-5/12 md:pr-12 mb-8 md:mb-0">
-              <div className="bg-gray-800/80 p-6 rounded-lg backdrop-blur-sm">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+              <div className="bg-black/50 backdrop-blur-sm p-6 rounded-lg border border-orange-500/20">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-blue-500 mb-6 drop-shadow-[0_0_10px_rgba(249,115,22,0.5)]">
                   Solar to Roof Bootcamp
                 </h1>
-                <h2 className="text-xl md:text-2xl text-white/90 mb-8">
+                <h2 className="text-xl md:text-2xl text-blue-400 mb-8 drop-shadow-[0_0_8px_rgba(249,115,22,0.3)]">
                   Go from zero to closing your first profitable deal in 30 days, leveraging proven system and expert mentorship
                 </h2>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link to="/roof-sales-checkout?plan=early" onClick={handleScrollToTop}>
-                    <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium">
+                    <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-medium shadow-[0_0_15px_rgba(249,115,22,0.5)] hover:shadow-[0_0_20px_rgba(249,115,22,0.7)] transition-all duration-300">
                       Enroll Now - Special Launch Price <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </Link>
@@ -65,7 +83,54 @@ function RoofSalesBootcamp() {
         </div>
       </section>
 
-      {/* Problem Section */}
+      {/* Pricing CTA Section - Moved here */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Ready to Transform Your Business?</h2>
+            <div className="bg-white p-8 rounded-xl shadow-md">
+              <div className="mb-6">
+                <p className="text-xl text-gray-700 mb-2">
+                  Regular Price: <span className="line-through font-medium">$2,495</span>
+                </p>
+                <div className="flex flex-col items-center justify-center">
+                  <div className="bg-red-100 text-red-800 px-4 py-1 rounded-full font-bold mb-2">
+                    Early Bird Special - 24% OFF
+                  </div>
+                  <p className="text-3xl font-bold text-primary">
+                    Only $1,895
+                  </p>
+                  <p className="text-red-600 font-bold mt-2">
+                    Only 4 Early Bird spots remaining!
+                  </p>
+                </div>
+              </div>
+              
+              <p className="text-gray-700 mb-6">
+                Don't miss this opportunity to add a powerful new revenue stream to your business with a proven system and expert guidance.
+              </p>
+
+              <div className="relative">
+                <div className="absolute -inset-1 bg-red-600 rounded-xl animate-pulse opacity-75" />
+                <Link to="/roof-sales-checkout?plan=early" className="relative block" onClick={handleScrollToTop}>
+                  <Button 
+                    size="lg" 
+                    className="w-full bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-8 text-2xl shadow-lg"
+                  >
+                    Secure Your Early Bird Spot Now <ArrowRight className="ml-2 h-6 w-6" />
+                  </Button>
+                </Link>
+              </div>
+              
+              <p className="text-sm text-gray-500 mt-4">
+                Secure payment processing. Immediate access to system upon enrollment.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Ready to Transform Section - Moved here */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -75,7 +140,7 @@ function RoofSalesBootcamp() {
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center gap-6 mt-8">
-              <a href="#guarantee" className="inline-block">
+              <a href="#guarantee" onClick={scrollToGuarantee} className="inline-block">
                 <Button size="lg" className="bg-primary hover:bg-primary-800 text-white font-medium px-8 py-6 text-xl">
                   View Our Guarantee
                 </Button>
@@ -157,13 +222,13 @@ function RoofSalesBootcamp() {
         </div>
       </section>
 
-      {/* The Guarantee Section */}
-      <section id="guarantee" className="py-16 bg-white">
+      {/* Guarantee Section */}
+      <section id="guarantee" className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">We're so confident in the results, we have a no-lose guarantee</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Our Guarantee</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Your success is our priority, and we're committed to getting you real results.
+              We stand behind our bootcamp with a 100% satisfaction guarantee. If you're not completely satisfied with the program, we'll refund your investment.
             </p>
           </div>
         
@@ -755,47 +820,29 @@ function RoofSalesBootcamp() {
         </div>
       </section>
 
-      {/* Final CTA / Checkout Section */}
-      <section className="py-16 bg-gray-50">
+      {/* Footer */}
+      <footer className="bg-blue-900 text-white py-8">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6">Ready to Transform Your Business?</h2>
-            <p className="text-xl text-gray-600 mb-8">
-              Only <span className="font-bold text-secondary">4 early bird spots</span> remaining at $1,895!
-            </p>
-            
-            <div className="bg-white p-8 rounded-xl shadow-md">
-              <p className="text-gray-700 mb-6">
-                Don't miss this opportunity to add a powerful new revenue stream to your business with a proven system and expert guidance.
-              </p>
-
-              <div className="relative">
-                <div className="absolute -inset-1 bg-red-600 rounded-xl animate-pulse opacity-75" />
-                <Link to="/roof-sales-checkout?plan=early" onClick={handleScrollToTop} className="relative block">
-                  <Button size="lg" className="w-full bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-8 text-2xl shadow-lg">
-                    Sign Up Now. Limited Seats <ArrowRight className="ml-2 h-6 w-6" />
-                  </Button>
-                </Link>
-              </div>
-              
-              <p className="text-sm text-gray-500 mt-4">
-                Secure payment processing. Immediate access to system upon enrollment.
-              </p>
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex space-x-6 mb-4 md:mb-0">
+              <a href="/privacy" className="text-gray-300 hover:text-white transition-colors">
+                Privacy Policy
+              </a>
+              <a href="/terms" className="text-gray-300 hover:text-white transition-colors">
+                Terms of Service
+              </a>
             </div>
+            <a 
+              href="https://aininjas.pro" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-orange-500 hover:text-orange-400 font-medium transition-all duration-300 animate-pulse"
+            >
+              Powered by AI Ninjas
+            </a>
           </div>
         </div>
-      </section>
-
-      {/* Add credentials logos to program details section */}
-      <div className="max-w-3xl mx-auto mt-8">
-        <h4 className="text-center font-bold text-gray-700 mb-4">Industry Credentials</h4>
-        <div className="flex flex-wrap justify-center items-center gap-8">
-          <img src="/Images/gaff-logo.png" alt="Gaff" className="h-16 object-contain" />
-          <img src="/Images/owens-corning-logo.png" alt="Owens Corning" className="h-16 object-contain" />
-          <img src="/Images/certainteed-logo.png" alt="CertainTeed" className="h-16 object-contain" />
-          <img src="/Images/additional-accolade.png" alt="Additional Accolade" className="h-16 object-contain" />
-        </div>
-      </div>
+      </footer>
     </div>
   );
 }

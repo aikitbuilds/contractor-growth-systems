@@ -1,9 +1,9 @@
+import React from 'react';
 import { useEffect, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle, Calendar, Clock, User, Shield, Code, Bot, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-// We will create/copy Navbar later
-// import Navbar from '@/components/Navbar'; 
+import Navbar from '@/components/Navbar';
 
 function RoofSalesBootcamp() {
   // Removed unused location variable
@@ -32,16 +32,24 @@ function RoofSalesBootcamp() {
     );
   };
 
+  // Function to scroll to guarantee section
+  const scrollToGuarantee = () => {
+    const guaranteeSection = document.getElementById('guarantee');
+    if (guaranteeSection) {
+      guaranteeSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
-      {/* <Navbar /> */} {/* Placeholder for Navbar */}
+      <Navbar /> {/* Navbar component */}
       
       {/* Hero Section */}
       <section className="relative pt-32 md:pt-0 min-h-[90vh] flex items-center">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="\images\BDChero.png"
+            src="/images/BDChero.png"
             alt="Modern home with new roof and solar" 
             className="w-full h-full object-cover"
           />
@@ -60,7 +68,7 @@ function RoofSalesBootcamp() {
                 </h2>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <ScrollToTopLink to="/checkout?plan=early">
-                    <Button size="lg" className="bg-secondary hover:bg-secondary-600 text-white font-medium">
+                    <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-medium shadow-[0_0_15px_rgba(249,115,22,0.5)] hover:shadow-[0_0_20px_rgba(249,115,22,0.7)] transition-all duration-300">
                       Enroll Now - Special Launch Price <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </ScrollToTopLink>
@@ -586,89 +594,91 @@ function RoofSalesBootcamp() {
               A one-time investment that will pay for itself with your first successful deal.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {/* Early Bird Pricing */}
+          
+          {/* Single Pricing Column */}
+          <div className="max-w-2xl mx-auto">
             <div className="bg-white border-2 border-secondary rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform">
+              {/* Early Bird Badge */}
+              <div className="relative">
+                <div className="absolute -right-12 top-6 rotate-45 bg-red-600 text-white py-1 px-12 text-sm font-bold shadow-lg z-10">
+                  EARLY BIRD SPECIAL
+                </div>
+              </div>
+              
               <div className="bg-secondary p-6 text-white text-center">
-                <h3 className="text-2xl font-bold">Early Bird Special</h3>
-                <p className="text-sm mt-1">First 10 Participants Only</p>
+                <h3 className="text-2xl font-bold">Solar to Roof Bootcamp</h3>
+                <p className="text-sm mt-1">Limited to Only 10 Participants</p>
               </div>
+              
               <div className="p-8 text-center">
-                <div className="mb-4">
-                  <span className="text-5xl font-bold text-primary">$1,895</span>
-                  <span className="text-gray-500 ml-2">one-time payment</span>
+                <div className="mb-6">
+                  <div className="relative inline-block">
+                    <span className="text-4xl font-bold text-gray-400 line-through">$2,495</span>
+                    <div className="absolute top-1/2 left-0 w-full h-1 bg-red-500 transform -rotate-12"></div>
+                  </div>
+                  <div className="mt-2">
+                    <span className="text-5xl font-bold text-primary">$1,895</span>
+                    <span className="text-gray-500 ml-2">one-time payment</span>
+                  </div>
+                  <div className="mt-2 bg-yellow-100 text-yellow-800 font-medium py-1 px-3 rounded-full inline-block">
+                    Save $600 (24% discount)
+                  </div>
                 </div>
-                <p className="text-gray-600 mb-6">
-                  Save $600 by securing your spot early!
+                
+                <p className="text-red-600 font-bold text-lg mb-6">
+                  Only 4 Early Bird spots remaining!
                 </p>
-                <div className="space-y-3 mb-8">
-                  <div className="flex items-center justify-center">
-                    <CheckCircle className="h-5 w-5 text-secondary mr-2" /> <span className="text-gray-700">All 8 Live Training Sessions</span>
+
+                <div className="space-y-3 mb-8 text-left">
+                  <h4 className="font-bold text-lg text-center mb-4">Complete Program Includes:</h4>
+                  <div className="flex items-start">
+                    <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" /> 
+                    <span className="text-gray-700">8 Live Interactive Training Sessions (Tuesdays & Thursdays for 1 Month)</span>
                   </div>
-                  <div className="flex items-center justify-center">
-                    <CheckCircle className="h-5 w-5 text-secondary mr-2" /> <span className="text-gray-700">Complete Business Operating System</span>
+                  <div className="flex items-start">
+                    <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" /> 
+                    <span className="text-gray-700">Complete Business Operating System with CRM Integrations</span>
                   </div>
-                  <div className="flex items-center justify-center">
-                    <CheckCircle className="h-5 w-5 text-secondary mr-2" /> <span className="text-gray-700">AI Sales Assistant & Tools</span>
+                  <div className="flex items-start">
+                    <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" /> 
+                    <span className="text-gray-700">Custom AI Sales Assistant for Lead Qualification & Proposals</span>
                   </div>
-                  <div className="flex items-center justify-center">
-                    <CheckCircle className="h-5 w-5 text-secondary mr-2" /> <span className="text-gray-700">Access to All Recordings</span>
+                  <div className="flex items-start">
+                    <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" /> 
+                    <span className="text-gray-700">Lifetime Access to All Session Recordings</span>
                   </div>
-                  <div className="flex items-center justify-center">
-                    <CheckCircle className="h-5 w-5 text-secondary mr-2" /> <span className="text-gray-700">The "First Deal Closed" Guarantee</span>
+                  <div className="flex items-start">
+                    <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" /> 
+                    <span className="text-gray-700">Personalized Attention in Small Group Setting (Max 10 Participants)</span>
+                  </div>
+                  <div className="flex items-start">
+                    <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" /> 
+                    <span className="text-gray-700">The "First Deal Closed" Guarantee - We'll Support You Until You Close</span>
+                  </div>
+                  <div className="flex items-start">
+                    <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" /> 
+                    <span className="text-gray-700">Done-For-You Sales Scripts and Marketing Materials</span>
+                  </div>
+                  <div className="flex items-start">
+                    <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-1 flex-shrink-0" /> 
+                    <span className="text-gray-700">Bonus: Private Community Access for Ongoing Support</span>
                   </div>
                 </div>
-                <ScrollToTopLink to="/checkout?plan=early" className="inline-block w-full">
-                  <Button size="lg" className="w-full bg-secondary hover:bg-secondary-600 text-white font-medium text-lg">
-                    Enroll Now
-                  </Button>
-                </ScrollToTopLink>
-                <p className="text-xs text-gray-500 mt-3">Only 4 spots remaining at this price!</p>
+                
+                <div className="relative mb-4">
+                  <div className="absolute -inset-1 bg-orange-500 rounded-xl animate-pulse opacity-75"></div>
+                  <ScrollToTopLink to="/checkout?plan=early" className="inline-block w-full relative">
+                    <Button size="lg" className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-lg py-4 shadow-[0_0_15px_rgba(249,115,22,0.5)] hover:shadow-[0_0_20px_rgba(249,115,22,0.7)] transition-all duration-300">
+                      Secure Your Early Bird Spot Now
+                    </Button>
+                  </ScrollToTopLink>
+                </div>
+                
+                <p className="text-sm text-gray-500">
+                  Secure payment processing. Payment plans available - contact us for details.
+                </p>
               </div>
             </div>
-            {/* Standard Pricing */}
-            <div className="bg-white border-2 border-gray-700 rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform">
-              <div className="bg-gray-700 p-6 text-white text-center">
-                <h3 className="text-2xl font-bold">Standard Pricing</h3>
-                <p className="text-sm mt-1">Limited Seats Available</p>
-              </div>
-              <div className="p-8 text-center">
-                <div className="mb-4">
-                  <span className="text-5xl font-bold text-primary">$2,495</span>
-                  <span className="text-gray-500 ml-2">one-time payment</span>
-                </div>
-                <p className="text-gray-600 mb-6">
-                  Complete system with all features included.
-                </p>
-                <div className="space-y-3 mb-8">
-                   <div className="flex items-center justify-center">
-                    <CheckCircle className="h-5 w-5 text-gray-700 mr-2" /> <span className="text-gray-700">All 8 Live Training Sessions</span>
-                  </div>
-                  <div className="flex items-center justify-center">
-                    <CheckCircle className="h-5 w-5 text-gray-700 mr-2" /> <span className="text-gray-700">Complete Business Operating System</span>
-                  </div>
-                  <div className="flex items-center justify-center">
-                    <CheckCircle className="h-5 w-5 text-gray-700 mr-2" /> <span className="text-gray-700">AI Sales Assistant & Tools</span>
-                  </div>
-                  <div className="flex items-center justify-center">
-                    <CheckCircle className="h-5 w-5 text-gray-700 mr-2" /> <span className="text-gray-700">Access to All Recordings</span>
-                  </div>
-                  <div className="flex items-center justify-center">
-                    <CheckCircle className="h-5 w-5 text-gray-700 mr-2" /> <span className="text-gray-700">The "First Deal Closed" Guarantee</span>
-                  </div>
-                </div>
-                <ScrollToTopLink to="/checkout?plan=standard" className="inline-block w-full">
-                  <Button size="lg" className="w-full bg-gray-700 hover:bg-gray-600 text-white font-medium text-lg py-3">
-                    Enroll Now
-                  </Button>
-                </ScrollToTopLink>
-              </div>
-            </div>
-          </div>
-          <div className="max-w-3xl mx-auto text-center mt-10">
-            <p className="text-sm text-gray-500">
-              All prices are in USD. Payment plans available - contact us for details.
-            </p>
           </div>
         </div>
       </section>
@@ -677,22 +687,41 @@ function RoofSalesBootcamp() {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6">Ready to Transform Your Business?</h2>
-            <p className="text-xl text-gray-600 mb-8">
-              Only <span className="font-bold text-secondary">4 early bird spots</span> remaining at $1,895!
-            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Ready to Transform Your Business?</h2>
             <div className="bg-white p-8 rounded-xl shadow-md">
+              <div className="mb-6">
+                <p className="text-xl text-gray-700 mb-2">
+                  Regular Price: <span className="line-through font-medium">$2,495</span>
+                </p>
+                <div className="flex flex-col items-center justify-center">
+                  <div className="bg-red-100 text-red-800 px-4 py-1 rounded-full font-bold mb-2">
+                    Early Bird Special - 24% OFF
+                  </div>
+                  <p className="text-3xl font-bold text-primary">
+                    Only $1,895
+                  </p>
+                  <p className="text-red-600 font-bold mt-2">
+                    Only 4 Early Bird spots remaining!
+                  </p>
+                </div>
+              </div>
+              
               <p className="text-gray-700 mb-6">
                 Don't miss this opportunity to add a powerful new revenue stream to your business with a proven system and expert guidance.
               </p>
+
               <div className="relative">
                 <div className="absolute -inset-1 bg-red-600 rounded-xl animate-pulse opacity-75" />
                 <ScrollToTopLink to="/checkout?plan=early" className="relative block">
-                  <Button size="lg" className="w-full bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-8 text-2xl shadow-lg">
-                    Sign Up Now. Limited Seats <ArrowRight className="ml-2 h-6 w-6" />
+                  <Button 
+                    size="lg" 
+                    className="w-full bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-8 text-2xl shadow-lg"
+                  >
+                    Secure Your Early Bird Spot Now <ArrowRight className="ml-2 h-6 w-6" />
                   </Button>
                 </ScrollToTopLink>
               </div>
+              
               <p className="text-sm text-gray-500 mt-4">
                 Secure payment processing. Immediate access to system upon enrollment.
               </p>

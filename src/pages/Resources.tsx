@@ -1,49 +1,82 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Calculator, Check, CheckCircle, Download, FileText, LineChart, ListChecks, LucideIcon, Target } from 'lucide-react';
+import { ArrowRight, Calculator, Check, CheckCircle, Download, FileText, LineChart, ListChecks, LucideIcon, Target, Bot, Brain, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import Navbar from '@/components/Navbar';
+import { Helmet } from 'react-helmet';
 
 interface ResourceProps {
   icon: React.ReactNode;
   title: string;
   description: string;
   ctaText: string;
-  imageUrl?: string;
-  onClick: () => void;
+  href: string;
+  isExternal?: boolean;
 }
 
-const ResourceCard = ({ icon, title, description, ctaText, imageUrl, onClick }: ResourceProps) => (
-  <Card className="h-full flex flex-col transition-all duration-300 hover:shadow-lg">
-    <CardHeader>
-      <div className="mb-4 w-16 h-16 bg-primary/10 text-primary rounded-full flex items-center justify-center">
-        {icon}
-      </div>
-      <CardTitle className="text-xl font-bold text-primary">{title}</CardTitle>
-    </CardHeader>
-    <CardContent className="flex-grow">
-      <p className="text-gray-700">{description}</p>
-      {imageUrl && (
-        <div className="mt-6">
-          <img src={imageUrl} alt={title} className="w-full h-auto rounded-md" />
+const ResourceCard = ({ icon, title, description, ctaText, href, isExternal }: ResourceProps) => {
+  if (isExternal) {
+    return (
+      <Card className="h-full flex flex-col transition-all duration-300 hover:shadow-lg">
+        <CardHeader>
+          <div className="mb-4 w-16 h-16 bg-primary/10 text-primary rounded-full flex items-center justify-center">
+            {icon}
+          </div>
+          <CardTitle className="text-xl font-bold text-primary">{title}</CardTitle>
+        </CardHeader>
+        <CardContent className="flex-grow">
+          <p className="text-gray-700">{description}</p>
+        </CardContent>
+        <CardFooter>
+          <a 
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full"
+          >
+            <Button 
+              className="w-full bg-secondary hover:bg-secondary/90 text-white" 
+            >
+              {ctaText}
+              <Download className="ml-2 h-5 w-5" />
+            </Button>
+          </a>
+        </CardFooter>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className="h-full flex flex-col transition-all duration-300 hover:shadow-lg">
+      <CardHeader>
+        <div className="mb-4 w-16 h-16 bg-primary/10 text-primary rounded-full flex items-center justify-center">
+          {icon}
         </div>
-      )}
-    </CardContent>
-    <CardFooter>
-      <Button 
-        className="w-full bg-secondary hover:bg-secondary/90 text-white" 
-        onClick={onClick}
-      >
-        {ctaText}
-        <Download className="ml-2 h-5 w-5" />
-      </Button>
-    </CardFooter>
-  </Card>
-);
+        <CardTitle className="text-xl font-bold text-primary">{title}</CardTitle>
+      </CardHeader>
+      <CardContent className="flex-grow">
+        <p className="text-gray-700">{description}</p>
+      </CardContent>
+      <CardFooter>
+        <Link 
+          to={href}
+          className="w-full"
+        >
+          <Button 
+            className="w-full bg-secondary hover:bg-secondary/90 text-white" 
+          >
+            {ctaText}
+            <Download className="ml-2 h-5 w-5" />
+          </Button>
+        </Link>
+      </CardFooter>
+    </Card>
+  );
+};
 
 const EmailCaptureForm = ({ title, onSubmit, onClose }: { title: string; onSubmit: (email: string, name: string) => void; onClose: () => void }) => {
   const [email, setEmail] = useState('');
@@ -149,6 +182,11 @@ const Resources = () => {
 
   return (
     <div className="min-h-screen">
+      <Helmet>
+        <title>Free Resources & Tools | Billion Dollar Contractor</title>
+        <meta name="description" content="Access our collection of free AI tools, templates, and resources designed to help contractors scale their businesses efficiently." />
+      </Helmet>
+
       <Navbar />
       
       <main className="pt-24 pb-16">
@@ -191,7 +229,7 @@ const Resources = () => {
                   title="Roofing Contractor ROI Calculator"
                   description="Estimate the potential return on investment when implementing BDC's proven systems. See how optimizing sales volume and profit margins can significantly outweigh the cost and maximize market opportunities."
                   ctaText="Access the ROI Calculator"
-                  onClick={() => handleResourceClick("Roofing Contractor ROI Calculator")}
+                  href="/resources/roi-calculator"
                 />
                 
                 <ResourceCard
@@ -199,7 +237,7 @@ const Resources = () => {
                   title="The 30-Day Sales Turnaround Checklist"
                   description="Feeling stuck? Based on our rapid Texas turnaround where we doubled a sales team and ignited growth in a month, this checklist provides the critical steps to diagnose issues and kickstart your sales engine."
                   ctaText="Download Your Checklist"
-                  onClick={() => handleResourceClick("The 30-Day Sales Turnaround Checklist")}
+                  href="/resources/30-day-checklist"
                 />
                 
                 <ResourceCard
@@ -207,7 +245,7 @@ const Resources = () => {
                   title="Scaling Blueprint: Key Elements for $10M+ Growth"
                   description="Moving beyond your current revenue ceiling requires strategic systems. Learn the core components – from optimizing inside sales to building multi-state operational processes – drawn from experience scaling contractors to over $300M annually."
                   ctaText="Download the Blueprint"
-                  onClick={() => handleResourceClick("Scaling Blueprint: Key Elements for $10M+ Growth")}
+                  href="/resources/scaling-blueprint"
                 />
               </div>
             </div>
@@ -228,7 +266,7 @@ const Resources = () => {
                   title="New Market / Division Launch Readiness Assessment"
                   description="Thinking of adding a service line (like roofing to solar) or expanding geographically? Use this assessment to evaluate your readiness across leadership, systems, tools, and financing, based on BDC's rapid residential launch model."
                   ctaText="Download the Assessment"
-                  onClick={() => handleResourceClick("New Market / Division Launch Readiness Assessment")}
+                  href="/resources/launch-readiness-assessment"
                 />
                 
                 <ResourceCard
@@ -236,7 +274,7 @@ const Resources = () => {
                   title="The Evolution of Solar Sales: Lessons from an Inside Sales Pioneer"
                   description="Understand the power of modern inside sales. This guide shares insights from the early days of pioneering phone-based solar sales and how those foundational principles apply to building efficient, scalable sales engines today."
                   ctaText="Download the Guide"
-                  onClick={() => handleResourceClick("The Evolution of Solar Sales: Lessons from an Inside Sales Pioneer")}
+                  href="/resources/solar-sales-lessons"
                 />
                 
                 <ResourceCard
@@ -244,7 +282,76 @@ const Resources = () => {
                   title="Sales Team Health Check"
                   description="Quickly gauge the effectiveness of your current sales engine. Assess leadership, process clarity, KPI tracking, team size, and morale to identify areas needing immediate attention (based on interactive element concept from Texas Turnaround)."
                   ctaText="Download the Health Check"
-                  onClick={() => handleResourceClick("Sales Team Health Check")}
+                  href="/resources/sales-team-health-check"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* AI Tools Section */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="text-2xl md:text-3xl font-bold text-primary mb-10 text-center">
+                AI Tools & Resources
+              </h2>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <ResourceCard
+                  icon={<Bot className="h-8 w-8" />}
+                  title="AI Readiness Assessment"
+                  description="Evaluate your business's readiness for AI implementation with our comprehensive checklist and scoring system."
+                  ctaText="Get the Assessment"
+                  href="/aichecklist"
+                />
+                <ResourceCard
+                  icon={<Brain className="h-8 w-8" />}
+                  title="AI Implementation Guide"
+                  description="Step-by-step guide to implementing AI in your contracting business, from basic automation to advanced applications."
+                  ctaText="Download Guide"
+                  href="/resources/ai-guide"
+                />
+                <ResourceCard
+                  icon={<Sparkles className="h-8 w-8" />}
+                  title="AI Prompt Templates"
+                  description="Collection of proven AI prompts for sales, customer service, and project management tasks."
+                  ctaText="Access Templates"
+                  href="/resources/prompts"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Business Templates Section */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <h2 className="text-2xl md:text-3xl font-bold text-primary mb-10 text-center">
+                Business Growth Templates
+              </h2>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <ResourceCard
+                  icon={<FileText className="h-8 w-8" />}
+                  title="Sales Process Templates"
+                  description="Customizable templates for sales scripts, follow-up sequences, and closing strategies."
+                  ctaText="Download Templates"
+                  href="/resources/sales-templates"
+                />
+                <ResourceCard
+                  icon={<FileText className="h-8 w-8" />}
+                  title="Project Management Kit"
+                  description="Essential templates for project planning, team coordination, and client communication."
+                  ctaText="Get the Kit"
+                  href="/resources/pm-kit"
+                />
+                <ResourceCard
+                  icon={<FileText className="h-8 w-8" />}
+                  title="Weekly Newsletter"
+                  description="Join thousands of contractors receiving Steve's insights on sales, marketing, and business growth."
+                  ctaText="Subscribe Now"
+                  href="https://www.thetuesdaytuneup.com"
+                  isExternal
                 />
               </div>
             </div>

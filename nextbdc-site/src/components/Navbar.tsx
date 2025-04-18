@@ -64,7 +64,8 @@ const Navbar = () => {
             <NavLink to="/checkout?plan=early">
               <Button variant="default" className={`
                 transition-all duration-300 transform hover:scale-105
-                bg-secondary text-white hover:bg-secondary-600
+                bg-orange-500 text-white hover:bg-orange-600
+                font-medium text-base shadow-md shadow-orange-500/20
               `}>
                 Enroll Now
               </Button>
@@ -118,7 +119,7 @@ const Navbar = () => {
               </NavLink>
               <div className="pt-3">
                 <NavLink to="/checkout?plan=early">
-                  <Button className="w-full bg-secondary hover:bg-secondary-600 text-white">
+                  <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white">
                     Enroll Now
                   </Button>
                 </NavLink>

@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-// import Navbar from '@/components/Navbar'; // Will copy later
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { AlertCircle, Gift, Star, ArrowLeft, Lock, CreditCard } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Gift, ArrowLeft, Lock } from 'lucide-react';
+import Navbar from '@/components/Navbar';
+import { GHLFormEmbed } from '@/components/GHLFormEmbed';
 
 // Added Testimonial Type (or import if defined elsewhere)
 interface TestimonialProps {
@@ -32,14 +31,12 @@ function TestimonialCard({ quote, author, title, imageSrc }: TestimonialProps) {
           <p className="text-gray-600 text-sm">{title}</p>
         </div>
       </div>
-      {/* Star rating can be added if desired */}
       <p className="text-gray-700 italic text-sm">"{quote}"</p>
     </Card>
   );
 }
 
 function Checkout() {
-  const [includeUpsell, setIncludeUpsell] = useState(false);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const plan = queryParams.get('plan') || 'early'; // Default to early bird
@@ -51,13 +48,10 @@ function Checkout() {
   
   const earlyBirdPrice = 1895;
   const standardPrice = 2495;
-  const upsellPrice = 495; // 2x 1-on-1 Coaching Sessions
-  
-  const basePrice = plan === 'standard' ? standardPrice : earlyBirdPrice;
-  const totalPrice = basePrice + (includeUpsell ? upsellPrice : 0);
   const isEarlyBird = plan !== 'standard';
+  const price = isEarlyBird ? earlyBirdPrice : standardPrice;
 
-  // Function to format currency (remains the same)
+  // Function to format currency
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -67,8 +61,18 @@ function Checkout() {
     }).format(value);
   };
 
-  // Testimonial Data (Copied from RoofSalesBootcamp page context)
-  // Image paths assume they will be in the public/Images folder
+  // Helper function to get the appropriate GHL form ID based on plan
+  const getFormId = (isEarlyBird: boolean): string => {
+    // Replace these with your actual GHL form IDs
+    return isEarlyBird ? 'bWJeCTvmhZPem9goQjRf' : 'U76ZUQnsAcARA2A5JmA5';
+  };
+
+  // Helper function to get appropriate form height
+  const getFormHeight = (): string => {
+    return '1200px'; // Increased height to show more of the form without scrolling
+  };
+
+  // Testimonial Data
   const testimonials: TestimonialProps[] = [
     {
       quote: "I closed my first roofing deal worth $24,500 just 18 days into the program. The AI tools made proposal creation incredibly fast, and the sales scripts worked exactly as promised.",
@@ -92,7 +96,7 @@ function Checkout() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* <Navbar /> */} {/* Placeholder for Navbar */}
+      <Navbar />
 
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">
@@ -109,8 +113,8 @@ function Checkout() {
           {/* Main Checkout Area */}
           <div className="max-w-4xl mx-auto">
             <div className="mb-6">
-              {/* Link back to root (bootcamp page) */}
-              <Link to="/" className="flex items-center text-primary hover:text-primary/80 transition-colors">
+              {/* Link back to bootcamp page */}
+              <Link to="/roof-sales-bootcamp" className="flex items-center text-primary hover:text-primary/80 transition-colors">
                 <ArrowLeft className="h-4 w-4 mr-1" />
                 <span>Back to Bootcamp Details</span>
               </Link>
@@ -120,7 +124,7 @@ function Checkout() {
             </h1>
 
             <div className="grid md:grid-cols-3 gap-8">
-              {/* Order Summary & Payment */}
+              {/* GHL Form and Order Summary */}
               <div className="md:col-span-2">
                 <Card className="mb-8">
                   <CardHeader>
@@ -139,83 +143,69 @@ function Checkout() {
                           )}
                         </p>
                       </div>
-                      <p className="font-semibold">{formatCurrency(basePrice)}</p>
+                      <p className="font-semibold">{formatCurrency(price)}</p>
                     </div>
-                    
-                    {/* Optional Upsell Display */}
-                    {includeUpsell && (
-                      <div className="flex justify-between items-center border-b pb-4 mb-4">
-                        <div>
-                          <p className="font-semibold">Optional Add-on:</p>
-                          <p className="text-sm text-gray-600">2x 1-on-1 Coaching Sessions</p>
-                        </div>
-                        <p className="font-semibold">{formatCurrency(upsellPrice)}</p>
-                      </div>
-                    )}
+
+                    {/* What's Included List */}
+                    <div className="my-4">
+                      <p className="font-medium mb-2">What's Included:</p>
+                      <ul className="space-y-1 text-sm">
+                        <li className="flex items-start">
+                          <span className="text-secondary mr-2">✓</span>
+                          <span>8 Live Interactive Training Sessions</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-secondary mr-2">✓</span>
+                          <span>Complete Business Operating System</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-secondary mr-2">✓</span>
+                          <span>AI Sales Assistant & Tools</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-secondary mr-2">✓</span>
+                          <span>Lifetime Access to All Session Recordings</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-secondary mr-2">✓</span>
+                          <span>The "First Deal Closed" Guarantee</span>
+                        </li>
+                      </ul>
+                    </div>
 
                     {/* Total */}
-                    <div className="flex justify-between items-center font-bold text-lg pt-4">
+                    <div className="flex justify-between items-center font-bold text-lg pt-4 border-t">
                       <p>Total Amount:</p>
-                      <p>{formatCurrency(totalPrice)}</p>
+                      <p>{formatCurrency(price)}</p>
                     </div>
                   </CardContent>
                 </Card>
 
-                {/* Payment Details Card */}
+                {/* GHL Form Embed */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Billing & Payment Details</CardTitle>
+                    <CardTitle>Complete Your Registration</CardTitle>
                   </CardHeader>
-                  {/* Replace with actual form handling later */}
-                  <form onSubmit={(e) => {e.preventDefault(); alert('Stripe integration needed!');}}>
-                    <CardContent className="space-y-4">
-                      {/* Added Billing Info Inputs */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <Input placeholder="First Name" required/>
-                        <Input placeholder="Last Name" required/>
+                  <CardContent>
+                    <GHLFormEmbed 
+                      formId={getFormId(isEarlyBird)}
+                      height={getFormHeight()}
+                      title="Solar to Roof Bootcamp Checkout"
+                      showTitle={false}
+                      containerClassName="w-full"
+                    />
+                    
+                    <div className="flex items-center justify-center mt-4 text-gray-500 text-xs">
+                      <div className="flex items-center">
+                        <Lock className="h-3 w-3 mr-1" />
+                        <span>Secure Payment Processing</span>
                       </div>
-                      <Input placeholder="Email Address" type="email" required/>
-                      <Input placeholder="Phone Number" type="tel" required/>
-                      <Input placeholder="Billing Address" required/>
-                      <div className="flex gap-4">
-                        <Input placeholder="City" className="flex-1" required/>
-                        <Input placeholder="State" className="w-20" required/>
-                        <Input placeholder="ZIP Code" className="flex-1" required/>
-                      </div>
-                      <Input placeholder="Company Website (Optional)" type="url"/>
-
-                      {/* Stripe Elements Placeholder */}
-                      <div className="pt-4">
-                        <p className="font-medium mb-2 text-sm">Payment Information (Securely handled by Stripe)</p>
-                        <div className="p-4 border rounded-md bg-gray-50 text-center text-gray-500">
-                          <p className="font-semibold">[ Stripe Card Input Placeholder ]</p>
-                          <p className="text-sm">Actual Stripe Elements will replace this area.</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                    <CardFooter className="flex flex-col items-center pt-6">
-                      {/* Moved Button Up */}
-                      <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary-700 text-white text-lg mb-4">
-                        Complete Purchase - {formatCurrency(totalPrice)}
-                      </Button>
-                      {/* Added Security Info */}
-                      <div className="flex items-center justify-center space-x-4 text-gray-500 text-xs">
-                        <div className="flex items-center">
-                          <Lock className="h-3 w-3 mr-1" />
-                          <span>Secure SSL Encrypted Checkout</span>
-                        </div>
-                        <span className="hidden sm:inline">|</span>
-                        <div className="flex items-center space-x-1">
-                          <CreditCard className="h-3 w-3 mr-1" />
-                          <span>Cards processed by Stripe</span>
-                        </div>
-                      </div>
-                    </CardFooter>
-                  </form>
+                    </div>
+                  </CardContent>
                 </Card>
               </div>
 
-              {/* Bonus & Upsell Column */}
+              {/* Bonus Column */}
               <div className="md:col-span-1 space-y-6">
                 {/* Early Bird Bonus */}
                 {isEarlyBird && (
@@ -234,39 +224,28 @@ function Checkout() {
                   </Card>
                 )}
 
-                {/* Optional Upsell */}
-                <Card className="bg-gradient-to-br from-blue-50 to-indigo-100 border border-blue-200">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-primary flex items-center">
-                      <Star className="h-5 w-5 text-yellow-500 mr-2" />
-                      Optional Add-on
-                    </CardTitle>
+                {/* Program Details */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Program Details</CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-700 mb-4">
-                      Accelerate your results with two <strong>1-on-1 personalized coaching sessions</strong> with Steve Huber.
-                    </p>
-                    <div className="flex items-center space-x-2 bg-white p-3 rounded-md border">
-                      <Checkbox 
-                        id="upsell-checkbox"
-                        checked={includeUpsell}
-                        onCheckedChange={() => setIncludeUpsell(!includeUpsell)}
-                      />
-                      <label
-                        htmlFor="upsell-checkbox"
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer flex-grow"
-                      >
-                        Add 2 Coaching Sessions <span className="font-semibold">(+{formatCurrency(upsellPrice)})</span>
-                      </label>
+                  <CardContent className="space-y-3">
+                    <div>
+                      <h4 className="font-semibold">Start Date</h4>
+                      <p className="text-gray-700">May 2025 TBD</p>
                     </div>
-                  </CardContent>
-                </Card>
-
-                {/* Secure Checkout Info */}
-                <Card className="bg-gray-50 border border-gray-200">
-                  <CardContent className="pt-6 text-center text-gray-600 text-sm">
-                    <AlertCircle className="h-5 w-5 mx-auto mb-2 text-gray-400" />
-                    <p>Your payment is processed securely by Stripe.</p>
+                    <div>
+                      <h4 className="font-semibold">Schedule</h4>
+                      <p className="text-gray-700">Tuesdays & Thursdays at 2:00 PM EST</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold">Duration</h4>
+                      <p className="text-gray-700">4 Weeks (8 Sessions) + Ongoing Access</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold">Format</h4>
+                      <p className="text-gray-700">Live Online via Zoom + On-Demand Software</p>
+                    </div>
                   </CardContent>
                 </Card>
               </div>
