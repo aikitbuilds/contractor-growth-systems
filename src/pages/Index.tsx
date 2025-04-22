@@ -272,6 +272,7 @@ const Index = () => {
               {/* Video Column */}
               <div className="md:w-1/2 p-6 md:p-8">
                 <div className="aspect-video rounded-lg overflow-hidden shadow-xl">
+                  {/* Original YouTube iframe */}
                   <iframe 
                     src="https://www.youtube.com/embed/fwE_xRmpsps" 
                     title="Bootcamp Overview Video"
@@ -300,6 +301,7 @@ const Index = () => {
                     </div>
                     <div className="flex items-start">
                       <CheckCircle className="h-6 w-6 text-secondary mr-3 mt-1 flex-shrink-0" />
+                      {/* TODO: Define "AI-powered tools" and "done-for-you marketing assets" with Steve/Michael before finalizing text */}
                       <p className="text-gray-700">Includes AI-powered tools and done-for-you marketing assets</p>
                     </div>
                     <div className="flex items-start">
@@ -413,6 +415,7 @@ const Index = () => {
               <h3 className="text-xl font-bold mb-3">Scaling Struggle</h3>
               <p className="text-gray-600 mb-4">Feeling stuck with founder-dependent operations and inefficient team performance?</p>
               <div className="mt-auto">
+                {/* TODO: Review/revise this testimonial mentioning "AI tools" after features are defined */}
                 <h4 className="font-bold text-primary mb-2">Our Solution:</h4>
                 <p className="font-medium">Growth Accelerator Framework</p>
               </div>
@@ -453,6 +456,7 @@ const Index = () => {
                   <p className="text-gray-300">Expert guidance from industry veterans with proven results</p>
                 </div>
                 <div className="flex items-start">
+                  {/* TODO: Define "On-Demand Software Access" with Steve/Michael before finalizing text */}
                   <CheckCircle className="h-6 w-6 text-secondary mr-3 mt-1 flex-shrink-0" />
                   <p className="text-gray-300">Direct integration with your team for sustainable growth</p>
                 </div>
@@ -503,6 +507,7 @@ const Index = () => {
               <div className="bg-secondary-100 p-4 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
                 <FileText className="h-10 w-10 text-secondary" />
               </div>
+              {/* TODO: Define "AI Sales Assistance" with Steve/Michael before finalizing text */}
               <h3 className="text-xl font-bold mb-3">Operational Efficiency</h3>
               <p className="text-gray-600">
                 Streamline your bidding, project management, and business operations to maximize profitability and scalability.
@@ -770,8 +775,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* AI Chat Component */}
-      <HomeAIChatComponent />
+      {/* AI Chat Component - Temporarily Disabled */}
+      {/* <HomeAIChatComponent /> */}
 
       {/* Final CTA */}
       <section className="py-16 bg-gray-50">

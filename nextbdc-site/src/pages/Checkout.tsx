@@ -46,10 +46,11 @@ function Checkout() {
     window.scrollTo(0, 0);
   }, []);
   
-  const earlyBirdPrice = 1895;
-  const standardPrice = 2495;
+  const listPrice = 3895;
+  const earlyBirdPrice = 2895;
+  const discountAmount = listPrice - earlyBirdPrice; // $1000
   const isEarlyBird = plan !== 'standard';
-  const price = isEarlyBird ? earlyBirdPrice : standardPrice;
+  const displayPrice = isEarlyBird ? earlyBirdPrice : listPrice;
 
   // Function to format currency
   const formatCurrency = (value: number) => {
@@ -81,7 +82,7 @@ function Checkout() {
       imageSrc: "/Images/team1.png"
     },
     {
-      quote: "Adding solar to our roofing business has increased our average ticket by 300%. The operating system they provide let us hit the ground running without hiring additional staff.",
+      quote: "Adding solar to our roofing business has increased our average ticket by 50%. The operating system they provide let us hit the ground running without hiring additional staff.",
       author: "Sarah Johnson",
       title: "Roofing Contractor, Texas",
       imageSrc: "/Images/team2.png"
@@ -137,14 +138,27 @@ function Checkout() {
                         <p className="font-semibold">BDC Solar-to-Roof Bootcamp</p>
                         <p className="text-sm text-gray-700 font-medium">
                           {isEarlyBird ? (
-                            <span className="text-secondary">Early Bird Special</span>
+                            <span className="text-secondary">Early Bird Special (Save {formatCurrency(discountAmount)})</span>
                           ) : (
                             <span>Standard Pricing</span>
                           )}
                         </p>
                       </div>
-                      <p className="font-semibold">{formatCurrency(price)}</p>
+                      <p className="font-semibold">{formatCurrency(displayPrice)}</p>
                     </div>
+                    {/* Add List Price display if needed */}
+                    {!isEarlyBird && (
+                       <div className="flex justify-between items-center text-sm text-gray-500 mb-4">
+                         <p>List Price:</p>
+                         <p>{formatCurrency(listPrice)}</p>
+                       </div>
+                    )}
+                    {isEarlyBird && (
+                       <div className="flex justify-between items-center text-sm text-gray-500 mb-4">
+                         <p>List Price:</p>
+                         <p className="line-through">{formatCurrency(listPrice)}</p>
+                       </div>
+                    )}
 
                     {/* What's Included List */}
                     <div className="my-4">
@@ -176,7 +190,7 @@ function Checkout() {
                     {/* Total */}
                     <div className="flex justify-between items-center font-bold text-lg pt-4 border-t">
                       <p>Total Amount:</p>
-                      <p>{formatCurrency(price)}</p>
+                      <p>{formatCurrency(displayPrice)}</p>
                     </div>
                   </CardContent>
                 </Card>
