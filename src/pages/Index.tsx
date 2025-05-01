@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
 import { Card } from '@/components/ui/card';
 import HomeAIChatComponent from '@/components/HomeAIChatComponent';
+import TariffReportModal from '@/components/TariffReportModal';
 
 const bootcampUrl = 'http://localhost:5176';
 
@@ -125,6 +126,9 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
+      
+      {/* Tariff Report Modal - will show after 30 seconds */}
+      <TariffReportModal />
       
       {/* Hero Section */}
       <section className="relative pt-32 md:pt-0 min-h-[90vh] flex items-center">
@@ -414,9 +418,9 @@ const Index = () => {
               <div className="relative">
                 <div className="rounded-xl overflow-hidden">
                   <img 
-                    src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                    src="/Images/hands_training.png" 
                     alt="Strategic collaboration" 
-                    className="w-full h-auto"
+                    className="w-full h-auto max-w-[70%] mx-auto"
                   />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-secondary/30 to-transparent mix-blend-overlay" />
@@ -445,9 +449,11 @@ const Index = () => {
               </div>
               
               <div className="mt-8">
-                <Button className="bg-secondary hover:bg-secondary-600 text-white">
-                  About Our Approach <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
+                <Link to="/services">
+                  <Button className="bg-secondary hover:bg-secondary-600 text-white">
+                    About Our Approach <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

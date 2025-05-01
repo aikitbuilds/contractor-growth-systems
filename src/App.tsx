@@ -40,6 +40,9 @@ import Forms from './pages/Forms';
 import ExampleForm from './pages/ExampleForm';
 import PaymentSuccess from './pages/PaymentSuccess';
 import AIChecklist from '@/pages/AIChecklist';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
+import Sitemap from './pages/Sitemap';
 
 const queryClient = new QueryClient();
 
@@ -86,6 +89,9 @@ const App = () => (
               <Route path="/test-integrations" element={<TestIntegrations />} />
               <Route path="/admin/submissions" element={<SubmissionAdmin />} />
               <Route path="/payment/success" element={<PaymentSuccess />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/sitemap" element={<Sitemap />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

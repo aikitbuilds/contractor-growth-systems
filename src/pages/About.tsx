@@ -25,10 +25,10 @@ const About = () => {
                 </div>
                 
                 <div className="md:w-1/2">
-                  {/* Updated to use steve1.png */}
+                  {/* Updated to use steve_cartoon.png */}
                   <div className="w-full aspect-square bg-gray-300 rounded-2xl shadow-lg overflow-hidden">
                     <img 
-                      src="/Images/steve1.png" 
+                      src="/Images/steve_cartoon.png" 
                       alt="Steve Huber, Founder of Billion Dollar Contractor" 
                       className="w-full h-full object-cover"
                       onError={(e) => {

@@ -15,20 +15,42 @@ const Services = () => {
       
       <main className="pt-24 pb-16">
         {/* Hero Section */}
-        <section className="bg-primary text-white py-16 md:py-24">
-          <div className="container mx-auto px-4">
+        <section className="relative text-white py-16 md:py-24 overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <video 
+              autoPlay 
+              muted 
+              loop 
+              className="w-full h-full object-cover"
+            >
+              <source src="/Images/services_hero.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-black/60"></div>
+          </div>
+          
+          <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-8">
                 <h1 className="text-3xl md:text-5xl font-bold mb-6">
                   Stop Fighting Fires, Start Building Your Future
                 </h1>
-                <p className="text-xl md:text-2xl font-medium text-secondary">
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Systems to Scale Section - Moved here */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6">
                   Systems to Scale Your Contracting Business
-                </p>
+                </h2>
               </div>
               
               <div className="max-w-4xl mx-auto">
-                <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+                <p className="text-lg md:text-xl text-gray-700 leading-relaxed text-center">
                   You didn't get into contracting to be buried in spreadsheets, chase down sales updates, or feel like every day is chaos. You want to build great projects, lead a strong team, and grow profitably. But scaling past your current level often feels overwhelming. Billion Dollar Contractor (BDC) is your hands-on partner to implement the practical, intelligent systems needed to break through growth barriers predictably and efficiently. We don't just tell you what to do – we build the engine with you.
                 </p>
               </div>
@@ -37,7 +59,7 @@ const Services = () => {
         </section>
         
         {/* Core Offering Section */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-12">
