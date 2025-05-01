@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import { Card } from '@/components/ui/card';
 import HomeAIChatComponent from '@/components/HomeAIChatComponent';
 import TariffReportModal from '@/components/TariffReportModal';
+import TariffReportSection from '@/components/TariffReportSection';
 
 const bootcampUrl = 'http://localhost:5176';
 
@@ -313,6 +314,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Tariff Report Section */}
+      <TariffReportSection />
+
       {/* The Tuesday Tuneup Banner */}
       <section className="bg-gradient-to-r from-blue-800 to-indigo-900 text-white py-12">
         <div className="container mx-auto px-4">
@@ -347,9 +351,9 @@ const Index = () => {
             </div>
             <div className="md:col-span-4">
               <img 
-                src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=400&ixid=MnwxfDB8MXxyYW5kb218MHx8b2ZmaWNlLG5vdGVib29rLHdyaXRpbmd8fHx8fHwxNjg4NjU2Njcw&ixlib=rb-4.0.3&q=80&w=600" 
-                alt="Newsletter" 
-                className="w-full h-auto rounded-lg shadow-lg"
+                src="/Images/tuesday.png" 
+                alt="Tuesday Tuneup Newsletter" 
+                className="w-full h-auto max-w-[80%] mx-auto rounded-lg shadow-lg"
               />
             </div>
           </div>

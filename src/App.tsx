@@ -43,6 +43,7 @@ import AIChecklist from '@/pages/AIChecklist';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import Sitemap from './pages/Sitemap';
+import ScrollToTop from './components/ScrollToTop';
 
 const queryClient = new QueryClient();
 
@@ -52,6 +53,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <div className="flex flex-col min-h-screen">
           <div className="flex-grow">
             <Routes>
