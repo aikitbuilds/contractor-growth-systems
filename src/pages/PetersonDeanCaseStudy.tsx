@@ -255,33 +255,12 @@ function PetersonDeanCaseStudy() {
             
             <div className="rounded-xl overflow-hidden shadow-lg mt-8">
               <div className="bg-white p-6 rounded-t-xl">
-                <div className="aspect-video w-full max-w-md mx-auto bg-gray-50 rounded-lg overflow-hidden relative">
-                  <video 
-                    src="/Images/steve.mp4" 
-                    className="w-full h-full object-cover"
-                    controls
-                    poster="/Images/steve1.png"
-                  >
-                    <track 
-                      kind="captions"
-                      src="/Images/petersondean-captions.vtt" 
-                      label="English"
-                      srcLang="en"
-                      default
-                    />
-                  </video>
-                  
-                  {/* Audio Waveform Visualization */}
-                  <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-900/70 to-transparent p-4">
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-white">Click to play</span>
-                      <span className="text-xs text-white">Peterson Dean Case Study</span>
-                    </div>
-                  </div>
+                <div className="text-center mb-4">
+                  <h3 className="text-xl font-bold text-primary">Sales Leadership Impact</h3>
+                  <p className="text-gray-600">
+                    Strategic leadership established the systematic processes necessary for sustainable growth
+                  </p>
                 </div>
-                <p className="text-center text-sm text-gray-500 mt-2">
-                  Note: Click to play video. Enable sound on your device.
-                </p>
               </div>
               <div className="bg-gray-800 text-white p-4">
                 <p className="text-sm italic">Steve Huber's leadership was instrumental in building the processes and systems that enabled massive scale</p>
