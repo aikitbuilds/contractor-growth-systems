@@ -1,18 +1,27 @@
-import { Routes, Route } from 'react-router-dom'
-import RoofSalesBootcamp from './pages/RoofSalesBootcamp'
-import Checkout from './pages/Checkout'
-import Navbar from './components/Navbar'
+import { useState } from 'react'
+import './App.css'
 
 function App() {
+  const [count, setCount] = useState(0)
+
   return (
-    <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<RoofSalesBootcamp />} />
-        <Route path="/checkout" element={<Checkout />} />
-      </Routes>
-    </>
+    <div className="App">
+      <header>
+        <h1>SunPeach Solar</h1>
+        <p>Local site development environment</p>
+      </header>
+      <main>
+        <div className="card">
+          <button onClick={() => setCount((count) => count + 1)}>
+            count is {count}
+          </button>
+          <p>
+            Edit <code>src/App.tsx</code> and save to test HMR
+          </p>
+        </div>
+      </main>
+    </div>
   )
 }
 
-export default App
+export default App 

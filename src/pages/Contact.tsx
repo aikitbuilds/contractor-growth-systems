@@ -1,82 +1,28 @@
-import { useState } from 'react'
+import { useEffect, useRef } from 'react'
 import Navbar from '@/components/Navbar'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { CheckCircle2 } from 'lucide-react'
-import { processContactSubmission } from '@/services/ghl'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
-    subject: 'general',
-    message: ''
-  })
-  
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
-  const [errorMessage, setErrorMessage] = useState('')
-  
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-  
-  const handleSelectChange = (value: string) => {
-    setFormData((prev) => ({ ...prev, subject: value }))
-  }
-  
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    // Basic validation
-    if (!formData.email || !formData.message) {
-      setStatus('error')
-      setErrorMessage('Please provide your email and message')
-      return
+  const scriptRef = useRef<HTMLScriptElement | null>(null);
+
+  useEffect(() => {
+    // Load the GHL form script
+    if (!scriptRef.current) {
+      const script = document.createElement('script');
+      script.src = 'https://link.msgsndr.com/js/form_embed.js';
+      script.async = true;
+      document.body.appendChild(script);
+      scriptRef.current = script;
     }
-    
-    setStatus('loading')
-    
-    try {
-      // Submit to GHL instead of our API endpoint
-      const result = await processContactSubmission({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        company: formData.company,
-        message: formData.message,
-        subject: formData.subject
-      })
-      
-      if (result.success) {
-        setStatus('success')
-        // Reset form after success
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          company: '',
-          subject: 'general',
-          message: ''
-        })
-      } else {
-        setStatus('error')
-        setErrorMessage(result.error || 'Failed to submit form')
+
+    // Cleanup function
+    return () => {
+      if (scriptRef.current) {
+        document.body.removeChild(scriptRef.current);
+        scriptRef.current = null;
       }
-    } catch (error) {
-      setStatus('error')
-      setErrorMessage('An error occurred while submitting the form')
-      console.error('Error submitting form:', error)
-    }
-  }
+    };
+  }, []);
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -93,127 +39,32 @@ export default function Contact() {
           </div>
           
           <div className="grid md:grid-cols-2 gap-12 items-start">
-            {/* Contact Form */}
+            {/* GHL Embed Form */}
             <Card className="shadow-lg">
-              {status === 'success' ? (
-                <div className="p-8 flex flex-col items-center text-center">
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                    <CheckCircle2 className="h-8 w-8 text-green-600" />
-                  </div>
-                  <h2 className="text-2xl font-bold mb-2">Message Sent!</h2>
-                  <p className="text-gray-600 mb-6">
-                    Thank you for reaching out. We'll get back to you as soon as possible.
-                  </p>
-                  <Button onClick={() => setStatus('idle')}>Send Another Message</Button>
+              <CardHeader>
+                <CardTitle>Send Us a Message</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div style={{ height: "538px" }}>
+                  <iframe
+                    src="https://api.leadconnectorhq.com/widget/form/B0VvdYowMKIHWGCZ7rFn"
+                    style={{ width: "100%", height: "100%", border: "none", borderRadius: "4px" }}
+                    id="inline-B0VvdYowMKIHWGCZ7rFn" 
+                    data-layout="{'id':'INLINE'}"
+                    data-trigger-type="alwaysShow"
+                    data-trigger-value=""
+                    data-activation-type="alwaysActivated"
+                    data-activation-value=""
+                    data-deactivation-type="neverDeactivate"
+                    data-deactivation-value=""
+                    data-form-name="Contact Us"
+                    data-height="538"
+                    data-layout-iframe-id="inline-B0VvdYowMKIHWGCZ7rFn"
+                    data-form-id="B0VvdYowMKIHWGCZ7rFn"
+                    title="Contact Us"
+                  ></iframe>
                 </div>
-              ) : (
-                <>
-                  <CardHeader>
-                    <CardTitle>Send Us a Message</CardTitle>
-                    <CardDescription>
-                      Fill out the form below and we'll respond within 24 hours.
-                    </CardDescription>
-                  </CardHeader>
-                  <form onSubmit={handleSubmit}>
-                    <CardContent className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="name">Full Name</Label>
-                        <Input
-                          id="name"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          placeholder="John Doe"
-                        />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email Address</Label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          placeholder="john@example.com"
-                          required
-                        />
-                      </div>
-                      
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="phone">Phone Number (Optional)</Label>
-                          <Input
-                            id="phone"
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            placeholder="1-888-850-2095"
-                          />
-                        </div>
-                        
-                        <div className="space-y-2">
-                          <Label htmlFor="company">Company (Optional)</Label>
-                          <Input
-                            id="company"
-                            name="company"
-                            value={formData.company}
-                            onChange={handleChange}
-                            placeholder="Your Company"
-                          />
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="subject">Subject</Label>
-                        <Select
-                          value={formData.subject}
-                          onValueChange={handleSelectChange}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select a subject" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="general">General Inquiry</SelectItem>
-                            <SelectItem value="support">Technical Support</SelectItem>
-                            <SelectItem value="sales">Sales Question</SelectItem>
-                            <SelectItem value="partnership">Partnership Opportunity</SelectItem>
-                            <SelectItem value="other">Other</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <Label htmlFor="message">Message</Label>
-                        <Textarea
-                          id="message"
-                          name="message"
-                          value={formData.message}
-                          onChange={handleChange}
-                          placeholder="How can we help you?"
-                          rows={5}
-                          required
-                        />
-                      </div>
-                      
-                      {status === 'error' && (
-                        <div className="p-3 bg-red-50 text-red-700 rounded-md">
-                          {errorMessage || 'An error occurred. Please try again.'}
-                        </div>
-                      )}
-                    </CardContent>
-                    <CardFooter>
-                      <Button 
-                        type="submit" 
-                        className="w-full" 
-                        disabled={status === 'loading'}
-                      >
-                        {status === 'loading' ? 'Sending...' : 'Send Message'}
-                      </Button>
-                    </CardFooter>
-                  </form>
-                </>
-              )}
+              </CardContent>
             </Card>
             
             {/* Contact Info */}
@@ -248,7 +99,6 @@ export default function Contact() {
                     <div>
                       <h3 className="font-semibold text-lg">Phone</h3>
                       <p className="text-gray-600">1-888-850-2095</p>
-                      <p className="text-gray-600">Monday - Friday, 9AM - 5PM EST</p>
                     </div>
                   </div>
                   
@@ -260,7 +110,7 @@ export default function Contact() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-lg">Office</h3>
+                      <h3 className="font-semibold text-lg">Address</h3>
                       <p className="text-gray-600">PO Box 322</p>
                       <p className="text-gray-600">Seaside, OR 97138</p>
                     </div>
@@ -269,23 +119,37 @@ export default function Contact() {
               </div>
               
               <div>
-                <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="font-semibold text-lg">How quickly will I receive a response?</h3>
-                    <p className="text-gray-600">We typically respond to all inquiries within 24 business hours.</p>
-                  </div>
-                  
-                  <div>
-                    <h3 className="font-semibold text-lg">Do you offer free consultations?</h3>
-                    <p className="text-gray-600">Yes, we offer a free 30-minute consultation to discuss your needs and how we can help your contracting business grow.</p>
-                  </div>
-                  
-                  <div>
-                    <h3 className="font-semibold text-lg">What areas do you serve?</h3>
-                    <p className="text-gray-600">Our services are available nationwide, with specialized focus on major metropolitan areas.</p>
-                  </div>
+                <h2 className="text-2xl font-bold mb-4">Office Hours</h2>
+                <div className="space-y-2">
+                  <p className="flex justify-between">
+                    <span className="font-medium">Monday - Friday:</span>
+                    <span>9:00 AM - 5:00 PM PT</span>
+                  </p>
+                  <p className="flex justify-between">
+                    <span className="font-medium">Saturday:</span>
+                    <span>Closed</span>
+                  </p>
+                  <p className="flex justify-between">
+                    <span className="font-medium">Sunday:</span>
+                    <span>Closed</span>
+                  </p>
                 </div>
+              </div>
+              
+              <div className="bg-primary/5 p-6 rounded-lg">
+                <h2 className="text-xl font-bold mb-3">Schedule a Direct Call</h2>
+                <p className="text-gray-600 mb-4">
+                  Need personalized attention for your contracting business growth challenges?
+                  Schedule a direct call with our team for a in-depth consultation.
+                </p>
+                <a
+                  href="https://calendly.com/billiondollarcontractor/strategy-call" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-md font-medium transition-colors"
+                >
+                  Schedule on Calendly
+                </a>
               </div>
             </div>
           </div>

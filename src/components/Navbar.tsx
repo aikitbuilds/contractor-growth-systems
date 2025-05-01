@@ -91,12 +91,6 @@ const Navbar = () => {
             >
               Services
             </NavLink>
-            <NavLink 
-              to="/pricing" 
-              className={({ isActive }) => linkClass(isActive)}
-            >
-              Pricing
-            </NavLink>
             <div className="relative group px-3 py-2">
               <span className="text-sm font-medium cursor-pointer flex items-center text-white hover:text-secondary">
                 Case Studies
@@ -126,70 +120,10 @@ const Navbar = () => {
                 </NavLink>
               </div>
             </div>
-            <div className="relative group px-3 py-2">
-              <span className="text-sm font-medium cursor-pointer flex items-center text-white hover:text-secondary">
-                Resources
-                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <title>Dropdown indicator</title>
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </span>
-              <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                <NavLink 
-                  to="/resources" 
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Free Downloads & Tools
-                </NavLink>
-                <a 
-                  href="https://www.thetuesdaytuneup.com/archive"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Blog
-                </a>
-                <NavLink
-                  to="/contractorai"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Contractor's Guide to AI
-                </NavLink>
-                <NavLink
-                  to="/events"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Webinars & Events
-                </NavLink>
-                <NavLink 
-                  to="/forms" 
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Forms & Questionnaires
-                </NavLink>
-                <NavLink 
-                  to="/project-dashboard" 
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Project Dashboard
-                </NavLink>
-              </div>
-            </div>
           </div>
           
           {/* Action Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <NavLink to="/login">
-              <Button variant="default" className={`
-                transition-all duration-300 transform hover:scale-105
-                ${isScrolled 
-                  ? 'bg-secondary text-white hover:bg-secondary-600' 
-                  : 'bg-secondary text-white hover:bg-secondary-600 shadow-lg shadow-secondary/30'
-                }
-              `}>
-                Client Login
-              </Button>
-            </NavLink>
             <NavLink to="/schedule">
               <Button className={`
                 transition-transform duration-300 hover:scale-105
@@ -245,15 +179,6 @@ const Navbar = () => {
               >
                 Services
               </NavLink>
-              <NavLink 
-                to="/pricing"
-                className={({ isActive }) => 
-                  `px-3 py-2 text-white ${isActive ? 'bg-primary-600 rounded' : ''}`
-                }
-              >
-                Pricing
-              </NavLink>
-              
               <div className="px-3 py-2">
                 <p className="text-white font-medium mb-2">Case Studies</p>
                 <div className="pl-4 space-y-2">
@@ -284,66 +209,7 @@ const Navbar = () => {
                 </div>
               </div>
               
-              <div className="px-3 py-2">
-                <p className="text-white font-medium mb-2">Resources</p>
-                <div className="pl-4 space-y-2">
-                  <NavLink 
-                    to="/resources" 
-                    className={({ isActive }) => 
-                      `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
-                    }
-                  >
-                    Free Downloads & Tools
-                  </NavLink>
-                  <a 
-                    href="https://www.thetuesdaytuneup.com/archive"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block py-1 text-sm text-white/90"
-                  >
-                    Blog
-                  </a>
-                  <NavLink 
-                    to="/contractorai"
-                    className={({ isActive }) => 
-                      `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
-                    }
-                  >
-                    Contractor's Guide to AI
-                  </NavLink>
-                  <NavLink 
-                    to="/events"
-                    className={({ isActive }) => 
-                      `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
-                    }
-                  >
-                    Webinars & Events
-                  </NavLink>
-                  <NavLink 
-                    to="/forms"
-                    className={({ isActive }) => 
-                      `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
-                    }
-                  >
-                    Forms & Questionnaires
-                  </NavLink>
-                  <NavLink 
-                    to="/project-dashboard"
-                    className={({ isActive }) => 
-                      `block py-1 text-sm text-white/90 ${isActive ? 'text-secondary font-medium' : ''}`
-                    }
-                  >
-                    Project Dashboard
-                  </NavLink>
-                </div>
-              </div>
-              
               <div className="pt-2 space-y-3">
-                <NavLink to="/login" className="block">
-                  <Button variant="default" className="w-full bg-secondary hover:bg-secondary-600 shadow-md">
-                    Client Login
-                  </Button>
-                </NavLink>
                 <NavLink to="/schedule" className="block">
                   <Button className="w-full bg-white text-primary hover:bg-gray-100">
                     Schedule a Strategy Call

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BDC Lead Flow Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .mermaid {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>BDC Team Lead Flow</h1>
+    <div class="mermaid">
+sequenceDiagram
+    participant Apollo as Apollo.io (Cold Email)
+    participant User as Potential Client (Contractor)
+    participant Website as BDC Website (bdcteam.pro)
+    participant LeadMagnet as Lead Magnet LP / Funnel
+    participant Bootcamp as Bootcamp LP / Funnel
+    participant BDC_Email as BDC Leads Email (e.g., info@bdcteam.pro)
+    participant CRM as BDC CRM/Mailing List
+
+    Apollo->>User: Sends Cold Email Sequence
+    Note over User: Receives email with 3 options
+
+    alt User clicks Website Link
+        User->>Website: Visits www.bdcteam.pro
+        Note over Website: User explores site content (Services, Cases, etc.)
+        Website->>User: Presents general CTAs (e.g., Schedule Audit)
+        User->>BDC_Email: (Optional) User uses general contact form / schedules audit
+        BDC_Email->>CRM: (Manual/Zapier) Add lead if contact initiated
+    end
+
+    alt User clicks Lead Magnet Link
+        User->>LeadMagnet: Visits Lead Magnet Landing Page (e.g., Blueprint Generator)
+        LeadMagnet->>User: Presents form (Name, Email, Website, etc.)
+        User->>LeadMagnet: Submits Form
+        LeadMagnet->>BDC_Email: **Sends Lead Alert** (Name, Email, Company, Details)
+        LeadMagnet->>CRM: (Via Backend/Zapier) **Adds User to Mailing List**
+        LeadMagnet->>User: Shows Thank You page, emails Lead Magnet PDF
+        Note over User: Receives Lead Magnet, potentially clicks Bootcamp CTA in PDF/email
+        User->>Bootcamp: (Optional) Visits Bootcamp Page from Lead Magnet CTA
+    end
+
+    alt User clicks Bootcamp Link
+        User->>Bootcamp: Visits Bootcamp Landing Page (bdcteam.pro/roof-sales-bootcamp)
+        Bootcamp->>User: Presents Course Info & Registration/Interest Form
+        User->>Bootcamp: Submits Form (e.g., Register/Notify Me)
+        Bootcamp->>BDC_Email: **Sends Lead/Registration Alert** (Name, Email, Company)
+        Bootcamp->>CRM: (Via Backend/Zapier) **Adds User to Mailing List/Bootcamp Segment**
+        Bootcamp->>User: Shows Confirmation/Thank You page
+    end
+
+    Note over Apollo, BDC_Email: Email responses/bounces handled within Apollo.io and BDC's inbox respectively.
+    Note over BDC_Email, CRM: Lead alerts from landing pages trigger CRM entry (manual or automated).
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            sequence: {
+                actorMargin: 50,
+                boxMargin: 10,
+                mirrorActors: false,
+                bottomMarginAdj: 1,
+                useMaxWidth: true,
+                width: 150,
+                height: 65
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -160,15 +160,6 @@ const Index = () => {
                 >
                   Schedule a Strategy Call <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-                <Link to="/dashboard">
-                  <Button 
-                    size="lg" 
-                    variant="outline" 
-                    className="border-orange-500 bg-black/30 text-orange-500 hover:bg-black/50 hover:text-orange-400 font-medium shadow-[0_0_15px_rgba(249,115,22,0.5)]"
-                  >
-                    Interactive Dashboard
-                  </Button>
-                </Link>
               </div>
             </div>
             
@@ -245,15 +236,6 @@ const Index = () => {
                     <span>Jun</span>
                   </div>
                 </div>
-                
-                <div className="text-center">
-                  <Link to="/dashboard">
-                    <Button variant="secondary" size="sm" className="text-xs bg-secondary/20 hover:bg-secondary/30 text-white border-0 transform transition-all duration-300 hover:scale-105">
-                      View Detailed Analytics
-                      <ArrowRight className="h-3 w-3 ml-1 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                  </Link>
-                </div>
               </div>
             </div>
           </div>
@@ -311,14 +293,14 @@ const Index = () => {
                   </div>
                   
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <Link to={bootcampUrl}>
+                    <a href="https://www.nextbdc.com" target="_blank" rel="noopener noreferrer">
                       <Button 
                         size="lg" 
                         className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-bold text-lg px-8 py-4 shadow-lg shadow-red-600/50 hover:shadow-red-600/70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 animate-pulse transform hover:scale-105 transition-all duration-300"
                       >
                         Sign Up Now. Limited Seats <ArrowRight className="ml-2 h-5 w-5" />
                       </Button>
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -754,23 +736,6 @@ const Index = () => {
                 <p className="text-gray-700">Ready to implement systematic approaches to sales and operations</p>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Lead Magnet */}
-      <section className="py-16 bg-gradient-to-br from-primary-700 to-primary">
-        <div className="container mx-auto">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Free Download: The AI-Ready Contractor Checklist</h2>
-            <p className="text-xl text-white/90 mb-8">
-              Discover if your contracting business is ready to leverage AI to automate sales, improve bidding accuracy, and increase close rates.
-            </p>
-            <Link to="/aichecklist">
-              <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-gray-100 font-medium">
-                Get the Checklist Now
-              </Button>
-            </Link>
           </div>
         </div>
       </section>
